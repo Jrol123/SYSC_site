@@ -3,6 +3,7 @@
     --nav-btn-bg: #284C7E;
     --dark: #131418;
     --grey-bg: #D2D2D2;
+    --purple-bg: #A690D3;
 }
 
 *{
@@ -231,6 +232,10 @@ nav{
     border-top:2px solid white;
    
     
+}
+
+.institute-right-div{
+    background-color: var(--purple-bg);
 }
 
 .ScrollBar{
