@@ -4,6 +4,8 @@
     --dark: #131418;
     --grey-bg: #D2D2D2;
     --purple-bg: #A690D3;
+    --light-blue-bg: #35C0CD;
+    --seal-bg: #1E6D74;
 }
 
 *{
@@ -151,7 +153,7 @@ nav{
         pointer-events: all;
     }
     .nav-links li{
-        opacity: 0;
+       margin-top:-60%;
     }
     .nav-links li:nth-child(1){
         transition: all 0.5s ease 0.2s;
@@ -204,16 +206,26 @@ nav{
     background-color: var(--nav-bg) ;
     border:8px solid white;
 } 
+.div-semi-circle-ontop { 
+    position: fixed;
+    top: 15%; 
+    left: 10px; 
+    transform: translate(-50%, -50%); 
+    height: 10em; 
+    width: 35em; 
+    border-radius: 0 0 550px 150px; 
+    background-color: var(--nav-bg) ;
+} 
 .div-semi-circle-smaller { 
     position: fixed; 
-    top: 15%; 
+    top: 13%; 
     left: 15%; 
     transform: translate(-50%, -50%); 
     height: 5em; 
-    width: 20em; 
+    width: 22em; 
     border-radius: 0 0 550px 150px; 
     background-color: var(--nav-bg);
-
+    border:8px solid white;
 } 
 
 
@@ -236,6 +248,16 @@ nav{
 
 .institute-right-div{
     background-color: var(--purple-bg);
+ 
+}
+.news-left-first-div{
+    background-color: var(--seal-bg);
+    color:var(--seal-bg);
+}
+
+.news-left-div{
+    background-color: var(--light-blue-bg);
+    color:var(--light-blue-bg);
 }
 
 .ScrollBar{
