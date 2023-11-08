@@ -294,7 +294,7 @@ ul {
 	position: absolute;
 	left: 0;
 	bottom: -10px;
-	background-color: #E91E63;
+	background-color: var(--nav-bg);
 	width: 50px;
 	height: 2px;
 }
