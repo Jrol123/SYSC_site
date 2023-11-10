@@ -18,13 +18,14 @@ from . import views
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    # path('info/', include(('info.urls', 'info'), namespace='info')),
+    path('', views.index, name='main'),
+    path('info/', include('info.urls')),
     # path('moderators/', include(('moderators.urls', 'moderators'),
     #                             namespace='moderators')),
-    # path('news/', include(('news.urls', 'news'), namespace='news')),
+    path('news/', include('news.urls')),
     # path('representatives/', include(
     #     ('representatives.urls', 'representatives'),
     #     namespace='representatives')),

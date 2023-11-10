@@ -1,4 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
 
+def institutes(request):
+    return render(request, 'info/institutes.html')
+
+
+def grant(request):
+    return render(request, 'info/grant.html')
