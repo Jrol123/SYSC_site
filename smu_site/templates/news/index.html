@@ -14,34 +14,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <script>
+        var closeBut = document.getElementsByClassName('close')[0],
+    modal = document.getElementsByClassName('modal-cont')[0],
+    cancelBut = document.getElementsByClassName('cancel')[0],
+    loginBut = document.getElementsByClassName('login')[0];
+    
+//close
+function x () {
+    modal.style.display = "none";
+}
+closeBut.onclick = x;
+cancelBut.onclick = x;
+
+loginBut.onclick = function () {
+    modal.style.display = "block";
+}
+
+window.onclick = function (e) {
+    if (e.target.className === 'modal-cont'){
+        e.target.style.display = 'none';
+    }
+}
+    </script>
 {% endblock %}
 <!--//-->
 
 {% block content %}
-    <!--Top Navbar -->
-    <nav>
-        <div class="logo">
-            <img class="d-none d-sm-block" src="{% static 'img/logo_fefu.png' %}" alt="Logo Image">
-            <h2 class="d-lg-none d-md-none">LOGO</h2>
-        </div>
-        <div class="hamburger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="{% url 'main' %}">Главный</a></li>
-            <li><a href="{% url 'news:index' %}">Новости</a></li>
-            <li><a href="{% url 'info:grant' %}">Гранты</a></li>
-            <li><a href="{% url 'info:institutes' %}">институты</a></li>
-            <li><a href="#">Link5</a></li>
-            
-           <!-- <li><button class="login-button" href="#">Login</button></li>
-            <li><button class="join-button" href="#">Join</button></li>  IF LOGIN AND SIGN IS NEEDED
-           -->
-        </ul>
-    </nav>
-    <!--// Top Navbar-->
+    
+    {% include "navbar.html" %}
 
     <!--Top side semi-circle design-->
     <div class="d-none d-sm-block div-semi-circle"></div> 
