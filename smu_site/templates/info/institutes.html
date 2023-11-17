@@ -18,29 +18,8 @@
 <!--//-->
 
 {% block content %}
-    <!--Top Navbar -->
-    <nav>
-        <div class="logo">
-            <img class="d-none d-sm-block" src="{% static 'img/logo_fefu.png' %}" alt="Logo Image">
-            <h2 class="d-lg-none d-md-none">LOGO</h2>
-        </div>
-        <div class="hamburger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="{% url 'main' %}">Главный</a></li>
-            <li><a href="{% url 'news:index' %}">Новости</a></li>
-            <li><a href="{% url 'info:grant' %}">Гранты</a></li>
-            <li><a href="{% url 'info:institutes' %}">институты</a></li>
-            <li><a href="#">Link5</a></li>
-           <!-- <li><button class="login-button" href="#">Login</button></li>
-            <li><button class="join-button" href="#">Join</button></li>  IF LOGIN AND SIGN IS NEEDED
-           -->
-        </ul>
-    </nav>
-    <!--// Top Navbar-->
+    
+    {% include "navbar.html" %}
 
     <!--Top side semi-circle design-->
     <div class="d-none d-sm-block div-semi-circle"></div> 
@@ -49,10 +28,12 @@
     <!--//-->
 
 
-    <div class="plates_home">
+    <div class="plates_home container-custom plate-container">
 
-        <div  id="first_plate" class="container plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <div class="row container">
+        {% for i in '123456789' %} <!--This loop repeats the div below exactly 9 times--> 
+
+        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <div class="row container-custom">
                 <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
                     <h1>Some info here</h1>
                     <h1>Some info here</h1>
@@ -64,107 +45,11 @@
             </div>        
         </div>
 
-        <div class="container plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <div class="row container">
-                <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <h1>Some info here</h1>
-                    <h1>Some info here</h1>
-                </div>
-
-                <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
-                    
-                </div>
-            </div>        
-        </div>
-
-        <div class="container plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <div class="row container">
-                <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <h1>Some info here</h1>
-                    <h1>Some info here</h1>
-                </div>
-
-                <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
-                    
-                </div>
-            </div>        
-        </div>
-
-        <div class="container plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <div class="row container">
-                <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <h1>Some info here</h1>
-                    <h1>Some info here</h1>
-                </div>
-
-                <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
-                    
-                </div>
-            </div>        
-        </div>
-
-        <div class="container plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <div class="row container">
-                <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <h1>Some info here</h1>
-                    <h1>Some info here</h1>
-                </div>
-
-                <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
-                    
-                </div>
-            </div>        
-        </div>
-
- 
-
+        {% endfor %}
     </div>
 
 
-    <footer class="footer">
-        <div class="container row">
-            <div class="footer-col">
-                <h4>company</h4>
-                <ul>
-                    <li><a href="#">about us</a></li>
-                    <li><a href="#">our services</a></li>
-                    <li><a href="#">privacy policy</a></li>
-                    <li><a href="#">visit website</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>get help</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">shipping</a></li>
-                    <li><a href="#">returns</a></li>
-                    <li><a href="#">order status</a></li>
-                    <li><a href="#">payment options</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>online</h4>
-                <ul>
-                    <li><a href="#">download</a></li>
-                    <li><a href="#">changelog</a></li>
-                    <li><a href="#">github</a></li>
-                    <li><a href="#">all version</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>follow us</h4>
-                <div class="social-links">
-                    <a href="#"></a>
-                    <a href="#"></i></a>
-                    <a href="#"></i></a>
-                    <a href="#"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 
     <!-- Javascript Inc-->
     <script src="{% static 'js/nav-bar.js' %}"></script>
