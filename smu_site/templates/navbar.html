@@ -2,8 +2,9 @@
 <nav class="navbar navbar-expand-lg">
 
     <div class="logo">
+        <a href="{% url 'main' %}"> 
             <img src="{% static 'img/logo_fefu.png' %}" alt="Logo Image">
-    
+        </a>
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,6 +27,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'info:institutes' %}">институты</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'info:documents' %}">документы</a>
+            </li>
            
 
             <li class="nav-item">
@@ -33,9 +38,7 @@
             </li>
             
             
-            <li class="nav-item">
-                <a class="nav-link" href="">Link</a>
-            </li>
+          
         
        </ul>
     </div>
