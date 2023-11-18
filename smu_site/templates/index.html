@@ -26,21 +26,22 @@
        
         <div class="row">
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
-            <div class="plates mb-5 rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
+            <div class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
                 <div style="margin-top:10em">
                     <div class="mt-5 mb-4 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 news-left-first-div">
-                        <h4>SOMETHING HERE</h4>
+                        <h4>blank</h4>
                     </div>
 
                     <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 news-left-div">
-                        <h1>SOMETHING HERE</h1>
-                        <h1>SOMETHING HERE</h1>
+                        {% for i in '1234' %}
+                        <h1>BLANK</h1>
+                        {% endfor %}
                     </div>
 
                     <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 news-left-div">
-                        <h1>SOMETHING HERE</h1>
-                        <h1>SOMETHING HERE</h1>
-                        <h1>SOMETHING HERE</h1>
+                        {% for i in '1234567890' %}
+                        <h1>BLANK</h1>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -48,14 +49,16 @@
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
                 <div>
                 <div class="plates">
-                    <h1>SOMETHING HERE</h1>
-                    <h1>SOMETHING HERE</h1>
+                    {% for i in '123' %}
+                    <h1>BLANK</h1>
+                    {% endfor %}
                 </div>
 
                 {% for i in '123456789489450394' %}
                 <div class="mt-4 plates">
-                    <h1>SOMETHING HERE</h1>
-                    <h1>SOMETHING HERE</h1>
+                    {% for i in '123' %}
+                    <h1>BLANK</h1>
+                    {% endfor %}
                 </div>
                 {% endfor %}
 
