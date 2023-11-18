@@ -1,5 +1,5 @@
 """
-URL configuration for smu_site project.
+URL configuration for test_smu project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -26,7 +26,6 @@ urlpatterns = [
     # path('moderators/', include(('moderators.urls', 'moderators'),
     #                             namespace='moderators')),
     path('news/', include('news.urls')),
-    path('organisation/', include('organisation.urls')),
     # path('representatives/', include(
     #     ('representatives.urls', 'representatives'),
     #     namespace='representatives')),

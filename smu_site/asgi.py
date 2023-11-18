@@ -1,5 +1,5 @@
 """
-ASGI config for smu_site project.
+ASGI config for test_smu project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smu_site.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_smu.settings')
 
 application = get_asgi_application()
