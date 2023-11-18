@@ -27,7 +27,6 @@ urlpatterns = [
     #                             namespace='moderators')),
     path('news/', include('news.urls')),
     path('organisation/', include('organisation.urls')),
-    path('login/', include('login.urls')),
     # path('representatives/', include(
     #     ('representatives.urls', 'representatives'),
     #     namespace='representatives')),
