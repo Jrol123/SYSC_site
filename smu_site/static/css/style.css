@@ -7,6 +7,8 @@
     --purple-bg: #A690D3;
     --light-blue-bg: #35C0CD;
     --seal-bg: #1E6D74;
+    --dark-grant: #AAA5A5;
+    --red-grant: #BF9B9B;
 }
 
 *{
@@ -146,6 +148,14 @@ body{
     background-color: var(--seal-bg);
     color:var(--seal-bg);
 }
+.sub_grant_left{
+    background-color: var(--dark-grant);
+    color:var(--dark-grant);
+}
+.sub_grant_right{
+    background-color: var(--red-grant);
+    color: var(--red-grant);
+}
 
 .news-left-div{
     background-color: var(--light-blue-bg);
@@ -163,7 +173,7 @@ body{
 
 /* Scrollbar for News page div */
 .ScrollBar::-webkit-scrollbar {
-    width:6px;
+    width:4px;
 }
 .ScrollBar::-webkit-scrollbar-track {
     background-color: darkgrey;
@@ -192,7 +202,6 @@ body{
     margin-left:30%;
     margin-right:30%;
 }
-
 
 
 
