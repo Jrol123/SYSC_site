@@ -38,9 +38,14 @@
                     <a href="#"></i></a>
                     <a href="#"></i></a>
                     <a href="#"></i></a>
-                </div>
+                </div><br/>
 
-               <!-- <a href="">login</a> -->
+                {% if user.is_authenticated %}
+                    <li>User: {{ user.get_username }}</li><br>
+                    <a href="{% url 'logout'%}?next={{request.path}}" class="login-btn">Выйти из акаунта</a>
+                {% else %}
+                    <a href="{% url 'login'%}?next={{request.path}}" class="login-btn">Вход</a>
+                {% endif %}
 
             </div>
         </div>

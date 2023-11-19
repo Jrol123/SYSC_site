@@ -194,13 +194,21 @@ body{
     margin-top:10px;
 }
 .login-btn{
-    padding:8px 10px;
-    background-color: var(--light-blue-bg);
+    padding:12px 35px;
+    background-color: none;
     border:none;
+    text-decoration:none;
+    color:  var(--light-blue-bg);
+    border-radius:25px;
+    border:2px solid  var(--light-blue-bg);
+    transition:0.5s;
+    
+}
+.login-btn:hover{
+    background-color: var(--light-blue-bg);
     color: var(--dark);
-    margin-top:10px;   
-    margin-left:30%;
-    margin-right:30%;
+    border:2px solid black;
+    transition:0.5s;
 }
 
 
