@@ -7,9 +7,8 @@ class Institute(models.Model):
 
 
 class ScientistInfo(models.Model):
-    institute_id = models.ForeignKey(Institute,
-                                     on_delete=models.CASCADE,
-                                     null=True)
+    institute = models.ForeignKey(Institute,
+                                  on_delete=models.CASCADE, null=True)
     name = models.CharField("Имя учёного", max_length=200)
     position = models.CharField("Позиция учёного", max_length=300)
     degree = models.CharField("Учёная степень", max_length=200)

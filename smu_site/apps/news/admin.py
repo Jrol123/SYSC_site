@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import News, Event
+from .models import News, Event
 
 
 admin.site.register(News)

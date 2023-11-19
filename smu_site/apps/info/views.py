@@ -9,5 +9,5 @@ def grant(request):
     return render(request, 'info/grant.html')
 
 
-def organisation(request):
-    return render(request, 'info/organisation.html')
+def organization(request):
+    return render(request, 'info/organization.html')
