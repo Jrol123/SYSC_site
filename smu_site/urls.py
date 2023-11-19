@@ -22,6 +22,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
+    path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
     # path('moderators/', include(('moderators.urls', 'moderators'),
     #                             namespace='moderators')),
