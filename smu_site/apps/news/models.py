@@ -4,11 +4,10 @@ from django.db import models
 
 class News(models.Model):
     news = models.OneToOneField("moderators.Queue",
-                                   on_delete=models.DO_NOTHING,
-                                   primary_key=True)
+                                on_delete=models.DO_NOTHING,
+                                primary_key=True)
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.BinaryField("Текст разметки новости")
-    # imgs = models.BinaryField("Изображения новости")
     tags = models.TextField("Тэги новости")
     pub_date = models.DateTimeField("Дата и время публикации",
                                     auto_now_add=True)
@@ -16,13 +15,46 @@ class News(models.Model):
 
 class Event(models.Model):
     event = models.OneToOneField("moderators.Queue",
-                                    on_delete=models.DO_NOTHING,
-                                    primary_key=True)
+                                 on_delete=models.DO_NOTHING,
+                                 primary_key=True)
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.BinaryField("Текст разметки мероприятия")
-    # imgs = models.BinaryField("Изображения новости")
     tags = models.TextField("Тэги мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
     end_date = models.DateTimeField("Дата и время окончания")
     pub_date = models.DateTimeField("Дата и время публикации",
                                     auto_now_add=True)
+
+
+class Image(models.Model):
+    """
+    0) Пользователь открывает форму.
+       в таблице <тип (news, events)> инициализируется статья.
+       В коде инициализируется переменная num_images = 0.
+    1) Пользователь нажимает на кнопку. Появляется modal
+       и в него он загружает картинку и пишет ей название (alt)
+       (добавление названия опционально, пользователь не обязан
+       всегда его писать. В таком случае просто как название файла
+       на сервере)
+    2) В папку images/<тип (news, events)>/<id объекта>/
+       <переменная num_image>
+       прилетает загруженная пользователем картинка
+    3) В таблице images создаётся запись под картинку
+    4) Переменная num_image увеличивается на 1
+    """
+    news = models.ForeignKey(News, on_delete=models.CASCADE,
+                             to_field="news", null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,
+                              to_field="event", null=True, blank=True)
+    
+    def _img_dir_path(self, filename):
+        if self.news:
+            return f'images/news/{self.news}/{self.id}_{filename}'
+        elif self.event:
+            return f'images/events/{self.event}/{self.id}_{filename}'
+    
+    url_path = models.ImageField("Путь к изображению",
+                                 upload_to=_img_dir_path)
+    alt = models.CharField("Краткое описание",
+                           max_length=400, default='')
+    
