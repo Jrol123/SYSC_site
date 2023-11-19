@@ -11,3 +11,7 @@ def grant(request):
 
 def documents(request):
     return render(request, 'info/documents.html')
+
+def organisation(request):
+    return render(request, 'info/organisation.html')
+
