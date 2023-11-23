@@ -35,13 +35,12 @@
                 <h4>follow us</h4>
                 <div class="social-links">
                     <a href="#"></a>
-                    <a href="#"></i></a>
-                    <a href="#"></i></a>
-                    <a href="#"></i></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
                 </div><br/>
 
                 {% if user.is_authenticated %}
-                    <li>User: {{ user.get_username }}</li><br>
                     <a href="{% url 'logout'%}?next={{request.path}}" class="login-btn">Выйти из акаунта</a>
                 {% else %}
                     <a href="{% url 'login'%}?next={{request.path}}" class="login-btn">Вход</a>
