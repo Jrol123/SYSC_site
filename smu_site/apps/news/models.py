@@ -1,5 +1,4 @@
 from django.db import models
-# from ..moderators.models import Queue
 
 
 class News(models.Model):
@@ -46,15 +45,27 @@ class Image(models.Model):
                              to_field="news", null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE,
                               to_field="event", null=True, blank=True)
+    institute = models.ForeignKey("info.Institute",
+                                  on_delete=models.CASCADE,
+                                  null=True, blank=True)
+    scientist = models.ForeignKey("info.ScientistInfo",
+                                  on_delete=models.CASCADE,
+                                  null=True, blank=True)
+    grant = models.ForeignKey("info.Grant", on_delete=models.CASCADE,
+                              null=True, blank=True)
     
     def _img_dir_path(self, filename):
-        if self.news:
-            return f'images/news/{self.news}/{self.id}_{filename}'
-        elif self.event:
-            return f'images/events/{self.event}/{self.id}_{filename}'
+        folder = ['news', 'events', 'institutes',
+                  'scientists', 'grants']
+        cd = lambda: [i for i, v
+                      in enumerate((self.news, self.event,
+                                    self.institute, self.scientist,
+                                    self.grant)) if v]
+        
+        return (f'images/{folder[cd()[0]]}/{self.event}'
+                f'/{self.id}_{filename}')
     
     url_path = models.ImageField("Путь к изображению",
                                  upload_to=_img_dir_path)
     alt = models.CharField("Краткое описание",
                            max_length=400, default='')
-    
