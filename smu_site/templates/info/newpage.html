@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Responsive Animated Navbar{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+{% endblock %}
+<!-- IconFont and Stylesheet -->
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+<!--//-->
+
+{% block content %}
+    
+    {% include "navbar.html" %}
+
+    <!--Top side semi-circle design-->
+    <div class="d-none d-sm-block div-semi-circle"></div> 
+    <div class="d-none d-sm-block div-semi-circle-smaller"></div>
+    <div class="d-none d-sm-block div-semi-circle-ontop"></div>  
+    <!--//-->
+
+
+    <div class="plates_home container-custom plate-container">
+
+        {% for i in '123456789' %} <!--This loop repeats the div below exactly 9 times--> 
+
+        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <div class="row container-custom">
+                <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    {% for i in '012' %}
+                        <h1>BLANK</h1>
+                    {% endfor %}
+                </div>
+
+                <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
+                    
+                </div>
+            </div>        
+        </div>
+
+        {% endfor %}
+    </div>
+
+
+    {% include "footer.html" %}
+
+    <!-- Javascript Inc-->
+    <script src="{% static 'js/nav-bar.js' %}"></script>
+{% endblock %}
