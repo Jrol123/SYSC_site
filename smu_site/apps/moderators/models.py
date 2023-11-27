@@ -7,9 +7,11 @@ class Queue(models.Model):
         ('doc', 'Документ'),
         ('news', 'Новость'),
         ('event', 'Мероприятие/событие'),
+        ('scientist', 'Учёный'),
+        ('grant', 'Грант'),
     )
     obj_type = models.CharField("Тип объекта",
-                                max_length=5, choices=CHOICES)
+                                max_length=10, choices=CHOICES)
     
     class Meta:
         verbose_name = 'Очередь'

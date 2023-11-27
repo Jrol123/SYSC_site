@@ -7,6 +7,9 @@ class Institute(models.Model):
 
 
 class ScientistInfo(models.Model):
+    scientist_id = models.OneToOneField("moderators.Queue",
+                                        on_delete=models.DO_NOTHING,
+                                        primary_key=True)
     institute = models.ForeignKey(Institute,
                                   on_delete=models.CASCADE, null=True)
     name = models.CharField("Имя учёного", max_length=200)
@@ -16,4 +19,14 @@ class ScientistInfo(models.Model):
 
 
 class Grant(models.Model):
-    text = models.TextField("Описание гранта")
+    grant_id = models.OneToOneField("moderators.Queue",
+                                    on_delete=models.DO_NOTHING,
+                                    primary_key=True)
+    name = models.CharField("Название гранта",
+                            max_length=300, default="")
+    description = models.TextField("Описание гранта", null=True)
+    end_doc_date = models.DateTimeField("Дата окончания приёма заявок",
+                                        null=True)
+    end_result_date = models.DateTimeField("Дата подведения итогов",
+                                           null=True)
+
