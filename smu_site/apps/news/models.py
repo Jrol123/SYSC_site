@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -5,9 +6,10 @@ class News(models.Model):
     news = models.OneToOneField("moderators.Queue",
                                 on_delete=models.DO_NOTHING,
                                 primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING,
+                                to_field='id')
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.BinaryField("Текст разметки новости")
-    tags = models.TextField("Тэги новости")
     pub_date = models.DateTimeField("Дата и время публикации",
                                     auto_now_add=True)
 
@@ -16,9 +18,10 @@ class Event(models.Model):
     event = models.OneToOneField("moderators.Queue",
                                  on_delete=models.DO_NOTHING,
                                  primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING,
+                                to_field='id')
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.BinaryField("Текст разметки мероприятия")
-    tags = models.TextField("Тэги мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
     end_date = models.DateTimeField("Дата и время окончания")
     pub_date = models.DateTimeField("Дата и время публикации",
