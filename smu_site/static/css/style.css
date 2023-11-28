@@ -158,7 +158,7 @@ body{
 }
 
 .news-left-div{
-    background-color: var(--seal-bg);
+    background-color: var(--nav-btn-bg);
     color:white;
 }
 .news-left-div h2{
@@ -170,7 +170,7 @@ body{
     border:1px dashed var(--seal-bg);
 }
 .event-card h3{
-    background-color: var(--seal-bg);
+    background-color: var(--nav-btn-bg);
     color:white;
     font-size:14px;
     width:200px;
@@ -437,70 +437,22 @@ h2 {
 }
 
 
-/* CALANDER STYLEING */
+input[type="date"]{
+    background-color:white;
+    padding: 15px;
+    width:100%;
 
-.calendar-container {
-width: 100%;
-margin: auto;
-
-color:var(--font-color);
+ 
+    font-family: "Roboto Mono",monospace;
+    color: black;
+    font-size: 18px;
+    border: 2px dashed var(--nav-btn-bg);
+    outline: none;
+    border-radius: 5px;
 }
-
-.calendar-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 5px;
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
 }
-
-.prev-month,
-.next-month {
-font-size: 45px;
-cursor: pointer;
-margin-left:20px;
-margin-right:20px;
-
-}
-
-.current-month {
-font-size: 20px;
-text-align:center;
-
-}
-
-.calendar-grid {
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-text-align: center;
-}
-
-.calendar-grids {
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-text-align: center;
-}
-
-.day-header {
-padding: 5px;
-color:white;
-}
-
-.calendar-day {
-padding: 7px;
-cursor: pointer;
-color:white;
-}
-
-.today {
-background-color:white;
-color:black;
-border-radius:100px;
-}
-
-.selected {
-background-color: black;
- border-radius:100px;
- color:white;
-}
-
-/* --- MAIN PAGE SECTION --- */
