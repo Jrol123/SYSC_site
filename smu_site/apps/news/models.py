@@ -60,12 +60,12 @@ class Image(models.Model):
     def _img_dir_path(self, filename):
         folder = ['news', 'events', 'institutes',
                   'scientists', 'grants']
-        cd = lambda: [i for i, v
+        cd = lambda: [(i, v) for i, v
                       in enumerate((self.news, self.event,
                                     self.institute, self.scientist,
                                     self.grant)) if v]
         
-        return (f'images/{folder[cd()[0]]}/{self.event}'
+        return (f'images/{folder[cd()[0][0]]}/{cd()[0][1]}'
                 f'/{self.id}_{filename}')
     
     url_path = models.ImageField("Путь к изображению",
