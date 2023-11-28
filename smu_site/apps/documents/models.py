@@ -1,5 +1,4 @@
 from django.db import models
-# from ..moderators.models import Queue
 
 
 class Doc(models.Model):
