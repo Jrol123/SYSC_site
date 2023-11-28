@@ -6,8 +6,8 @@ class News(models.Model):
     news = models.OneToOneField("moderators.Queue",
                                 on_delete=models.DO_NOTHING,
                                 primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING,
-                                to_field='id')
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
+                             to_field='id')
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.BinaryField("Текст разметки новости")
     pub_date = models.DateTimeField("Дата и время публикации",
@@ -18,8 +18,8 @@ class Event(models.Model):
     event = models.OneToOneField("moderators.Queue",
                                  on_delete=models.DO_NOTHING,
                                  primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING,
-                                to_field='id')
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
+                             to_field='id')
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.BinaryField("Текст разметки мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
