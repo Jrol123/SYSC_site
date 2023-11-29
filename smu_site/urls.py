@@ -25,8 +25,8 @@ urlpatterns = [
     path('', views.index, name='main'),
     path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
-    # path('moderators/', include(('moderators.urls', 'moderators'),
-    #                             namespace='moderators')),
+    path('moderators/', include(('moderators.urls', 'moderators'),
+                                namespace='moderators')),
     path('news/', include('news.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     # path('representatives/', include(
