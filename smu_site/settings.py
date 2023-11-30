@@ -127,14 +127,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# auto redirect after login
+LOGIN_REDIRECT_URL = '/'
+
 STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = [
    os.path.join(PROJECT_ROOT, "static"),
 ]
-
-# auto redirect after login
-LOGIN_REDIRECT_URL = '/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
