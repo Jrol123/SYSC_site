@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC+10:00'  # 'Asia/Vladivostok'
+TIME_ZONE = 'Asia/Vladivostok'
 
 USE_I18N = True
 
