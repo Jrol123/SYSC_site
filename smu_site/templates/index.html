@@ -28,13 +28,15 @@
 
             <div  style="margin-top:6em; color:none;" class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
                 <div style="margin-top:10em; color:none;">
-                    
-                    <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 news-left-div" style="background-color:whitesmoke">
-                      <input type="date" value = "2023-11-28">
-                      <input type="date" id="date" class="mt-3">
-
-                      <script src="{% static 'js/todays_date.js' %}"></script>
-                  </div>
+                    <form method="POST" action="{% url 'main' %}">
+                        {% csrf_token %}
+                        <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 news-left-div" style="background-color:whitesmoke">
+                          <input type="date" value="{{sdate}}" name="start-date" >
+                          <input type="date" value="{{edate}}" id="date" class="mt-3" name="end-date" >
+<!--                          <script src="{% static 'js/todays_date.js' %}"></script>-->
+                            <button type="submit" style="color:black">Фильтровать</button>
+                        </div>
+                    </form>
 
                   <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="news-left-div container">
