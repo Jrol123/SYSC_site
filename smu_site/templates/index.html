@@ -57,28 +57,54 @@
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
-              {% for i in '123' %}
-                <div class="mt-5 plates" style="border-radius:0px;">
-                  <figure class="news-card">
-                    <div class="frame">
-                      <fieldset>
-                        <div class="function"><Br/>
-                          <a href="#">Click Me</a>
+                {% if latest_news_month %}
+                  {% for n, m in latest_news_month %}
+                  <div class="mt-5 plates" style="border-radius:0px;">
+                      <figure class="news-card">
+                        <div class="frame">
+                          <fieldset>
+                            <div class="function"><br>
+                              <a href="#">Click Me</a>
+                            </div>
+                          </fieldset>
                         </div>
-                      </fieldset>
-                    </div>
 
-                    <div class="container news-sec">
-                      <div class="date"><span class="day">28</span><span class="month">Oct</span></div>
-                      <h2 class="text_compress">The World Ended Yesterday</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. 
-                      </p><hr />
-                      <a href="" class="readmore-btn">Read More</a>
-                    </div>     
-                  </figure>          
-                </div>
-              {% endfor %}  
+                        <div class="container news-sec">
+                          <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
+                          <h2 class="text_compress">{{n.title}}</h2>
+                          <p>
+                            {{n.text}}
+                          </p><hr />
+                          <a href="" class="readmore-btn">Read More</a>
+                        </div>
+                      </figure>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                    <p style="color: black">У меня для вас плохие новости... А, стоп, они не найдены. Не может быть плохим то, чего нет</p>
+                {% endif %}
+<!--              {% for i in '' %}-->
+<!--                <div class="mt-5 plates" style="border-radius:0px;">-->
+<!--                  <figure class="news-card">-->
+<!--                    <div class="frame">-->
+<!--                      <fieldset>-->
+<!--                        <div class="function"><Br/>-->
+<!--                          <a href="#">Click Me</a>-->
+<!--                        </div>-->
+<!--                      </fieldset>-->
+<!--                    </div>-->
+
+<!--                    <div class="container news-sec">-->
+<!--                      <div class="date"><span class="day">28</span><span class="month">Oct</span></div>-->
+<!--                      <h2 class="text_compress">The World Ended Yesterday</h2>-->
+<!--                      <p>-->
+<!--                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. -->
+<!--                      </p><hr />-->
+<!--                      <a href="" class="readmore-btn">Read More</a>-->
+<!--                    </div>     -->
+<!--                  </figure>          -->
+<!--                </div>-->
+<!--              {% endfor %}  -->
             </div>
           </div> 
         </div>

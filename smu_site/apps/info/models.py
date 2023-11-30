@@ -43,7 +43,7 @@ class ScientistLink(models.Model):
                                   on_delete=models.CASCADE,
                                   to_field="scientist")
     link = models.URLField("Ссылка на профиль")
-    short_desc = models.CharField("Краткое описание", max_length=250)
+    service_name = models.CharField("Краткое описание", max_length=250)
 
 
 class ScientistPublication(models.Model):
