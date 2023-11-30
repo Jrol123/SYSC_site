@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'smu_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db_test.sqlite3',  # потом переименовать
     }
 }
 
@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'Asia/Vladivostok'
+TIME_ZONE = 'UTC+10:00'  # 'Asia/Vladivostok'
 
 USE_I18N = True
 
