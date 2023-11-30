@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Queue(models.Model):
-    obj_id = models.BigIntegerField("Идентификатор объекта")
     CHOICES = (
         ('doc', 'Документ'),
         ('news', 'Новость'),
@@ -16,9 +15,3 @@ class Queue(models.Model):
     class Meta:
         verbose_name = 'Очередь'
         verbose_name_plural = 'Очереди'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['obj_id', 'obj_type'],
-                name='unique_obj_id_type'
-            )
-        ]

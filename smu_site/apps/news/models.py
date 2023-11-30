@@ -3,11 +3,9 @@ from django.db import models
 
 
 class News(models.Model):
-    news = models.OneToOneField("moderators.Queue",
-                                on_delete=models.DO_NOTHING,
-                                primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
-                             to_field='id')
+    queue = models.OneToOneField("moderators.Queue",
+                                 on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.BinaryField("Текст разметки новости")
     pub_date = models.DateTimeField("Дата и время публикации",
@@ -15,16 +13,14 @@ class News(models.Model):
     link = models.URLField("Ссылка на новость в телеграм", null=True)
     
     def __str__(self):
-        return (f"News(id={self.news}, user=\"{self.user.username}\", "
+        return (f"News(id={self.id}, user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
 
 
 class Event(models.Model):
-    event = models.OneToOneField("moderators.Queue",
-                                 on_delete=models.DO_NOTHING,
-                                 primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING,
-                             to_field='id')
+    queue = models.OneToOneField("moderators.Queue",
+                                 on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.BinaryField("Текст разметки мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
@@ -34,7 +30,7 @@ class Event(models.Model):
     link = models.URLField("Ссылка на новость в телеграм", null=True)
     
     def __str__(self):
-        return (f"Event(id={self.event}, "
+        return (f"Event(id={self.id}, "
                 f"user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date}), "
                 f"begin_date={self.begin_date}, "
@@ -58,21 +54,16 @@ class Image(models.Model):
     4) Переменная num_image увеличивается на 1
     """
     news = models.ForeignKey(News, on_delete=models.CASCADE,
-                             # to_field="news",
                              null=True, blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE,
-                              # to_field="event",
                               null=True, blank=True)
     institute = models.ForeignKey("info.Institute",
                                   on_delete=models.CASCADE,
-                                  # to_field="id",
                                   null=True, blank=True)
     scientist = models.ForeignKey("info.ScientistInfo",
                                   on_delete=models.CASCADE,
-                                  # to_field="scientist",
                                   null=True, blank=True)
     grant = models.ForeignKey("info.Grant", on_delete=models.CASCADE,
-                              # to_field="grant",
                               null=True, blank=True)
     
     def _img_dir_path(self, filename):
