@@ -14,9 +14,8 @@ class Institute(models.Model):
 
 
 class ScientistInfo(models.Model):
-    scientist = models.OneToOneField("moderators.Queue",
-                                     on_delete=models.DO_NOTHING,
-                                     primary_key=True)
+    queue = models.OneToOneField("moderators.Queue",
+                                 on_delete=models.SET_NULL, null=True)
     institute = models.ForeignKey(Institute, on_delete=models.CASCADE,
                                   null=True)
     name = models.CharField("Имя учёного", max_length=200)
@@ -31,7 +30,7 @@ class ScientistInfo(models.Model):
     future_plans = models.TextField("Планы на будущее", null=True)
     
     def __str__(self):
-        return (f"ScientistInfo(id={self.scientist}, "
+        return (f"ScientistInfo(id={self.id}, "
                 f"institute=\"{self.institute.name}\", "
                 f"name=\"{self.name}\", position=\"{self.position}\", "
                 "scientific_interests="
@@ -40,34 +39,31 @@ class ScientistInfo(models.Model):
 
 class ScientistLink(models.Model):
     scientist = models.ForeignKey(ScientistInfo,
-                                  on_delete=models.CASCADE,
-                                  to_field="scientist")
+                                  on_delete=models.CASCADE)
     link = models.URLField("Ссылка на профиль")
     service_name = models.CharField("Краткое описание", max_length=250)
 
 
 class ScientistPublication(models.Model):
     scientist = models.ForeignKey(ScientistInfo,
-                                  on_delete=models.CASCADE,
-                                  to_field="scientist")
+                                  on_delete=models.CASCADE)
     pub_link = models.TextField("Ссылка на публикацию")
     
 
 class Grant(models.Model):
-    grant = models.OneToOneField("moderators.Queue",
-                                 on_delete=models.DO_NOTHING,
-                                 primary_key=True)
+    queue = models.OneToOneField("moderators.Queue",
+                                 on_delete=models.SET_NULL, null=True)
     name = models.CharField("Название гранта", max_length=300)
     description = models.TextField("Описание гранта", null=True)
     end_doc_date = models.DateTimeField("Дата окончания приёма заявок",
                                         null=True)
     end_result_date = models.DateTimeField("Дата подведения итогов",
                                            null=True)
-    criteria = models.TextField("Критерии к участникам")
+    criteria = models.TextField("Критерии к участникам", null=True)
     link = models.URLField("Ссылка на страницу с грантом")
     
     def __str__(self):
-        return (f"Grant(id={self.grant}, name=\"{self.name}\", "
+        return (f"Grant(id={self.id}, name=\"{self.name}\", "
                 f"end_doc_date=\"{self.end_doc_date}\", "
                 f"end_result_date=\"{self.end_result_date}\")")
 
