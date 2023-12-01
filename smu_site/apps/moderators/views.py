@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateInstituteForm
+from .forms import CreateUserForm, CreateGrantForm
 from django.contrib.auth.decorators import login_required, permission_required
-from info.models import Institute
+from info.models import Grant
 
 app_name = 'moderator'
 
@@ -32,23 +32,25 @@ def create_new_user(request):
 
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
-def create_new_institute(request):
+def create_new_grant(request):
 
     if request.method == 'POST':
 
-        form = CreateInstituteForm(request.POST)
+        form = CreateGrantForm(request.POST)
 
         if form.is_valid():
 
-            institute = Institute(name=form.cleaned_data['name'],
-                                  description=form.cleaned_data['description'],
-                                  structure=form.cleaned_data['structure'],
-                                  link=form.cleaned_data['link'])
-            institute.save()
+            grant = Grant(name=form.cleaned_data['name'],
+                          criteria=form.cleaned_data['criteria'],
+                          description=form.cleaned_data['description'],
+                          end_doc_date=form.cleaned_data['end_doc_date'],
+                          end_result_date=form.cleaned_data['end_result_date'],
+                          link=form.cleaned_data['link'])
+            grant.save()
 
             return HttpResponseRedirect('/moderators/account')
 
     else:
-        form = CreateInstituteForm()
+        form = CreateGrantForm()
 
     return render(request, 'moderators/create_new_user.html', {'form': form})
