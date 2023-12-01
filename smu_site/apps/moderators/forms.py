@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-
+from info.models import Institute
 
 class CreateUserForm(forms.Form):
     user_group = forms.ChoiceField(help_text="Выберите тип аккаунта",
@@ -39,3 +39,24 @@ class CreateUserForm(forms.Form):
         group = self.cleaned_data['user_group']
 
         return group
+
+
+class CreateInstituteForm(forms.Form):
+    name = forms.CharField(help_text="Введите название института", required=True)
+    description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea)
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+
+        name_list = Institute.objects.values('name')  # список свойств в формате:
+        # [{'name': 'Name1'}, {'name': 'Name2'}, ...]
+        for val in name_list:
+            if name == val['name']:
+                raise ValidationError('Такое название уже существует')
+
+        return name
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+
+        return description
