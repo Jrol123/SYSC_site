@@ -168,9 +168,11 @@ body{
 .news-left-div{
     background-color: var(--nav-bg);
     color:white;
+   
 }
 .news-left-div h2{
     color:whitesmoke;
+    
 }
 .event-card{
     background-color:white;
@@ -187,7 +189,7 @@ body{
 }
 
 .event-grant h3{
-  background-color: var(--nav-btn-bg);
+  background-color: var(--nav-bg);
   color:white;
   font-size:14px;
   width:100%;
@@ -407,15 +409,18 @@ border:1px solid blue;
   padding:15px 15px;
   bottom:2em;
   margin-top:-2em;
-  color:white;
+  color:var(--nav-btn-bg);
   text-decoration:none;
   border-radius:5px;
-  background-color: var(--nav-btn-bg)
-}
-.readmore-btn:hover{
   background-color:whitesmoke;
   border:2px solid var(--nav-btn-bg);
-  color:var(--nav-btn-bg);
+
+}
+.readmore-btn:hover{
+  color:white;
+  background-color: var(--nav-btn-bg);
+  
+ 
 }
 .date {
   background-color: var(--nav-btn-bg);
