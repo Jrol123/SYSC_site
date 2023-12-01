@@ -41,7 +41,9 @@ def create_new_institute(request):
         if form.is_valid():
 
             institute = Institute(name=form.cleaned_data['name'],
-                                 info=form.cleaned_data['description'])
+                                  description=form.cleaned_data['description'],
+                                  structure=form.cleaned_data['structure'],
+                                  link=form.cleaned_data['link'])
             institute.save()
 
             return HttpResponseRedirect('/moderators/account')

@@ -44,6 +44,8 @@ class CreateUserForm(forms.Form):
 class CreateInstituteForm(forms.Form):
     name = forms.CharField(help_text="Введите название института", required=True)
     description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea)
+    structure = forms.CharField(help_text="Что такое структура, блять?!", widget=forms.Textarea)
+    link = forms.URLField(help_text="Введите ссылку")
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -56,7 +58,14 @@ class CreateInstituteForm(forms.Form):
 
         return name
 
+    def clean_structure(self):
+        structure = self.cleaned_data['structure']
+        return structure
+
     def clean_description(self):
         description = self.cleaned_data['description']
-
         return description
+
+    def clean_link(self):
+        link = self.cleaned_data['link']
+        return link
