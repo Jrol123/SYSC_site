@@ -2,8 +2,10 @@ from django.db import models
 
 
 class Institute(models.Model):
-    name = models.CharField("Название института", max_length=400)
-    description = models.TextField("Информация об институте")
+    name = models.CharField("Название института",
+                            max_length=400, unique=True)
+    description = models.TextField("Информация об институте",
+                                   default="None", blank=True)
     employees_count = models.IntegerField("Число сотрудников",
                                           default=1)
     scientist_count = models.IntegerField("Число молодых учёных",

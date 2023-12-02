@@ -14,7 +14,7 @@ class BlockLink(models.Model):
 
 
 class BlockForm(models.Model):
-    bljat = models.TextField("хммммммммммммммммммммммммммммммммммммммм")
+    empty = models.TextField("хммммммммммммммммммммммммммммммммммммммм")
 
 
 class BlockType(models.Model):
@@ -26,10 +26,14 @@ class BlockType(models.Model):
 class BlockConnection(models.Model):
     connect_type = models.ForeignKey("SHC.ConnectionType",
                                      on_delete=models.CASCADE)
-    main_block = models.ForeignKey(Block, on_delete=models.CASCADE)
-    side_block = models.ForeignKey(Block, on_delete=models.CASCADE)
+    main_block = models.ForeignKey(Block, on_delete=models.CASCADE,
+                                   verbose_name="Главный блок",
+                                   related_name="main_block")
+    side_block = models.ForeignKey(Block, on_delete=models.CASCADE,
+                                   verbose_name="Побочный блок",
+                                   related_name="side_block")
     color = models.CharField("Цвет", max_length=50)
 
 
 class ConnectionType(models.Model):
-    bljat = models.TextField("пжпжпжпжппжпжпжпжпжпжппжпжпжпжпжпжпжпжпж")
+    empty = models.TextField("пжпжпжпжппжпжпжпжпжпжппжпжпжпжпжпжпжпжпж")
