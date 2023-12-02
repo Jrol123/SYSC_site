@@ -60,7 +60,7 @@ class Image(models.Model):
     institute = models.ForeignKey("info.Institute",
                                   on_delete=models.CASCADE,
                                   null=True, blank=True)
-    scientist = models.ForeignKey("info.ScientistInfo",
+    scientist = models.ForeignKey("info.Scientist",
                                   on_delete=models.CASCADE,
                                   null=True, blank=True)
     grant = models.ForeignKey("info.Grant", on_delete=models.CASCADE,

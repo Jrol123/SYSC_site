@@ -4,8 +4,15 @@ from django.db import models
 class Institute(models.Model):
     name = models.CharField("Название института", max_length=400)
     description = models.TextField("Информация об институте")
-    structure = models.TextField("Структура института")
+    employees_count = models.IntegerField("Число сотрудников",
+                                          default=1)
+    scientist_count = models.IntegerField("Число молодых учёных",
+                                          default=0)
+    chairman = models.CharField("Ф.И.О. председателя СМУ",
+                                max_length=200)
     link = models.URLField("Ссылка на сайт института")
+    smu_link = models.URLField("Ссылка на сайт СМУ института",
+                               null=True, blank=True)
     
     def __str__(self):
         return (f"Institute(id={self.id}, name=\"{self.name}\", "
@@ -13,7 +20,7 @@ class Institute(models.Model):
                 f"link=\"{self.link}\")")
 
 
-class ScientistInfo(models.Model):
+class Scientist(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
     institute = models.ForeignKey(Institute, on_delete=models.CASCADE,
@@ -38,14 +45,14 @@ class ScientistInfo(models.Model):
 
 
 class ScientistLink(models.Model):
-    scientist = models.ForeignKey(ScientistInfo,
+    scientist = models.ForeignKey(Scientist,
                                   on_delete=models.CASCADE)
     link = models.URLField("Ссылка на профиль")
     service_name = models.CharField("Краткое описание", max_length=250)
 
 
 class ScientistPublication(models.Model):
-    scientist = models.ForeignKey(ScientistInfo,
+    scientist = models.ForeignKey(Scientist,
                                   on_delete=models.CASCADE)
     pub_link = models.TextField("Ссылка на публикацию")
     
