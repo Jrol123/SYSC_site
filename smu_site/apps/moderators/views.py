@@ -42,8 +42,11 @@ def create_new_institute(request):
 
             institute = Institute(name=form.cleaned_data['name'],
                                   description=form.cleaned_data['description'],
-                                  structure=form.cleaned_data['structure'],
-                                  link=form.cleaned_data['link'])
+                                  emplotees_count=form.cleaned_data['employees_count'],
+                                  scientist_count=form.cleaned_data['scientist_count'],
+                                  chairman=form.cleaned_data['chairman'],
+                                  link=form.cleaned_data['link'],
+                                  smu_link=form.cleaned_data['smu_link'])
             institute.save()
 
             return HttpResponseRedirect('/moderators/account')

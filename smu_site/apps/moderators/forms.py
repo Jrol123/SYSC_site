@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from info.models import Institute
 
 class CreateUserForm(forms.Form):
-    user_group = forms.ChoiceField(help_text="Выберите тип аккаунта",
+    user_group = forms.ChoiceField(help_text="Выберите тип аккаунта", required=False,
                                    choices=(("representative", "Representative"), ("moderator", "Moderator")))
     user_name = forms.CharField(help_text="Введите имя аккаунта", required=True)
     password = forms.CharField(help_text="Введите пароль", required=True, widget=forms.PasswordInput)
@@ -43,9 +43,12 @@ class CreateUserForm(forms.Form):
 
 class CreateInstituteForm(forms.Form):
     name = forms.CharField(help_text="Введите название института", required=True)
-    description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea)
-    structure = forms.CharField(help_text="Что такое структура, блять?!", widget=forms.Textarea)
-    link = forms.URLField(help_text="Введите ссылку")
+    description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea, required=False)
+    employees_count = forms.IntegerField(help_text="Введите число сотрудников", required=True)
+    scientist_count = forms.IntegerField(help_text="Введите число молодых ученых", required=True)
+    chairman = forms.CharField(help_text="Введите ФИО представителя", required=True)
+    link = forms.URLField(help_text="Введите ссылку на сайт института", required=True)
+    smu_link = forms.URLField(help_text="Введите ссылку на сайт СМУ института", required=False)
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -58,9 +61,21 @@ class CreateInstituteForm(forms.Form):
 
         return name
 
-    def clean_structure(self):
-        structure = self.cleaned_data['structure']
-        return structure
+    def clean_employees_count(self):
+        employees_count = self.cleaned_data['employees_count']
+        if employees_count < 1:
+            raise ValidationError('Количество сотрудников не может быть меньше 1')
+        return employees_count
+
+    def clean_scientist_count(self):
+        scientist_count = self.cleaned_data['scientist_count']
+        if scientist_count < 0:
+            raise ValidationError('Количество сотрудников не может быть отрицательным')
+        return scientist_count
+
+    def clean_chairman(self):
+        chairman = self.cleaned_data['chairman']
+        return chairman
 
     def clean_description(self):
         description = self.cleaned_data['description']
@@ -68,4 +83,8 @@ class CreateInstituteForm(forms.Form):
 
     def clean_link(self):
         link = self.cleaned_data['link']
+        return link
+
+    def clean_smu_link(self):
+        link = self.cleaned_data['smu_link']
         return link
