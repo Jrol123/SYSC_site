@@ -15,6 +15,9 @@ class News(models.Model):
     def __str__(self):
         return (f"News(id={self.id}, user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
+    
+    def get_template_message(self):
+        return f"<b>{self.title}</b>\n\n{self.text}"
 
 
 class Event(models.Model):
@@ -35,6 +38,11 @@ class Event(models.Model):
                 f"title=\"{self.title}\", pub_date={self.pub_date}), "
                 f"begin_date={self.begin_date}, "
                 f"end_date={self.end_date}")
+    
+    def get_template_message(self):
+        return (f"<b>{self.title}</b>\n\n"
+                f"Дата начала: {self.begin_date}\n"
+                f"Дата окончания: {self.end_date}\n\n{self.text}")
 
 
 class Image(models.Model):
@@ -85,3 +93,14 @@ class Image(models.Model):
     def __str__(self):
         return (f"Image(id={self.id}, url_path=\"{self.url_path}\", "
                 f"alt=\"{self.alt}\")")
+    
+    @classmethod
+    def get_related_images(cls, obj_id,
+                           category: ('news', 'event', 'institute',
+                                      'scientist', 'grant')):
+        assert category in ('news', 'event', 'institute',
+                            'scientist', 'grant')
+        
+        kwargs = {category: obj_id}
+        return list(cls.objects.filter(**kwargs).order_by("id"))
+        
