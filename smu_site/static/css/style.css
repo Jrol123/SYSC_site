@@ -422,6 +422,23 @@ border:1px solid blue;
   
  
 }
+
+.grant-btn{
+  padding:12px 12px;
+  bottom:2em;
+  margin-top:-2em;
+  color:var(--nav-btn-bg);
+  text-decoration:none;
+  border-radius:5px;
+  background-color:white;
+  border:2px solid var(--nav-bg);
+
+}
+.grant-btn:hover{
+  color:white;
+  background-color: var(--nav-bg);
+}
+
 .date {
   background-color: var(--nav-btn-bg);
   
@@ -445,7 +462,7 @@ border:1px solid blue;
 }
 h4 {
   font-family: Gill Sans, Verdana;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
