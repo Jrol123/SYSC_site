@@ -427,16 +427,17 @@ border:1px solid blue;
   padding:12px 12px;
   bottom:2em;
   margin-top:-2em;
-  color:var(--nav-btn-bg);
+  color:white;
   text-decoration:none;
   border-radius:5px;
-  background-color:white;
+  background-color: var(--nav-bg);
   border:2px solid var(--nav-bg);
 
 }
 .grant-btn:hover{
-  color:white;
-  background-color: var(--nav-bg);
+  
+  color:var(--nav-btn-bg);
+  background-color:white;
 }
 
 .date {
