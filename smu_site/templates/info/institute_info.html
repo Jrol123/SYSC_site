@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Responsive Animated Navbar{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+{% endblock %}
+<!-- IconFont and Stylesheet -->
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+<!--//-->
+
+{% block content %}
+    
+    {% include "navbar.html" %}
+
+
+    <div class="plates_home container-custom plate-container">
+		<div class="row">
+			<div class="plates mt-5 mb-5 col-lg-4 col-sm-4 col-md-4 col-xs-4 rounded">
+				<div class="column container-custom">
+					<div class="mt-4 mb-4 p-3 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 institute-right-div">
+						<p>Some photo of institute</p>
+					</div>
+					<div class="mt-4 mb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<p class="text-black"> Some describe of institute </p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-main col-sm-12 col-md-12 col-xs-12"> </div>
+			<div class="ScrollBar plates mt-5 mb-5 ml-20 col-lg-7 col-sm-7 col-md-7 col-xs-7 rounded">
+				{% for i in '1234567891011121314151617181920' %}
+				<div class="d-flex flex-row-reverse mt-5 mb-4 p-3 rounded sub_grant_left col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="rounded sub_grant_right m-3 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<h1>BLANK</h1>
+						<h1>BLANK</h1>
+						<h1>BLANK</h1>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+    </div>
+
+
+    {% include "footer.html" %}
+
+    <!-- Javascript Inc-->
+    <script src="{% static 'js/nav-bar.js' %}"></script>
+
+{% endblock %}
