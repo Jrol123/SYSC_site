@@ -7,5 +7,6 @@ app_name = 'info'
 urlpatterns = [
     path('organization/', views.organization, name='organization'),
     path('institutes/', views.institutes, name='institutes'),
-    path('grant/', views.grant, name='grant')
+    path('grant/', views.grant, name='grant'),
+    path('institutes_info/', views.institute_info, name='institute_info')
 ]

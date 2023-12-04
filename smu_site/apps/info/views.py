@@ -11,3 +11,6 @@ def grant(request):
 
 def organization(request):
     return render(request, 'info/organization.html')
+    
+def institute_info(request):
+    return render(request, 'info/institute_info.html')
