@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required, permission_required
 app_name = 'moderator'
 
 
+def profile(request):
+    return render(request, 'moderators/index.html')
+
+
 @login_required
 @permission_required('auth.create_user', raise_exception=True)
 def create_new_user(request):

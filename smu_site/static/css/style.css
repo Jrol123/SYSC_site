@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "title" ;
+  src: url("../fonts/NoirPro-Light.ttf");
+}
+@font-face {
+  font-family: "sarif";
+  src: url("../fonts/sarif.ttf");
+}
 :root{
     --nav-bg: #6996D3;
     --nav-btn-bg: #284C7E;
@@ -158,11 +166,13 @@ body{
 }
 
 .news-left-div{
-    background-color: var(--nav-btn-bg);
+    background-color: var(--nav-bg);
     color:white;
+   
 }
 .news-left-div h2{
     color:whitesmoke;
+    
 }
 .event-card{
     background-color:white;
@@ -170,12 +180,21 @@ body{
     border:1px dashed var(--seal-bg);
 }
 .event-card h3{
-    background-color: var(--nav-btn-bg);
+    background-color: var(--nav-bg);
     color:white;
     font-size:14px;
     width:200px;
     padding:12px 12px;
-    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+    clip-path: polygon(100% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+}
+
+.event-grant h3{
+  background-color: var(--nav-bg);
+  color:white;
+  font-size:14px;
+  width:100%;
+  padding:12px 12px;
+
 }
 .event-card p{
     color:black;
@@ -192,13 +211,13 @@ body{
 
 /* Scrollbar for News page div */
 .ScrollBar::-webkit-scrollbar {
-    width:4px;
+    width:6px;
 }
 .ScrollBar::-webkit-scrollbar-track {
-    background-color: darkgrey;
+    background-color: white;
 }
 .ScrollBar::-webkit-scrollbar-thumb {
-    background-color: white;
+    background-color: darkgrey
 }
 
 
@@ -340,7 +359,6 @@ ul {
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 .frame {
-  background-image: url('https://c0.wallpaperflare.com/preview/811/935/645/adults-analysis-brainstorming-collaboration.jpg');
   background-size: fill;
   width: 100%;
 
@@ -388,13 +406,40 @@ border:1px solid blue;
 }
 
 .readmore-btn{
-  padding:10px 12px;
+  padding:15px 15px;
   bottom:2em;
+  margin-top:-2em;
+  color:var(--nav-btn-bg);
+  text-decoration:none;
+  border-radius:5px;
+  background-color:whitesmoke;
+  border:2px solid var(--nav-btn-bg);
+
+}
+.readmore-btn:hover{
+  color:white;
+  background-color: var(--nav-btn-bg);
+  
+ 
+}
+
+.grant-btn{
+  padding:12px 12px;
+  bottom:2em;
+  margin-top:-2em;
   color:white;
   text-decoration:none;
-  border-radius:10px;
-  background-color: var(--nav-btn-bg)
+  border-radius:5px;
+  background-color: var(--nav-bg);
+  border:2px solid var(--nav-bg);
+
 }
+.grant-btn:hover{
+  
+  color:var(--nav-btn-bg);
+  background-color:white;
+}
+
 .date {
   background-color: var(--nav-btn-bg);
   
@@ -415,6 +460,14 @@ border:1px solid blue;
 .news-card .date span {
   display: block;
   line-height: 14px;
+}
+h4 {
+  font-family: Gill Sans, Verdana;
+  font-size: 14px;
+  line-height: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
 h3 {
@@ -455,4 +508,88 @@ input[type="date"]{
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+
+
+
+/* ACCORDION */
+.org_img{
+  width:100%
+}
+.acc {
+  max-width: 100%;
+  margin: 1rem auto;
+  background-color: #fff;
+  border-radius: 0.2rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+  border:2px solid black;
+}
+
+details:not([open]) {
+  animation-name: fold-in;
+  animation-duration: 0.2s;
+}
+details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  padding: 1.5rem;
+  color:black;
+}
+summary h3{
+  font-size:20px;
+  font-weight: 100;
+}
+.content h5{
+  color:black;
+  border-bottom:2px dashed var(--nav-btn-bg);
+  padding:15px 10px;
+  border-radius: 0.5em;
+
+
+}
+details summary::-webkit-details-marker,
+details summary::marker {
+  content: "";
+  display: none;
+}
+details summary::after {
+  content: "+";
+  font-size: 2.0rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+details .content {
+  padding: 0 1.5rem 1.5rem;
+}
+
+details[open] summary::after {
+  content: "−";
+}
+details[open] .content {
+  animation-name: fold-out;
+  animation-duration: 0.2s;
+}
+
+@keyframes fold-out {
+  0% {
+    opacity: 0;
+    margin-top: -1rem;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes fold-in {
+  0% {
+    padding-bottom: 1rem;
+  }
+  100% {
+    padding-bottom: 0;
+  }
 }

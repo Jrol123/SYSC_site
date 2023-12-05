@@ -26,7 +26,8 @@
           <div class="row">
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
 
-            <div  style="margin-top:6em; color:none;" class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
+            <div  style="margin-top:3em; color:none;" class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
+                
                 <div style="margin-top:10em; color:none;">
                     <form method="POST" action="{% url 'main' %}">
                         {% csrf_token %}
@@ -39,15 +40,18 @@
                     </form>
 
                   <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                    <div class="news-left-div container">
-                      <h2 class="text-center pt-2">обьявление</h2>
-                      <hr />
+                    <div class="news-left-div container rounded">
+                      <h2 style="color:whitesmoke" class="text-center pt-2">обьявление</h2>
+                      <hr>
                     </div>
 
                     {% for i in '123' %}
-                    <div class="mt-3 event-card ">
-                      <h3> 22.11.2023</h3>
+                    <div class="mt-3 event-card rounded ">
+                      <h3> Називание</h3>
+                     
                       <div class="mt-3 container">
+                        <p>21/12/2023</p>
+                        <hr style="color:black">
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,  </p>
                       </div>
                     </div>
@@ -85,32 +89,12 @@
                   {% else %}
                     <p style="color: black">У меня для вас плохие новости... А, стоп, они не найдены. Не может быть плохим то, чего нет</p>
                 {% endif %}
-<!--              {% for i in '' %}-->
-<!--                <div class="mt-5 plates" style="border-radius:0px;">-->
-<!--                  <figure class="news-card">-->
-<!--                    <div class="frame">-->
-<!--                      <fieldset>-->
-<!--                        <div class="function"><Br/>-->
-<!--                          <a href="#">Click Me</a>-->
-<!--                        </div>-->
-<!--                      </fieldset>-->
-<!--                    </div>-->
-
-<!--                    <div class="container news-sec">-->
-<!--                      <div class="date"><span class="day">28</span><span class="month">Oct</span></div>-->
-<!--                      <h2 class="text_compress">The World Ended Yesterday</h2>-->
-<!--                      <p>-->
-<!--                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. -->
-<!--                      </p><hr />-->
-<!--                      <a href="" class="readmore-btn">Read More</a>-->
-<!--                    </div>     -->
-<!--                  </figure>          -->
-<!--                </div>-->
-<!--              {% endfor %}  -->
             </div>
           </div> 
         </div>
     </div>
+
+
     
     {% include "footer.html" %}
 
