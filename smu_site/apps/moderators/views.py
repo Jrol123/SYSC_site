@@ -20,10 +20,6 @@ def moder_guests(request):
     return render(request, 'moderators/moder_guests.html')
 
 
-def grants(request):
-    return render(request, 'moderators/grants.html')
-
-
 def gzs(request):
     return render(request, 'moderators/gzs.html')
 
@@ -38,10 +34,10 @@ def add_new_guests(request):
                                             password=form.cleaned_data['password'])
             user_group = Group.objects.get(name=form.cleaned_data['user_group'])
             user.groups.add(user_group)
-      else:
+    else:
         form = CreateUserForm()
 
-    return render(request, 'moderators/add_new_guests.html', {'form': form})
+    return render(request, 'moderators/create_new_grant.html', {'form': form})
 
 
 @login_required
