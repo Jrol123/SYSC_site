@@ -26,6 +26,24 @@
 </head>
 
 <body>
+
+	<script>
+		  $(document).ready(function(){
+			$('#myForm').submit(function(e){
+			  e.preventDefault(); // Предотвращение стандартного поведения формы
+			  var formData = $(this).serialize(); // Получение данных формы
+			  $.ajax({
+				type: 'POST',
+				url: 'обработчик', // Замените на URL вашего обработчика формы
+				data: formData,
+				success: function(response){
+				  // Обработка ответа от сервера
+				  console.log(response); // Пример: вывод ответа в консоль
+				}
+			  });
+			});
+		  });
+</script>
     <div class="signinform">
 
         <!-- container -->

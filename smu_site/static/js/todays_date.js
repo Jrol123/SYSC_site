@@ -14,3 +14,4 @@ function formatDate(date = new Date()) {
     padTo2Digits(date.getDate()),
   ].join('-');
 }
+

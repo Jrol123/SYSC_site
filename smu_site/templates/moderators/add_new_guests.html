@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Responsive Animated Navbar{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+{% endblock %}
+<!-- IconFont and Stylesheet -->
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+<!--//-->
+
+{% block content %}
+    {% include "navbar.html" %}
+	<div class="plates_home container-custom plate-container">
+		<div class="Navbar_Moder plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row flex justify-content-center">
+			<div class="links m-1 col-lg-1 col-sm-1 col-md-1 col-xs-1 d-flex bg-black">
+				<a href="{% url 'moderators:news' %}">Добавить новости</a>
+			</div>
+			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
+				<a href="{% url 'moderators:moder_guests' %}">Модерация предложений гостей</a>
+			</div>
+			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
+				<a href="{% url 'moderators:grants' %}">Гранты</a>
+			</div>
+			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
+				<a href="{% url 'moderators:gzs' %}">ГЖС</a>
+			</div>
+			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
+				<a href="{% url 'moderators:profile' %}">Вернуться в главное окно модерации</a>
+			</div>
+		</div>
+	</div>
+	<div class="plates_home container-custom plate-container">	
+		<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column flex">
+			<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row-reverse flex">
+				<div class="plates col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex flex justify-content-center">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div>
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{field.label_tag}}
+                            <div>{{field}}</div>
+                            <div class="error">{{field.errors}}</div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <button class="btn bg-success" style="submit" > Добавить пользователя. </button>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
+    {% include "footer.html" %}
+
+    <!-- Javascript Inc-->
+    <script src="{% static 'js/nav-bar.js' %}"></script>
+{% endblock %}
