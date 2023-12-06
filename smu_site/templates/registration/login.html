@@ -26,6 +26,24 @@
 </head>
 
 <body>
+
+	<script>
+		  $(document).ready(function(){
+			$('#myForm').submit(function(e){
+			  e.preventDefault(); // Предотвращение стандартного поведения формы
+			  var formData = $(this).serialize(); // Получение данных формы
+			  $.ajax({
+				type: 'POST',
+				url: 'обработчик', // Замените на URL вашего обработчика формы
+				data: formData,
+				success: function(response){
+				  // Обработка ответа от сервера
+				  console.log(response); // Пример: вывод ответа в консоль
+				}
+			  });
+			});
+		  });
+</script>
     <div class="signinform">
 
         <!-- container -->
@@ -50,7 +68,7 @@
                             <span><i class="fas fa-key" aria-hidden="true"></i></span>
                             {{ form.password }}
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">вход</button>
+                        <a class="btn btn-primary btn-block" href="{% url 'moderators:profile' %}">вход</a>
                     </form>
 
                     
