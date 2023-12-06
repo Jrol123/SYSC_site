@@ -32,19 +32,17 @@
 
         {% for i in '123456789' %} <!--This loop repeats the div below exactly 9 times--> 
 
-        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <a class="stretched-link" href="{% url 'info:institute_info' %}"></a>
+        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
             <div class="row container-custom">
                 <div class="mt-4 mb-4 c col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    {% for i in '012' %}
-                        <h1>BLANK</h1>
-                    {% endfor %}
+                        {% for i in '012' %}
+                            <h1>BLANK</h1>
+                        {% endfor %}
                 </div>
-
                 <div class="mt-4 mb-4 rounded col-lg-4 col-md-4 col-sm-4 col-xs-4 institute-right-div">
-                    
                 </div>
-            </div>        
+            </div>
+            <a class="stretched-link" href="{% url 'info:institute_info' %}"></a>
         </div>
 
         {% endfor %}
