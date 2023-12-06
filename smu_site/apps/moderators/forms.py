@@ -39,3 +39,38 @@ class CreateUserForm(forms.Form):
         group = self.cleaned_data['user_group']
 
         return group
+
+
+class CreateGrantForm(forms.Form):
+    name = forms.CharField(help_text="Введите название гранта", required=True)
+    description = forms.CharField(help_text="Введите описание гранта", widget=forms.Textarea)
+    end_doc_date = forms.DateField(help_text="Введите дату окончания приема заявок", required=True,
+                                   widget=forms.SelectDateWidget)
+    end_result_date = forms.DateField(help_text="Введите дату подведения итогов", required=True,
+                                      widget=forms.SelectDateWidget)
+    criteria = forms.CharField(help_text="Введите критерии", widget=forms.Textarea)
+    link = forms.URLField(help_text="Введите ссылку на грант", required=True)
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        return name
+
+    def clean_structure(self):
+        criteria = self.cleaned_data['criteria']
+        return criteria
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+        return description
+
+    def clean_link(self):
+        link = self.cleaned_data['link']
+        return link
+
+    def clean_end_doc_date(self):
+        end_doc_date = self.cleaned_data['end_doc_date']
+        return end_doc_date
+
+    def clean_end_result_date(self):
+        end_result_date = self.cleaned_data['end_result_date']
+        return end_result_date
