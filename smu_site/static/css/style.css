@@ -41,7 +41,7 @@ body{
     margin-right: auto;
     margin-left: auto;
 }
-  
+
 .navbar {
     width:100%;
     background-color: var(--nav-bg);
@@ -132,7 +132,6 @@ body{
 .plates_home{
     padding-top:6em;
     padding-bottom:4em;
-
 }
 .plate-container {
 	max-width: 1500px;
@@ -592,4 +591,39 @@ details[open] .content {
   100% {
     padding-bottom: 0;
   }
+}
+/* Admin Panel*/
+
+.redctor_place
+{
+	background-color: gray!important;
+}
+.links
+{
+	justify-content: center;
+	align-items: center;
+	background-color: gray!important;
+	border-radius: 10px;
+}
+.links > a
+{
+	text-decoration: none;
+	color: black;
+	text-align: center;
+}
+
+.NewsFromGuests
+{
+	height: 500px!important;
+}
+
+.photo_drop
+{
+	height: 100px!important;
+	font-size: 40px!important;
+	text-align: center!important;
+	justify-content:center!important;
+	align-items: center!important;
+	margin:0!important;
+	padding:0!important;
 }
