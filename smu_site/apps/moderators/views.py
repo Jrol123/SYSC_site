@@ -8,7 +8,7 @@ app_name = 'moderator'
 
 
 def profile(request):
-    return render(request, 'moderators/index.html')
+    return render(request, 'moderators/moder_panel_main.html')
 
 
 @login_required
