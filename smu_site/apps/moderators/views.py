@@ -38,3 +38,18 @@ def create_new_user(request):
         form = CreateUserForm()
 
     return render(request, 'moderators/create_new_user.html', {'form': form})
+
+def news(request):
+    return render(request, 'moderators/news.html')
+    
+def moder_guests(request):
+    return render(request, 'moderators/moder_guests.html')
+
+def grants(request):
+    return render(request, 'moderators/grants.html')
+
+def gzs(request):
+    return render(request, 'moderators/gzs.html')
+
+def add_new_guests(request):
+    return render(request, 'moderators/add_new_guests.html')
