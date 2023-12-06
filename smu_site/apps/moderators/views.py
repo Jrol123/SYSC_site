@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm
 from django.contrib.auth.decorators import login_required, permission_required
-from info.models import Grant
+from info.models import Grant, Institute
 
 app_name = 'moderator'
 
@@ -37,7 +37,7 @@ def add_new_guests(request):
     else:
         form = CreateUserForm()
 
-    return render(request, 'moderators/create_new_grant.html', {'form': form})
+    return render(request, 'moderators/add_new_guests.html', {'form': form})
 
 
 @login_required
@@ -62,4 +62,31 @@ def create_new_grant(request):
     else:
         form = CreateGrantForm()
 
-    return render(request, 'moderators/add_new_guests.html', {'form': form})
+    return render(request, 'moderators/create_new_grant.html', {'form': form})
+
+
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def create_new_institute(request):
+
+    if request.method == 'POST':
+
+        form = CreateInstituteForm(request.POST)
+
+        if form.is_valid():
+
+            institute = Institute(name=form.cleaned_data['name'],
+                                  description=form.cleaned_data['description'],
+                                  emplotees_count=form.cleaned_data['employees_count'],
+                                  scientist_count=form.cleaned_data['scientist_count'],
+                                  chairman=form.cleaned_data['chairman'],
+                                  link=form.cleaned_data['link'],
+                                  smu_link=form.cleaned_data['smu_link'])
+            institute.save()
+
+            return HttpResponseRedirect('/moderators/account')
+
+    else:
+        form = CreateInstituteForm()
+
+    return render(request, 'moderators/create_new_institute.html', {'form': form})
