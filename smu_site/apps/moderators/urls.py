@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'moderators'
+
 urlpatterns = [
     path('account/create_user', views.create_new_user, name='create_user'),
     path('account', views.profile, name='profile'),

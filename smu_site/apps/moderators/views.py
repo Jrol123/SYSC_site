@@ -4,8 +4,6 @@ from django.contrib.auth.models import User, Group
 from .forms import CreateUserForm
 from django.contrib.auth.decorators import login_required, permission_required
 
-app_name = 'moderator'
-
 
 def profile(request):
     return render(request, 'moderators/moder_panel_main.html')
