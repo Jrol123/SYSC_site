@@ -8,18 +8,18 @@ class News(models.Model):
                                  on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField("Заголовок новости", max_length=400)
-    text = models.BinaryField("Текст разметки новости")
+    text = models.TextField("Текст разметки новости")
     pub_date = models.DateTimeField("Дата и время публикации",
                                     auto_now_add=True)
     link = models.URLField("Ссылка на новость в телеграм", null=True)
-    
+
     def __str__(self):
         return (f"News(id={self.id}, user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
-    
+
     def get_template_message(self):
         return f"<b>{self.title}</b>\n\n{self.text}"
-    
+
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
     #     super().delete(using, keep_parents)
@@ -30,25 +30,25 @@ class Event(models.Model):
                                  on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField("Заголовок мероприятия", max_length=400)
-    text = models.BinaryField("Текст разметки мероприятия")
+    text = models.TextField("Текст разметки мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
     end_date = models.DateTimeField("Дата и время окончания")
     pub_date = models.DateTimeField("Дата и время публикации",
                                     auto_now_add=True)
     link = models.URLField("Ссылка на новость в телеграм", null=True)
-    
+
     def __str__(self):
         return (f"Event(id={self.id}, "
                 f"user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date}), "
                 f"begin_date={self.begin_date}, "
                 f"end_date={self.end_date}")
-    
+
     def get_template_message(self):
         return (f"<b>{self.title}</b>\n\n"
                 f"Дата начала: {self.begin_date}\n"
                 f"Дата окончания: {self.end_date}\n\n{self.text}")
-    
+
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
     #     super().delete(using, keep_parents)
