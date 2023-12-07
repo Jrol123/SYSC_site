@@ -20,19 +20,19 @@ from django.urls import path, include
 
 from . import views, settings
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
     path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
-    path('moderators/', include(('moderators.urls', 'moderators'),
-                                namespace='moderators')),
+    path('moderators/', include('moderators.urls')),
     path('news/', include('news.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     # path('representatives/', include(
     #     ('representatives.urls', 'representatives'),
     #     namespace='representatives')),
-    # path('SHC/', include(('SHC.urls', 'SHC'), namespace='SHC'))
+    path('SHC/', include('SHC.urls')),
 ]
 
 if settings.DEBUG:
