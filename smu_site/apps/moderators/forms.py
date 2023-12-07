@@ -129,6 +129,3 @@ class CreateInstituteForm(forms.Form):
 class CreateNewsForm(forms.Form):
     name = forms.CharField(help_text="Введите название", required=True)
     description = forms.CharField(help_text="Введите текст", widget=forms.Textarea)
-    date = forms.DateField(help_text="Введите дату окончания приема заявок", required=True,
-                                   widget=forms.SelectDateWidget)
-    link = forms.URLField(help_text="Введите ссылку", required=True)
