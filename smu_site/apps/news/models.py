@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+# from SYSC_site.smu_site.tgbot.auto_dispatch import bot, channel_id
 
 
 class News(models.Model):
@@ -18,6 +19,10 @@ class News(models.Model):
     
     def get_template_message(self):
         return f"<b>{self.title}</b>\n\n{self.text}"
+    
+    # def delete(self, using=None, keep_parents=False):
+    #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
+    #     super().delete(using, keep_parents)
 
 
 class Event(models.Model):
@@ -43,6 +48,10 @@ class Event(models.Model):
         return (f"<b>{self.title}</b>\n\n"
                 f"Дата начала: {self.begin_date}\n"
                 f"Дата окончания: {self.end_date}\n\n{self.text}")
+    
+    # def delete(self, using=None, keep_parents=False):
+    #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
+    #     super().delete(using, keep_parents)
 
 
 class Image(models.Model):
