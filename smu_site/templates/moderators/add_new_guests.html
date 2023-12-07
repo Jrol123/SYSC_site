@@ -44,19 +44,19 @@
 	<div class="plates_home container-custom plate-container">	
 		<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column flex">
 			<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row-reverse flex">
-				<div class="plates col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex flex justify-content-center">
+				<div class="col-lg-4 col-sm-2 col-md-2 col-xs-2 d-flex flex justify-content-center">
                     <form action="" method="POST">
                         {% csrf_token %}
                         <div>
                         {% for field in form %}
-                        <div class="form-group">
+                        <div class="">
                             {{field.label_tag}}
-                            <div>{{field}}</div>
+                            <div class="input_fields">{{field}}</div>
                             <div class="error">{{field.errors}}</div>
                         </div>
                         {% endfor %}
                         </div>
-                        <button class="btn bg-success" style="submit" > Добавить пользователя. </button>
+                        <button class="btn-add-guest" style="submit" > Добавить пользователя. </button>
                     </form>
 				</div>
 			</div>
