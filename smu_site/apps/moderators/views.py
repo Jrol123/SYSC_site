@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm
 from django.contrib.auth.decorators import login_required, permission_required
 from info.models import Grant, Institute
+from news.models import News
 
 
 @login_required
@@ -94,5 +95,30 @@ def create_new_institute(request):
 
     else:
         form = CreateInstituteForm()
+
+    return render(request, 'moderators/create_new_institute.html', {'form': form})
+
+
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def create_news(request):
+
+    if request.method == 'POST':
+
+        form = CreateNewsForm(request.POST)
+
+        if form.is_valid():
+
+            news = News(title=form.cleaned_data['name'],
+                        text=form.cleaned_data['description'],
+                        pub_date=form.cleaned_data['date'],
+                        link=form.cleaned_data['link'],
+                        user_id=request.user.id)
+            news.save()
+
+            return HttpResponseRedirect('/moderators/account')
+
+    else:
+        form = CreateNewsForm()
 
     return render(request, 'moderators/create_new_institute.html', {'form': form})
