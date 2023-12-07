@@ -617,6 +617,24 @@ details[open] .content {
 	text-align: center;
 }
 
+.filter-btn{
+  background-color: var(--nav-bg);
+  border:none;
+  color:white;
+  padding:7px;
+  padding-right:10px;
+  border-radius:3px;
+  margin-top:1em;
+  clip-path: polygon(11% 0, 100% 0, 100% 100%, 0 100%, 0 30%);
+  transition:0.5s ease-in-out;
+}
+.filter-btn:hover{
+  background-color:black;
+  color:white;
+  clip-path: polygon(11% 0, 100% 0, 100% 100%, 0 100%, 0 0%);
+  transition:0.5s ease-in-out;
+}
+
 .NewsFromGuests
 {
 	height: 500px!important;
