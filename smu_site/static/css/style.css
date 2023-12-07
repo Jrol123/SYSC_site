@@ -754,3 +754,21 @@ details[open] .content {
   border-radius:10px;
   margin-top:10px;
 }
+
+
+
+/* TEXT REDACTOR CSS */
+#myTextarea{
+  height:700px;
+  max-width:100%;
+  position: relative;
+
+
+
+}
+.redactor{
+  background-color:rgb(206, 204, 204);
+}
+input{
+  display:block;
+}
