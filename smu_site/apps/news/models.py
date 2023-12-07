@@ -112,4 +112,3 @@ class Image(models.Model):
         
         kwargs = {category: obj_id}
         return list(cls.objects.filter(**kwargs).order_by("id"))
-        
