@@ -592,7 +592,7 @@ details[open] .content {
     padding-bottom: 0;
   }
 }
-<<<<<<< Updated upstream
+
 /* Admin Panel*/
 
 .redctor_place
@@ -629,15 +629,21 @@ details[open] .content {
 	padding:0!important;
 }
 
-
-.text-ellipse {
-  display: block;
-  width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.limited_text{
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
 }
 
+.event-btn{
+  padding:10px;
+  text-decoration:none;
+  border:1px solid var(--nav-bg);
+  margin-top:20px;
+
+
+}
 
 
 .category {
@@ -693,5 +699,4 @@ details[open] .content {
 .cat_link li{
   padding-bottom:10px;
   color:black;
->>>>>>> Stashed changes
 }
