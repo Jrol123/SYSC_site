@@ -18,6 +18,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 # Quick-start development settings - unsuitable for production
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'smu_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # потом переименовать
     }
 }
 
@@ -143,6 +144,3 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
