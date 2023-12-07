@@ -14,8 +14,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	<script type="text/javascript">
+		tinymce.init({
+			selector: '#myTextarea',
+			plugins: [
+			'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+			'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+			'media', 'table', 'emoticons', 'template'
+			],
+			toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+			'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+			'forecolor backcolor emoticons | help | googlemap',
+	
+			setup: function (editor) {
+			  editor.ui.registry.addButton('googlemap', {
+				text: 'Insert Map',
+				onAction: function () {
+				  let link = prompt("Enter the link here.");
+				  
+				  if(link != ""){
+					const mapCode = '<iframe src="' + link + '" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>';
+					editor.insertContent(mapCode);
+				  }
+				},
+			  });
+			},
+			menu: {
+			favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+			},
+			menubar: 'favs file edit view insert format tools table help',
+			content_css: 'css/content.css'
+		});
+		</script>
+
+		<script>
+			function call() {
+			  var content =tinymce.get("myTextarea").getContent();
+			  var blob = new Blob([content], { type: "text/plain" });
+		
+			  var a = document.createElement("a");
+			  a.href = URL.createObjectURL(blob);
+			  a.download = "output.txt";
+			  document.body.appendChild(a);
+			  a.click();
+			  document.body.removeChild(a);
+			}
+		  </script>
+
 {% endblock %}
 <!--//-->
+
+
 
 {% block content %}
     {% include "navbar.html" %}
@@ -41,26 +91,25 @@
 			</div>
 		</div>
 	</div>
-	<div class="plates_home container-custom plate-container">	
-		<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column flex">
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column flex">
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Окно текстового редактора IN PROGRESS </h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-			</div>
-			<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row-reverse flex">
-				<div class="plates col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex flex justify-content-center">
-					<button class="btn bg-success" style="submit"> Опубликовать </button>
-				</div>
-			</div>
+
+	
+
+	<div class="container-custom redactor">
+		<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+			<textarea id="myTextarea" style="width:100%">dd</textarea>
+		</div> 
+
+	</div>
+
+	<div class="container-custom redactor">
+		<div class="">
+			<input class="form-control" type="file" id="formFileReadonly" readonly>
+			<button type="submit" class="btn btn-primary">Upload</button>
+			<button type="submit" class="btn btn-info" onclick="call()">Show generated html code</button>
 		</div>
 	</div>
+	
     {% include "footer.html" %}
 
-    <!-- Javascript Inc-->
-    <script src="{% static 'js/nav-bar.js' %}"></script>
+ 
 {% endblock %}
