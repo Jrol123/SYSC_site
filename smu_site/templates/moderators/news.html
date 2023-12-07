@@ -36,6 +36,9 @@
 			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
 				<a href="{% url 'moderators:profile' %}">Вернуться в главное окно модерации</a>
 			</div>
+            <div class="links ml-1 mr-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
+				<a href="{% url 'moderators:create_institute' %}">Добавление института</a>
+			</div>
 		</div>
 	</div>
 	<div class="plates_home container-custom plate-container">	
@@ -51,7 +54,7 @@
 			</div>
 			<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row-reverse flex">
 				<div class="plates col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex flex justify-content-center">
-					<button class="btn bg-success" style="submit"> Опубликовать </p>
+					<button class="btn bg-success" style="submit"> Опубликовать </button>
 				</div>
 			</div>
 		</div>
