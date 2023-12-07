@@ -23,7 +23,7 @@ def gzs(request):
 
 
 @login_required
-@permission_required('auth.create_user', raise_exception=True)
+@permission_required('auth.moderator', raise_exception=True)
 def add_new_guests(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
