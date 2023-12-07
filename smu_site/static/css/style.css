@@ -428,8 +428,7 @@ border:1px solid blue;
 
 .grant-btn{
   padding:12px 12px;
-  bottom:2em;
-  margin-top:-2em;
+  margin-top:4em;
   color:white;
   text-decoration:none;
   border-radius:5px;
@@ -529,17 +528,18 @@ input[type="date"]{
   border:2px solid black;
 }
 
-details:not([open]) {
+.grantees:not([open]) {
   animation-name: fold-in;
   animation-duration: 0.2s;
 }
-details summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
-  padding: 1.5rem;
-  color:black;
+.title{
+  padding: 1.8em;
+  
+}
+.title h3{
+  color:rgb(36, 36, 36);
+  font-size:23px;
+  text-align:center;
 }
 summary h3{
   font-size:20px;
@@ -596,6 +596,7 @@ details[open] .content {
     padding-bottom: 0;
   }
 }
+
 /* Admin Panel*/
 
 .redctor_place
@@ -630,4 +631,76 @@ details[open] .content {
 	align-items: center!important;
 	margin:0!important;
 	padding:0!important;
+}
+
+.limited_text{
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+}
+
+.event-btn{
+  padding:10px;
+  text-decoration:none;
+  border:1px solid var(--nav-bg);
+  margin-top:20px;
+
+
+}
+
+
+.category {
+  margin: 0;
+  padding: 1rem;
+  border: 1px dashed white;
+  color: color;
+  width:100%;
+  -webkit-appearance: none;
+  background-color:var(--nav-bg);
+}
+.category option{
+  padding: 1rem;
+}
+.list {
+  display:block;
+  margin-left:-10em;
+  margin: 20px 0 0 0;
+  
+}
+.list__item{
+  display:block;
+ 
+  border-bottom:0;
+}
+.list__item-title {
+  margin: 0;
+  padding: 0.9rem;
+  display:block;
+  width:100%;
+  text-align:initial;
+  font-weight:bold;
+  cursor:pointer;
+  background:transparent;
+  background: whitesmoke;
+  color:black;
+  border:0;
+  -webkit-appearance: none;
+  font-size:16px;
+  line-height:1.4;
+}
+.list__item-description {
+  display: none;
+  padding:10px;
+  color:black;
+  font-size:16px;
+  line-height:1.4;
+}
+
+.list__item-description--open{
+  display:block;
+}
+.cat_link li{
+  padding-bottom:10px;
+  color:black;
 }

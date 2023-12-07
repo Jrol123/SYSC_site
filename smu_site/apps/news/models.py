@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+# from SYSC_site.smu_site.tgbot.auto_dispatch import bot, channel_id
 
 
 class News(models.Model):
@@ -15,6 +16,13 @@ class News(models.Model):
     def __str__(self):
         return (f"News(id={self.id}, user=\"{self.user.username}\", "
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
+    
+    def get_template_message(self):
+        return f"<b>{self.title}</b>\n\n{self.text}"
+    
+    # def delete(self, using=None, keep_parents=False):
+    #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
+    #     super().delete(using, keep_parents)
 
 
 class Event(models.Model):
@@ -35,6 +43,15 @@ class Event(models.Model):
                 f"title=\"{self.title}\", pub_date={self.pub_date}), "
                 f"begin_date={self.begin_date}, "
                 f"end_date={self.end_date}")
+    
+    def get_template_message(self):
+        return (f"<b>{self.title}</b>\n\n"
+                f"Дата начала: {self.begin_date}\n"
+                f"Дата окончания: {self.end_date}\n\n{self.text}")
+    
+    # def delete(self, using=None, keep_parents=False):
+    #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
+    #     super().delete(using, keep_parents)
 
 
 class Image(models.Model):
@@ -60,7 +77,7 @@ class Image(models.Model):
     institute = models.ForeignKey("info.Institute",
                                   on_delete=models.CASCADE,
                                   null=True, blank=True)
-    scientist = models.ForeignKey("info.ScientistInfo",
+    scientist = models.ForeignKey("info.Scientist",
                                   on_delete=models.CASCADE,
                                   null=True, blank=True)
     grant = models.ForeignKey("info.Grant", on_delete=models.CASCADE,
@@ -85,3 +102,13 @@ class Image(models.Model):
     def __str__(self):
         return (f"Image(id={self.id}, url_path=\"{self.url_path}\", "
                 f"alt=\"{self.alt}\")")
+    
+    @classmethod
+    def get_related_images(cls, obj_id,
+                           category: ('news', 'event', 'institute',
+                                      'scientist', 'grant')):
+        assert category in ('news', 'event', 'institute',
+                            'scientist', 'grant')
+        
+        kwargs = {category: obj_id}
+        return list(cls.objects.filter(**kwargs).order_by("id"))

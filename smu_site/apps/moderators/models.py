@@ -15,3 +15,9 @@ class Queue(models.Model):
     class Meta:
         verbose_name = 'Очередь'
         verbose_name_plural = 'Очереди'
+
+        constraints = [
+            models.UniqueConstraint(fields=['id', 'obj_type'],
+                                    name='unique_id_type_obj')
+        ]
+
