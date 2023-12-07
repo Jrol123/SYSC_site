@@ -19,7 +19,7 @@ def index(request):
     edate = date.fromisoformat(
             request.POST.get("end-date", localdate().isoformat()))
     
-    edate += timedelta(days=2)
+    edate += timedelta(days=1)
     
     # Выбираем те новости и события, которые не находятся в очереди
     latest_news = list(News.objects.filter(pub_date__range=(sdate, edate)))
@@ -40,7 +40,7 @@ def index(request):
                    for n in latest_news]
     
     sdate = sdate.isoformat()
-    edate -= timedelta(days=2)
+    edate -= timedelta(days=1)
     edate = edate.isoformat()
     return render(request, 'index.html',
                   {
