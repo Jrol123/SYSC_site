@@ -6,18 +6,26 @@ from django.contrib.auth.decorators import login_required, permission_required
 from info.models import Grant, Institute
 
 
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
 def profile(request):
     return render(request, 'moderators/moder_panel_main.html')
 
 
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
 def news(request):
     return render(request, 'moderators/news.html')
 
 
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
 def moder_guests(request):
     return render(request, 'moderators/moder_guests.html')
 
 
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
 def gzs(request):
     return render(request, 'moderators/gzs.html')
 
