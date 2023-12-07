@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Institute(models.Model):
+
     name = models.CharField("Название института",
                             max_length=400, unique=True)
     description = models.TextField("Информация об институте",
