@@ -18,10 +18,6 @@
     --dark-grant: #AAA5A5;
     --red-grant: #BF9B9B;
 }
-/* Костыль для срочного очернения текста */
-.black-lives-meter{
-    color: black !important;
-}
 
 *{
     margin: 0;
