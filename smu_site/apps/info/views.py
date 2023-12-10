@@ -7,7 +7,8 @@ def institutes(request):
 
 
 def grant(request):
-    grants = Grant.objects.filter(queue_id__isnull=True).order_by("end_doc_date")
+    grants = (Grant.objects.filter(queue_id__isnull=True)
+              .order_by("end_doc_date"))
     
     return render(request, 'info/grant.html',
                   {'grants': grants})
@@ -15,6 +16,7 @@ def grant(request):
 
 def organization(request):
     return render(request, 'info/organization.html')
+    
     
 def institute_info(request):
     return render(request, 'info/institute_info.html')

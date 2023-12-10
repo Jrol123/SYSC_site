@@ -38,24 +38,22 @@
                     </form>
                   <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="news-left-div container rounded">
-                      <h2 style="color:whitesmoke" class="text-center pt-2">обьявление</h2>
+                      <h2 style="color:whitesmoke" class="text-center pt-2">объявления</h2>
                       <hr>
                     </div>
 
-                    {% for i in '123' %}
+                    {% for e in events %}
                     <div class="mt-3 event-card rounded ">
-                      <h3> Название</h3>
+                      <h3>{{e.title}}</h3>
                      
                       <div class="mt-3 container">
-                        <p style="float:left; margin-right:7em">25/11/2023</P>
+                        <p style="float:left; margin-right:7em">{{e.begin_date}}</P>
                    
-                        <p>01/12/2023</P>
+                        <p>{{e.end_date}}</P>
                        
                         <hr style="color:black">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,  </p>
-                      
-                      
-                      
+                        <p>{{e.text}}</p>
+
                       </div>
                     </div>
                     {% endfor %}
@@ -66,8 +64,8 @@
             
             <div class="ScrollBar col-lg-7 col-sm-12 col-md-12 col-xs-12">
               <div>
-                {% if latest_news_month %}
-                  {% for n, m in latest_news_month %}
+                {% if last_news_month %}
+                  {% for n, m in last_news_month %}
                   <div class="mt-5 plates" style="border-radius:0px;">
                       <figure class="news-card">
                         <div class="frame">
