@@ -8,24 +8,18 @@ from news.models import News, Event
 
 def index(request):
     # Получаем даты для фильтрации списка новостей
-    # sdate = datetime.combine(date.fromisoformat(
-    #     request.POST.get("start-date", "2023-11-28")),
-    #     datetime.min.time()).isoformat()
-    # edate = datetime.combine(date.fromisoformat(
-    #     request.POST.get("end-date", localdate().isoformat())),
-    #     datetime.min.time())
     sdate = date.fromisoformat(
             request.POST.get("start-date", "2023-11-28"))
     edate = date.fromisoformat(
             request.POST.get("end-date", localdate().isoformat()))
-    
     edate += timedelta(days=1)
     
     # Выбираем те новости и события, которые не находятся в очереди
-    latest_news = list(News.objects.filter(pub_date__range=(sdate, edate)))
-    latest_events = list(Event.objects.filter(pub_date__range=(sdate, edate)))
+    latest_news = list(News.objects.filter(
+        pub_date__range=(sdate, edate), queue_id__isnull=True))
+    latest_events = list(Event.objects.filter(
+        pub_date__range=(sdate, edate), queue_id__isnull=True))
     latest_news += latest_events
-    print(repr(latest_news))
     
     # Сортируем по дате и выбираем первые 5 для первой страницы новостей
     latest_news = list(sorted(latest_news, key=lambda x: x.pub_date,
