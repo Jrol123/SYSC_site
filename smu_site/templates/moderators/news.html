@@ -40,6 +40,11 @@
 				},
 			  });
 			},
+
+			init_instance_callback : function(editor) {
+				var freeTiny = document.querySelector('.tox .tox-notification--in');
+			   freeTiny.style.display = 'none';
+			  },
 			menu: {
 			favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
 			},
@@ -98,7 +103,7 @@
 
 	<div style="position:relative; z-index:1 " class="container-custom redactor">
 		<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
-			<textarea id="myTextarea" style="width:100%">dd</textarea>
+			<textarea id="myTextarea" style="width:100%"></textarea>
 		</div> 
 
 	</div>
