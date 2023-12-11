@@ -6,12 +6,12 @@ class Doc(models.Model):
                                  on_delete=models.SET_NULL, null=True)
     name = models.CharField("Название документа", max_length=100)
     category = models.CharField("Категория (каталог) документа",
-                                max_length=300, default='')
+                                max_length=300, default='unsorted')
     
     def _img_dir_path(self, filename):
         return (f'documents/'
                 f'{self.category}/'
-                f'{self.id}_{filename}')
+                f'{filename}')
     
     path = models.FileField("Путь до документа",
                             upload_to=_img_dir_path)
