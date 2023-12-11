@@ -24,7 +24,7 @@
 
         <div class="plates_home container-custom plate-container ">
           <div class="row">
-            
+            <div class="col-lg-main col-md-12 col-sm-12"></div>
             <div  style="margin-top:3em; color:none; border-top:5px solid var(--nav-bg)" class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
                 <div style="margin-top:10em; color:none;">
                     <form method="POST" action="{% url 'main' %}">
@@ -58,11 +58,38 @@
                     </div>
                     {% endfor %}
                   </div>
-                </div>
-            </div>
+                <!--
+                <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="news-left-div container rounded">
+                      <h2 style="color:whitesmoke" class="text-center pt-2">активные гранты</h2>
+                      <hr>
+                    </div>
 
+                    <div class="mt-3 grant-card rounded ">
+                      <h3> </h3>
+                     
+                      <div class="mt-3 container">
+                        <p style="">Название</P>
+                   
+                      
+                        <hr style="color:black">
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,  </p>
+                      
+                      </div>
+                    </div>
+
+
+                  </div>
+ -->
+
+
+                  
+                </div>
+               
+            </div>
+            <div class="col-lg-main col-md-12 col-sm-12"></div>
             
-            <div class="ScrollBar col-lg-7 col-sm-12 col-md-12 col-xs-12">
+            <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
                 {% if last_news_month %}
                   {% for n, m in last_news_month %}
@@ -100,9 +127,7 @@
           </div> 
 
           
-          <div  style="margin-top:3em; color:none;" class="plates rounded col-lg-2 col-sm-12 col-md-12 col-xs-12">
-            <h1>The end</h1>
-          </div>
+        
         </div>
     </div>
 
