@@ -11,4 +11,5 @@ urlpatterns = [
     path('account/gzs', views.gzs, name='gzs'),
     path('account/add_new_guests', views.add_new_guests, name='add_new_guests'),
     path('account/create_new_institute', views.create_new_institute, name='create_institute'),
+    path('account/upload_doc', views.upload_doc, name='upload_doc')
 ]

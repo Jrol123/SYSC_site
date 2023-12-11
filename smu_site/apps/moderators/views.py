@@ -1,10 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadDocForm
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic import ListView, CreateView
 from info.models import Grant, Institute
-from news.models import News
+from news.models import News, Image
+from documents.models import Doc
+from .models import Queue
 
 
 @login_required
@@ -50,13 +53,11 @@ def add_new_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_grant(request):
-
     if request.method == 'POST':
 
-        form = CreateGrantForm(request.POST)
+        form = CreateGrantForm(request.POST, request.FILES)
 
         if form.is_valid():
-
             grant = Grant(name=form.cleaned_data['name'],
                           criteria=form.cleaned_data['criteria'],
                           description=form.cleaned_data['description'],
@@ -64,6 +65,10 @@ def create_new_grant(request):
                           end_result_date=form.cleaned_data['end_result_date'],
                           link=form.cleaned_data['link'])
             grant.save()
+            img = Image(grant_id=grant.id,
+                        url_path=request.FILES['url_path'],
+                        alt='dhggfhfdg')
+            img.save()
 
             return HttpResponseRedirect('/moderators/account')  # редирект
     else:
@@ -75,13 +80,11 @@ def create_new_grant(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_institute(request):
-
     if request.method == 'POST':
 
         form = CreateInstituteForm(request.POST)
 
         if form.is_valid():
-
             institute = Institute(name=form.cleaned_data['name'],
                                   description=form.cleaned_data['description'],
                                   emplotees_count=form.cleaned_data['employees_count'],
@@ -102,13 +105,11 @@ def create_new_institute(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
-
     if request.method == 'POST':
 
         form = CreateNewsForm(request.POST)
 
         if form.is_valid():
-
             news = News(title=form.cleaned_data['name'],
                         text=form.cleaned_data['description'],
                         pub_date=form.cleaned_data['date'],
@@ -123,3 +124,19 @@ def create_news(request):
         form = CreateNewsForm()
 
     return render(request, 'moderators/create_new_institute.html', {'form': form})
+
+
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def upload_doc(request):
+    if request.method == "POST":
+        form = UploadDocForm(request.POST, request.FILES)
+        if form.is_valid():
+            doc = Doc(path=request.FILES["path"],
+                      name=form.cleaned_data['name'],
+                      category=form.cleaned_data['category'])
+            doc.save()
+            return HttpResponseRedirect('/moderators/account')
+    else:
+        form = UploadDocForm()
+    return render(request, "moderators/upload_doc.html", {"form": form})

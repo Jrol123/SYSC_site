@@ -1,7 +1,10 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from info.models import Institute
+from info.models import Institute, Grant
+from news.models import Image
+from documents.models import Doc
+from django.forms import ModelForm
 
 
 class CreateUserForm(forms.Form):
@@ -42,7 +45,7 @@ class CreateUserForm(forms.Form):
         return group
 
 
-class CreateGrantForm(forms.Form):
+class CreateGrantForm(ModelForm):
     name = forms.CharField(help_text="Введите название гранта", required=True)
     description = forms.CharField(help_text="Введите описание гранта", widget=forms.Textarea)
     end_doc_date = forms.DateField(help_text="Введите дату окончания приема заявок", required=True,
@@ -51,6 +54,10 @@ class CreateGrantForm(forms.Form):
                                       widget=forms.SelectDateWidget)
     criteria = forms.CharField(help_text="Введите критерии", widget=forms.Textarea)
     link = forms.URLField(help_text="Введите ссылку на грант", required=True)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'description', 'end_doc_date', 'end_result_date', 'criteria', 'link']
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -129,3 +136,9 @@ class CreateInstituteForm(forms.Form):
 class CreateNewsForm(forms.Form):
     name = forms.CharField(help_text="Введите название", required=True)
     description = forms.CharField(help_text="Введите текст", widget=forms.Textarea)
+
+
+class UploadDocForm(ModelForm):
+    class Meta:
+        model = Doc
+        fields = ['name', 'category', 'path']
