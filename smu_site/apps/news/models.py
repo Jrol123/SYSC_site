@@ -104,9 +104,7 @@ class Image(models.Model):
                 f"alt=\"{self.alt}\")")
     
     @classmethod
-    def get_related_images(cls, obj_id,
-                           category: ('news', 'event', 'institute',
-                                      'scientist', 'grant')):
+    def get_related_images(cls, obj_id, category):
         assert category in ('news', 'event', 'institute',
                             'scientist', 'grant')
         

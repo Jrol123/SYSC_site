@@ -11,13 +11,7 @@ class Queue(models.Model):
     )
     obj_type = models.CharField("Тип объекта",
                                 max_length=10, choices=CHOICES)
-    
+
     class Meta:
         verbose_name = 'Очередь'
         verbose_name_plural = 'Очереди'
-
-        constraints = [
-            models.UniqueConstraint(fields=['id', 'obj_type'],
-                                    name='unique_id_type_obj')
-        ]
-
