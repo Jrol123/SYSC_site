@@ -42,7 +42,7 @@ last_mess_id = int(cfg['Support']['last_message_id'])
 
 def delete(self, using=None, keep_parents=False):
     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
-    self.delete(using, keep_parents)
+    super().delete(using, keep_parents)
 
 
 News.delete = delete
@@ -128,9 +128,9 @@ def news_mailing(wait_for):
         
         time.sleep(wait_for)
         
-        nw = list(News.objects.filter(queue_id__isnull=True, link=None)
+        nw = list(News.objects.filter(queue_id=None, link=None)
                   .order_by("pub_date"))
-        ev = list(Event.objects.filter(queue_id__isnull=True, link=None)
+        ev = list(Event.objects.filter(queue_id=None, link=None)
                   .order_by("pub_date"))
         
         if nw:

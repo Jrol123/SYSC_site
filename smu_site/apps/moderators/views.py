@@ -111,6 +111,8 @@ def create_news(request):
 
             news = News(title=form.cleaned_data['name'],
                         text=form.cleaned_data['description'],
+                        pub_date=form.cleaned_data['date'],
+                        link=form.cleaned_data['link'],
                         user_id=request.user.id)
             request.user.get_user_permissions()
             news.save()
