@@ -68,6 +68,7 @@
 
 
 {% block content %}
+	<div class="z-index:3">
     {% include "navbar.html" %}
 	<div class="plates_home container-custom plate-container">
 		<div class="Navbar_Moder plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row flex justify-content-center">
@@ -91,18 +92,18 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 
 	
 
-	<div style="position:relative; z-index:-1 " class="px-3 redactor">
+	<div style="position:relative; z-index:1 " class="container-custom redactor">
 		<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
 			<textarea id="myTextarea" style="width:100%">dd</textarea>
 		</div> 
 
 	</div>
 
-	<div class="px-3 redactor">
+	<div class="container-custom redactor">
 		<div class="">
 			<input class="form-control" type="file" id="formFileReadonly" readonly>
 			<button type="submit" class="btn btn-primary">Upload</button>
