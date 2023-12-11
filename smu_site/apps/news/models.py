@@ -82,7 +82,7 @@ class Image(models.Model):
                                   null=True, blank=True)
     grant = models.ForeignKey("info.Grant", on_delete=models.CASCADE,
                               null=True, blank=True)
-
+    
     def _img_dir_path(self, filename):
         folder = ['news', 'events', 'institutes',
                   'scientists', 'grants']
@@ -92,7 +92,7 @@ class Image(models.Model):
                                     self.grant)) if v]
         
         return (f'images/{folder[cd()[0][0]]}/{cd()[0][1]}'
-                f'/{filename}')
+                f'/{self.id}_{filename}')
     
     url_path = models.ImageField("Путь к изображению",
                                  upload_to=_img_dir_path)
