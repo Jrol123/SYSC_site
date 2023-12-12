@@ -67,7 +67,7 @@ def create_new_grant(request):
             grant.save()
             img = Image(grant_id=grant.id,
                         url_path=request.FILES['url_path'],
-                        alt='dhggfhfdg')
+                        alt=form.cleaned_data['alt'])
             img.save()
 
             return HttpResponseRedirect('/moderators/account')  # редирект
@@ -82,17 +82,21 @@ def create_new_grant(request):
 def create_new_institute(request):
     if request.method == 'POST':
 
-        form = CreateInstituteForm(request.POST)
+        form = CreateInstituteForm(request.POST, request.FILES)
 
         if form.is_valid():
             institute = Institute(name=form.cleaned_data['name'],
                                   description=form.cleaned_data['description'],
-                                  emplotees_count=form.cleaned_data['employees_count'],
+                                  employees_count=form.cleaned_data['employees_count'],
                                   scientist_count=form.cleaned_data['scientist_count'],
                                   chairman=form.cleaned_data['chairman'],
                                   link=form.cleaned_data['link'],
                                   smu_link=form.cleaned_data['smu_link'])
             institute.save()
+            img = Image(institute_id=institute.id,
+                        url_path=request.FILES['url_path'],
+                        alt=form.cleaned_data['alt'])
+            img.save()
 
             return HttpResponseRedirect('/moderators/account')
 

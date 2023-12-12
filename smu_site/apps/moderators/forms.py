@@ -17,7 +17,7 @@ class CreateUserForm(forms.Form):
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
 
-        name_list = User.objects.values('username') # список свойств в формате:
+        name_list = User.objects.values('username')  # список свойств в формате:
         # [{'username': 'MyUsername1'}, {'username': 'MyUsername2'}, ...]
         for val in name_list:
             if name == val['username']:
@@ -57,7 +57,7 @@ class CreateGrantForm(ModelForm):
 
     class Meta:
         model = Image
-        fields = ['name', 'url_path', 'description', 'end_doc_date', 'end_result_date', 'criteria', 'link']
+        fields = ['name', 'url_path', 'alt', 'description', 'end_doc_date', 'end_result_date', 'criteria', 'link']
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -84,7 +84,7 @@ class CreateGrantForm(ModelForm):
         return end_result_date
 
 
-class CreateInstituteForm(forms.Form):
+class CreateInstituteForm(ModelForm):
     name = forms.CharField(help_text="Введите название института", required=True)
     description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea, required=False)
     employees_count = forms.IntegerField(help_text="Введите число сотрудников", required=True)
@@ -92,6 +92,11 @@ class CreateInstituteForm(forms.Form):
     chairman = forms.CharField(help_text="Введите ФИО представителя", required=True)
     link = forms.URLField(help_text="Введите ссылку на сайт института", required=True)
     smu_link = forms.URLField(help_text="Введите ссылку на сайт СМУ института", required=False)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'description', 'employees_count',
+                  'scientist_count', 'chairman', 'link', 'smu_link']
 
     def clean_name(self):
         name = self.cleaned_data['name']
