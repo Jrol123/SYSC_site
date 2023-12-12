@@ -162,10 +162,9 @@ def create_news(request):
 
     else:
         form = CreateNewsForm()
+    return render(request, 'moderators/news.html', {'form': form})
 
-    return render(request, 'moderators/create_new_institute.html', {'form': form})
-
-
+  
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def upload_doc(request):

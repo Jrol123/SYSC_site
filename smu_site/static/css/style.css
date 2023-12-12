@@ -189,6 +189,7 @@ body{
     background-color:white;
     width:100%;
     border:1px dashed var(--seal-bg);
+    
 }
 .event-card h3{
     background-color: var(--nav-bg);
@@ -209,6 +210,33 @@ body{
 }
 .event-card p{
     color:black;
+}
+
+.grant-card{
+  background-color:white;
+  width:100%;
+  border-radius:100;
+  
+}
+.grant-card h3{
+  background-color: black;
+  color:white;
+  font-size:14px;
+  width:200px;
+  padding:12px 12px;
+  clip-path: polygon(100% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+}
+
+.grant-card h3{
+background-color: black;
+color:white;
+font-size:14px;
+width:100%;
+padding:12px 12px;
+
+}
+.grant-card p{
+  color:black;
 }
 
 .ScrollBar{
@@ -546,7 +574,8 @@ input[type="date"]{
 }
 .title h3{
   color:rgb(36, 36, 36);
-  font-size:23px;
+  color:rgb(78, 78, 78);
+  font-size:20px;
   text-align:center;
 }
 summary h3{
@@ -671,6 +700,7 @@ details[open] .content {
   text-decoration:none;
   border:1px solid var(--nav-bg);
   margin-top:20px;
+  
 }
 .event-btn:hover{
   background-color:black;
@@ -689,7 +719,7 @@ details[open] .content {
   background-color:var(--nav-bg);
 }
 .category option{
-  padding: 1rem;
+  padding: 15px;
 }
 .list {
   display:block;
