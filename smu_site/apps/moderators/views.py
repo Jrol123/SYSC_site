@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadDocForm
+from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm,
+                    UploadDocForm, CreateScientistForm)
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import ListView, CreateView
-from info.models import Grant, Institute
+from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Image
 from documents.models import Doc
 from .models import Queue
@@ -104,6 +105,41 @@ def create_new_institute(request):
         form = CreateInstituteForm()
 
     return render(request, 'moderators/create_new_institute.html', {'form': form})
+
+
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def create_scientist(request, institute_id):
+    if request.method == 'POST':
+
+        form = CreateScientistForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            scientist = Scientist(institute_id=institute_id,
+                                  name=form.cleaned_data['name'],
+                                  lab=form.cleaned_data['lab'],
+                                  position=form.cleaned_data['position'],
+                                  degree=form.cleaned_data['degree'],
+                                  teaching_info=form.cleaned_data['teaching_info'],
+                                  scientific_interests=form.cleaned_data['scientific_interests'],
+                                  achievements=form.cleaned_data['achievements'],
+                                  future_plans=form.cleaned_data['future_plans'])
+            scientist.save()
+            link = ScientistLink(scientist_id=scientist.id,
+                                 service_name=form.cleaned_data['service_name'],
+                                 link=form.cleaned_data['link'])
+            link.save()
+            img = Image(scientist_id=scientist.id,
+                        url_path=request.FILES['url_path'],
+                        alt=form.cleaned_data['alt'])
+            img.save()
+
+            return HttpResponseRedirect('/moderators/account')
+
+    else:
+        form = CreateScientistForm()
+
+    return render(request, 'moderators/create_scientist.html', {'form': form})
 
 
 @login_required

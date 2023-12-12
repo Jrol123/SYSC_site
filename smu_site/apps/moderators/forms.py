@@ -138,6 +138,25 @@ class CreateInstituteForm(ModelForm):
         return link
 
 
+class CreateScientistForm(ModelForm):
+    name = forms.CharField(help_text="Введите ФИО учёного", required=True)
+    lab = forms.CharField(help_text="?", required=False)
+    position = forms.IntegerField(help_text="?", required=True)
+    degree = forms.IntegerField(help_text="Введите учёную степень", required=True)
+    teaching_info = forms.CharField(help_text="?", required=True, widget=forms.Textarea)
+    scientific_interests = forms.CharField(help_text="Интересы", required=True, widget=forms.Textarea)
+    achievements = forms.CharField(help_text="Достижения", required=True, widget=forms.Textarea)
+    future_plans = forms.CharField(help_text="Планы", required=True, widget=forms.Textarea)
+    link = forms.URLField(help_text="Введите ссылку", required=False)
+    service_name = forms.CharField(help_text="Введите название сервиса", required=False)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'lab', 'position',
+                  'degree', 'teaching_info', 'scientific_interests',
+                  'achievements', 'future_plans', 'link', 'service_name']
+
+
 class CreateNewsForm(forms.Form):
     name = forms.CharField(help_text="Введите название", required=True)
     description = forms.CharField(help_text="Введите текст", widget=forms.Textarea)
