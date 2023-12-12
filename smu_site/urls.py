@@ -28,7 +28,8 @@ urlpatterns = [
     path('info/', include('info.urls')),
     path('moderators/', include('moderators.urls')),
     path('news/', include('news.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login', include('django.contrib.auth.urls')),
+    path('accounts/login', views.user_login, name='user_login'),
     # path('representatives/', include(
     #     ('representatives.urls', 'representatives'),
     #     namespace='representatives')),

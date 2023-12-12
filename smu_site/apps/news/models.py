@@ -91,7 +91,7 @@ class Image(models.Model):
                                     self.institute, self.scientist,
                                     self.grant)) if v]
         
-        return (f'images/{folder[cd()[0][0]]}/{cd()[0][1]}'
+        return (f'images/{folder[cd()[0][0]]}/{cd()[0][1].id}'
                 f'/{self.id}_{filename}')
     
     url_path = models.ImageField("Путь к изображению",

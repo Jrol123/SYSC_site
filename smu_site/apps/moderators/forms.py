@@ -1,7 +1,10 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from info.models import Institute
+from info.models import Institute, Grant
+from news.models import Image
+from documents.models import Doc
+from django.forms import ModelForm
 
 
 class CreateUserForm(forms.Form):
@@ -14,7 +17,7 @@ class CreateUserForm(forms.Form):
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
 
-        name_list = User.objects.values('username') # список свойств в формате:
+        name_list = User.objects.values('username')  # список свойств в формате:
         # [{'username': 'MyUsername1'}, {'username': 'MyUsername2'}, ...]
         for val in name_list:
             if name == val['username']:
@@ -42,7 +45,7 @@ class CreateUserForm(forms.Form):
         return group
 
 
-class CreateGrantForm(forms.Form):
+class CreateGrantForm(ModelForm):
     name = forms.CharField(help_text="Введите название гранта", required=True)
     description = forms.CharField(help_text="Введите описание гранта", widget=forms.Textarea)
     end_doc_date = forms.DateField(help_text="Введите дату окончания приема заявок", required=True,
@@ -51,6 +54,10 @@ class CreateGrantForm(forms.Form):
                                       widget=forms.SelectDateWidget)
     criteria = forms.CharField(help_text="Введите критерии", widget=forms.Textarea)
     link = forms.URLField(help_text="Введите ссылку на грант", required=True)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'description', 'end_doc_date', 'end_result_date', 'criteria', 'link']
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -77,7 +84,7 @@ class CreateGrantForm(forms.Form):
         return end_result_date
 
 
-class CreateInstituteForm(forms.Form):
+class CreateInstituteForm(ModelForm):
     name = forms.CharField(help_text="Введите название института", required=True)
     description = forms.CharField(help_text="Введите писание института", widget=forms.Textarea, required=False)
     employees_count = forms.IntegerField(help_text="Введите число сотрудников", required=True)
@@ -85,6 +92,11 @@ class CreateInstituteForm(forms.Form):
     chairman = forms.CharField(help_text="Введите ФИО представителя", required=True)
     link = forms.URLField(help_text="Введите ссылку на сайт института", required=True)
     smu_link = forms.URLField(help_text="Введите ссылку на сайт СМУ института", required=False)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'description', 'employees_count',
+                  'scientist_count', 'chairman', 'link', 'smu_link']
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -126,6 +138,31 @@ class CreateInstituteForm(forms.Form):
         return link
 
 
+class CreateScientistForm(ModelForm):
+    name = forms.CharField(help_text="Введите ФИО учёного", required=True)
+    lab = forms.CharField(help_text="?", required=False)
+    position = forms.IntegerField(help_text="?", required=True)
+    degree = forms.IntegerField(help_text="Введите учёную степень", required=True)
+    teaching_info = forms.CharField(help_text="?", required=True, widget=forms.Textarea)
+    scientific_interests = forms.CharField(help_text="Интересы", required=True, widget=forms.Textarea)
+    achievements = forms.CharField(help_text="Достижения", required=True, widget=forms.Textarea)
+    future_plans = forms.CharField(help_text="Планы", required=True, widget=forms.Textarea)
+    link = forms.URLField(help_text="Введите ссылку", required=False)
+    service_name = forms.CharField(help_text="Введите название сервиса", required=False)
+
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'lab', 'position',
+                  'degree', 'teaching_info', 'scientific_interests',
+                  'achievements', 'future_plans', 'link', 'service_name']
+
+
 class CreateNewsForm(forms.Form):
     name = forms.CharField(help_text="Введите название", required=True)
     description = forms.CharField(help_text="Введите текст", widget=forms.Textarea)
+
+
+class UploadDocForm(ModelForm):
+    class Meta:
+        model = Doc
+        fields = ['name', 'category', 'path']
