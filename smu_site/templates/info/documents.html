@@ -26,59 +26,49 @@
        
         <div class="row">
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
-
-            <div class="mt-3 plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
-                <div class="mt-5 mb-5">
-                    <div class="container">
-                        <select class="category" name="cat" id="cat">
-                          <option selected value="all">все категории</option>
-                          <option value="1">Category 1</option>
-                          <option value="2">Category 2</option>
-                          <option value="3">Category 3</option>
-                        </select>
-                        <ul class="list">
-                          <li data-cat="1" class="list__item">
-                            <button class="list__item-title">Item 1</button>
-                            <div class="list__item-description">
-                                <ul class="cat_link">
-                                    <li><a href="#">This link should contain some document1</a></li>
-                                    <li><a href="#">Link 2</a></li>
-
-                                <ul>
-                            </div>
-                          </li>
-                          <li data-cat="2" class="list__item">
-                            <button class="list__item-title">Item 2</button>
-                            <div class="list__item-description">Item 2 description</div>
-                          </li>
-                          <li data-cat="3" class="list__item">
-                            <button class="list__item-title">Item 3</button>
-                            <div class="list__item-description">Item 3 description</div>
-                          </li>
-                          <li data-cat="1" class="list__item">
-                            <button class="list__item-title">Item 4</button>
-                            <div class="list__item-description">Item 4 description</div>
-                          </li>
-                          <li data-cat="2" class="list__item">
-                            <button class="list__item-title">Item 5</button>
-                            <div class="list__item-description">Item 5 description</div>
-                          </li>
-                          <li data-cat="3" class="list__item">
-                            <button class="list__item-title">Item 6</button>
-                            <div class="list__item-description">Item 6 description</div>
-                          </li>
-                        </ul>
-                        <div class="result"></div>
-                      </div>
-                    
-                      <script src="{% static 'js/doc_category.js' %}"></script>
-                </div>
-            </div>
+				<div class="mt-3 plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
+					<div class="mt-5 mb-5">
+						<div class="container">
+							<form action="" method="POST">
+								<ul class="list">
+									<li> 
+										<button class="category">Item 1</button>
+									</li>
+									<li data-cat="1" class="list__item">
+										<button class="list__item-title">Item 1</button>
+									</li>
+									<li data-cat="2" class="list__item">
+										<button class="list__item-title">Item 2</button>
+									</li>
+									<li data-cat="3" class="list__item">
+										<button class="list__item-title">Item 3</button>
+									</li>
+									<li data-cat="1" class="list__item">
+										<button class="list__item-title">Item 4</button>
+									</li>
+									<li data-cat="2" class="list__item">
+										<button class="list__item-title">Item 5</button>
+									</li>
+									<li data-cat="3" class="list__item">
+										<button class="list__item-title">Item 6</button>
+									</li>
+								</ul>
+							</form>
+							<div class="result"></div>
+						  </div>
+						
+						  <script src="{% static 'js/doc_category.js' %}"></script>
+					</div>
+				</div>
 
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
 
-            <div class="mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12">
-                <!--Something Here-->
+            <div class="ScrollBar Scroll_dock mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12">
+				{% for i in '1234567891011121314151617181920' %}
+                <div class="pl_hrefs plates col-sm-12 col-md-12 col-xs-12 m-2">
+					<a href="#"> Какой-то документ 1 </a>
+				</div>
+				{% endfor %}
             </div>      
         </div>
     </div>
