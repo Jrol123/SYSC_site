@@ -41,10 +41,7 @@
 			  });
 			},
 
-			init_instance_callback : function(editor) {
-				var freeTiny = document.querySelector('.tox .tox-notification--in');
-			   freeTiny.style.display = 'none';
-			  },
+			
 			menu: {
 			favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
 			},
@@ -103,18 +100,20 @@
 
 	<div style="position:relative; z-index:1 " class="container-custom redactor">
 		<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
-			<textarea id="myTextarea" style="width:100%"></textarea>
+			<form action="" method="POST">
+				<input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em" placeholder="название новости" required/>
+				
+				<textarea id="myTextarea" style="width:100%"></textarea>
+
+				<input class="form-control" style="height:3em; margin-top:1 margin-bottom:1em"  type="file" id="formFileReadonly" readonly>
+				<button type="submit" class="btn btn-primary">Upload</button>
+
+				<button type="submit" class="btn btn-info" onclick="call()">Show generated html code</button>
+			</form>
 		</div> 
 
 	</div>
 
-	<div class="container-custom redactor">
-		<div class="">
-			<input class="form-control" type="file" id="formFileReadonly" readonly>
-			<button type="submit" class="btn btn-primary">Upload</button>
-			<button type="submit" class="btn btn-info" onclick="call()">Show generated html code</button>
-		</div>
-	</div>
 	
     {% include "footer.html" %}
 
