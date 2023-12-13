@@ -52,7 +52,7 @@
                         <p>{{e.end_date}}</P>
                        
                         <hr style="color:black">
-                        {{e.text}}
+                        {{e.text | safe}}
 
                       </div>
                     </div>
@@ -107,7 +107,7 @@
                           <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
                           <h2 class="text_compress">{{n.title}}</h2>
 
-                          {{n.text}}
+                          {{n.text | safe}}
                             <hr>
                           <a href="" class="readmore-btn">Read More</a>
                         </div>
