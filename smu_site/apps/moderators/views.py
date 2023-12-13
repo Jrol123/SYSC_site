@@ -9,32 +9,38 @@ from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Image
 from documents.models import Doc
 from .models import Queue
+from django.db import transaction
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def profile(request):
     return render(request, 'moderators/moder_panel_main.html')
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def news(request):
     return render(request, 'moderators/news.html')
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def moder_guests(request):
     return render(request, 'moderators/moder_guests.html')
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def gzs(request):
     return render(request, 'moderators/gzs.html')
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def add_new_guests(request):
@@ -51,6 +57,7 @@ def add_new_guests(request):
     return render(request, 'moderators/add_new_guests.html', {'form': form})
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_grant(request):
@@ -78,6 +85,7 @@ def create_new_grant(request):
     return render(request, 'moderators/create_new_grant.html', {'form': form})
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_institute(request):
@@ -107,6 +115,7 @@ def create_new_institute(request):
     return render(request, 'moderators/create_new_institute.html', {'form': form})
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_scientist(request, institute_id):
@@ -142,6 +151,7 @@ def create_scientist(request, institute_id):
     return render(request, 'moderators/create_scientist.html', {'form': form})
 
 
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
@@ -150,12 +160,9 @@ def create_news(request):
         form = CreateNewsForm(request.POST)
 
         if form.is_valid():
-            news = News(title=form.cleaned_data['name'],
-                        text=form.cleaned_data['description'],
-                        pub_date=form.cleaned_data['date'],
-                        link=form.cleaned_data['link'],
+            news = News(title='Text',
+                        text=form.cleaned_data['text'],
                         user_id=request.user.id)
-            request.user.get_user_permissions()
             news.save()
 
             return HttpResponseRedirect('/moderators/account')
@@ -164,7 +171,8 @@ def create_news(request):
         form = CreateNewsForm()
     return render(request, 'moderators/news.html', {'form': form})
 
-  
+
+@transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def upload_doc(request):

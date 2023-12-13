@@ -157,11 +157,6 @@ class CreateScientistForm(ModelForm):
                   'achievements', 'future_plans', 'link', 'service_name']
 
 
-class CreateNewsForm(forms.Form):
-    name = forms.CharField(help_text="Введите название", required=True)
-    description = forms.CharField(help_text="Введите текст", widget=forms.Textarea)
-
-
 class UploadDocForm(ModelForm):
     class Meta:
         model = Doc
