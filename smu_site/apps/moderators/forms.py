@@ -157,6 +157,13 @@ class CreateScientistForm(ModelForm):
                   'achievements', 'future_plans', 'link', 'service_name']
 
 
+class CreateNewsForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea(attrs={
+        'id': "myTextarea",
+        'style': "width:100%"
+    }))
+
+
 class UploadDocForm(ModelForm):
     class Meta:
         model = Doc
