@@ -37,7 +37,12 @@ body{
     z-index:1;
     zoom:90%;
 }
-
+strong, em {
+    color: black;
+}
+strong {
+    font-weight: bold;
+}
 .container-custom{
     width: 100%;
     padding-right: 4em;
