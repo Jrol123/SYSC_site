@@ -52,7 +52,7 @@
                         <p>{{e.end_date}}</P>
                        
                         <hr style="color:black">
-                        <p>{{e.text}}</p>
+                        {{e.text}}
 
                       </div>
                     </div>
@@ -106,8 +106,14 @@
                         <div class="container news-sec">
                           <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
                           <h2 class="text_compress">{{n.title}}</h2>
+<<<<<<< Updated upstream
                           <p>{{n.text}}</p><hr>
                           <a href="" class="readmore-btn">Продолжить чтение</a>
+=======
+                          {{n.text}}
+                            <hr>
+                          <a href="" class="readmore-btn">Read More</a>
+>>>>>>> Stashed changes
                         </div>
                       </figure>
                   </div>
