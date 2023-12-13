@@ -93,6 +93,7 @@ class Image(models.Model):
         
         return (f'images/{folder[cd()[0][0]]}/{cd()[0][1]}'
                 f'/{filename}')
+
     
     url_path = models.ImageField("Путь к изображению",
                                  upload_to=_img_dir_path)
