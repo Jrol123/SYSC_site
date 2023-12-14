@@ -42,7 +42,7 @@
                       <hr>
                     </div>
 
-                    {% for e in events %}
+                    {% for e, text in events %}
                     <div class="mt-3 event-card rounded ">
                       <h3>{{e.title}}</h3>
                      
@@ -52,7 +52,7 @@
                         <p>{{e.end_date}}</P>
                        
                         <hr style="color:black">
-                        {{e.text | safe}}
+                          <p>{{text}}</p>
 
                       </div>
                     </div>
@@ -92,7 +92,7 @@
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
                 {% if last_news_month %}
-                  {% for n, m in last_news_month %}
+                  {% for n, m, text in last_news_month %}
                   <div class="mt-5 plates" style="border-radius:0px;">
                       <figure class="news-card">
                         <div class="frame">
@@ -106,8 +106,7 @@
                         <div class="container news-sec">
                           <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
                           <h2 class="text_compress">{{n.title}}</h2>
-
-                          {{n.text | safe}}
+                            <p>{{text}}</p>
                             <hr>
                           <a href="" class="readmore-btn">Read More</a>
                         </div>
