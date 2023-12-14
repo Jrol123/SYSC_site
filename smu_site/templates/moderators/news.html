@@ -108,7 +108,12 @@
 	{% include "moderators/moder_navbar.html" %}
 </div>
 
+    
 	<div class="place_form plates_home container-custom plate-container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em"
+                   placeholder="Название новости" required/>
 		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
 			<div style="position:relative; z-index:1 " class="container-custom">
 				<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
