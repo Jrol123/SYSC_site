@@ -3,7 +3,9 @@ from info.models import Institute, Scientist, Grant
 
 
 def institutes(request):
-    return render(request, 'info/institutes.html')
+    inst = Institute.objects.all().order_by('name')
+    return render(request, 'info/institutes.html',
+                  {'institutes': inst})
 
 
 def grant(request):
