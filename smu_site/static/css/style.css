@@ -141,9 +141,13 @@ body{
     border-radius:17px;
     box-shadow: rgba(0, 0, 0, 0.10) 0px 3px 8px;
 }
+.main_plate{
+  min-height: 100vh;
+}
 .plates_home{
     padding-top:6em;
     padding-bottom:4em;
+    
 }
 .plate-container {
 	max-width: 1500px;
@@ -835,8 +839,8 @@ details[open] .content {
 .pl_hrefs
 {
 	background-color: #99c2f0!important;
-	height: 50px!impotant;
-	text-align: left!impotant;
+	height: 50px!important;
+	text-align: left!important;
 }
 .pl_hrefs > a
 {
