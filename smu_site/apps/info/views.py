@@ -12,7 +12,8 @@ def institutes(request):
 def grant(request):
     grants = (Grant.objects.filter(queue_id__isnull=True)
               .order_by('end_doc_date'))
-    grants = [(g, Image.objects.filter(grant_id=g.id).first())
+    grants = [(g, Image.objects.filter(grant_id=g.id)
+               .order_by('id').first())
               for g in grants]
     return render(request, 'info/grant.html',
                   {'grants': grants})

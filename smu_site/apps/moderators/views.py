@@ -1,10 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm
 from django.contrib.auth.decorators import login_required, permission_required
+from documents.models import Doc
 from info.models import Grant, Institute
 from news.models import News
+from SHC.models import Doc as SHCDoc
 
 
 @login_required
@@ -22,7 +24,17 @@ def moder_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def gzs(request):
-    return render(request, 'moderators/gzs.html')
+    if request.method == 'POST':
+        form = UploadSHCDocForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+            form.save()
+            return HttpResponseRedirect('/moderators/account')
+    else:
+        form = UploadSHCDocForm()
+
+    return render(request, 'moderators/gzs.html',
+                  {'form': form})
 
 
 @login_required

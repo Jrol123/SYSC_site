@@ -21,18 +21,30 @@
 	{% include "moderators/moder_navbar.html" %}
 	<div class="place_form main_plate plates_home container-custom plate-container">
 		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12">
-			<form class="form_all" action="" method="POST">
+			<form class="form_all" action="" method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
 					<div class="First plates p-1 col-lg-12 col-sm-12 col-md-12 col-xs-12">
 						<br>
-						<label class="labels_for_form" for="grant_name">Название документа:</label>
-						<input class="input_for_form col-lg-3 col-sm-3 col-md-3 col-xs-3" type="text" id="grant_name" name="grant_name"><br>
-						<label class="labels_for_form" for="grant_name">загрузить документ:</label>
-						<input class="input_for_form_img col-lg-6 col-sm-6 col-md-6 col-xs-6" type="file" accept=".doc, .docx, .xls, .txt, .rtf, .pdf" name="documentUpload">
+						<label class="labels_for_form" for="doc_name">{{form.name.help_text}}:</label>
+						{{form.name}}
 						<br>
-						<label class="labels_for_form" for="description">Описание:</label>
-						<textarea class="textarea col-lg-12 col-sm-12 col-md-12 col-xs-12" id="description" name="description"></textarea><br>
+						<label class="labels_for_form" for="documentUpload">{{form.path.help_text}}:</label>
+						{{form.path}}
+						<br>
+						<label class="labels_for_form" for="description">{{form.description.help_text}}:</label>
+						{{form.description}}
+						<br>
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="doc_name">Название документа:</label>-->
+<!--						<input class="input_for_form col-lg-3 col-sm-3 col-md-3 col-xs-3" type="text" id="doc_name" name="grant_name">-->
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="documentUpload">Pагрузить документ:</label>-->
+<!--						<input class="input_for_form_img col-lg-6 col-sm-6 col-md-6 col-xs-6" type="file" accept=".doc, .docx, .xls, .txt, .rtf, .pdf" id="documentUpload" name="documentUpload">-->
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="description">Описание:</label>-->
+<!--						<textarea class="textarea col-lg-12 col-sm-12 col-md-12 col-xs-12" id="description" name="description"></textarea>-->
+<!--						<br>-->
 					</div>
 				</div>
 				<input class="submit_all labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Отправить">

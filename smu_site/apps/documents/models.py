@@ -9,9 +9,7 @@ class Doc(models.Model):
                                 max_length=300, default='')
     
     def _img_dir_path(self, filename):
-        return (f'documents/'
-                f'{self.category}/'
-                f'{self.id}_{filename}')
+        return f'documents/{self.category}/{filename}'
     
     path = models.FileField("Путь до документа",
                             upload_to=_img_dir_path)
