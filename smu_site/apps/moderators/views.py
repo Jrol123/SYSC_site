@@ -1,20 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm,
-                    UploadDocForm, CreateScientistForm)
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm
 from django.contrib.auth.decorators import login_required, permission_required
-from django.views.generic import ListView, CreateView
-from info.models import Grant, Institute, Scientist, ScientistLink
-from news.models import News, Image
-from documents.models import Doc
-from .models import Queue
-
-
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def profile(request):
-    return render(request, 'moderators/moder_panel_main.html')
+from info.models import Grant, Institute
+from news.models import News
 
 
 @login_required
@@ -54,11 +44,13 @@ def add_new_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_grant(request):
+
     if request.method == 'POST':
 
-        form = CreateGrantForm(request.POST, request.FILES)
+        form = CreateGrantForm(request.POST)
 
         if form.is_valid():
+
             grant = Grant(name=form.cleaned_data['name'],
                           criteria=form.cleaned_data['criteria'],
                           description=form.cleaned_data['description'],
@@ -66,10 +58,6 @@ def create_new_grant(request):
                           end_result_date=form.cleaned_data['end_result_date'],
                           link=form.cleaned_data['link'])
             grant.save()
-            img = Image(grant_id=grant.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
-            img.save()
 
             return HttpResponseRedirect('/moderators/account')  # редирект
     else:
@@ -81,23 +69,21 @@ def create_new_grant(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_institute(request):
+
     if request.method == 'POST':
 
-        form = CreateInstituteForm(request.POST, request.FILES)
+        form = CreateInstituteForm(request.POST)
 
         if form.is_valid():
+
             institute = Institute(name=form.cleaned_data['name'],
                                   description=form.cleaned_data['description'],
-                                  employees_count=form.cleaned_data['employees_count'],
+                                  emplotees_count=form.cleaned_data['employees_count'],
                                   scientist_count=form.cleaned_data['scientist_count'],
                                   chairman=form.cleaned_data['chairman'],
                                   link=form.cleaned_data['link'],
                                   smu_link=form.cleaned_data['smu_link'])
             institute.save()
-            img = Image(institute_id=institute.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
-            img.save()
 
             return HttpResponseRedirect('/moderators/account')
 
@@ -109,49 +95,18 @@ def create_new_institute(request):
 
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
-def create_scientist(request, institute_id):
-    if request.method == 'POST':
-
-        form = CreateScientistForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            scientist = Scientist(institute_id=institute_id,
-                                  name=form.cleaned_data['name'],
-                                  lab=form.cleaned_data['lab'],
-                                  position=form.cleaned_data['position'],
-                                  degree=form.cleaned_data['degree'],
-                                  teaching_info=form.cleaned_data['teaching_info'],
-                                  scientific_interests=form.cleaned_data['scientific_interests'],
-                                  achievements=form.cleaned_data['achievements'],
-                                  future_plans=form.cleaned_data['future_plans'])
-            scientist.save()
-            link = ScientistLink(scientist_id=scientist.id,
-                                 service_name=form.cleaned_data['service_name'],
-                                 link=form.cleaned_data['link'])
-            link.save()
-            img = Image(scientist_id=scientist.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
-            img.save()
-
-            return HttpResponseRedirect('/moderators/account')
-
-    else:
-        form = CreateScientistForm()
-
-    return render(request, 'moderators/create_scientist.html', {'form': form})
-
-
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
+
     if request.method == 'POST':
 
         form = CreateNewsForm(request.POST)
 
         if form.is_valid():
+
             news = News(title=form.cleaned_data['name'],
                         text=form.cleaned_data['description'],
+                        pub_date=form.cleaned_data['date'],
+                        link=form.cleaned_data['link'],
                         user_id=request.user.id)
             request.user.get_user_permissions()
             news.save()
@@ -160,20 +115,5 @@ def create_news(request):
 
     else:
         form = CreateNewsForm()
-    return render(request, 'moderators/news.html', {'form': form})
 
-  
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def upload_doc(request):
-    if request.method == "POST":
-        form = UploadDocForm(request.POST, request.FILES)
-        if form.is_valid():
-            doc = Doc(path=request.FILES["path"],
-                      name=form.cleaned_data['name'],
-                      category=form.cleaned_data['category'])
-            doc.save()
-            return HttpResponseRedirect('/moderators/account')
-    else:
-        form = UploadDocForm()
-    return render(request, "moderators/upload_doc.html", {"form": form})
+    return render(request, 'moderators/news.html', {'form': form})

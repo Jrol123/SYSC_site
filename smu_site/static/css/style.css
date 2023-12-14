@@ -37,12 +37,7 @@ body{
     z-index:1;
     zoom:90%;
 }
-strong, em {
-    color: black;
-}
-strong {
-    font-weight: bold;
-}
+
 .container-custom{
     width: 100%;
     padding-right: 4em;
@@ -252,7 +247,11 @@ padding:12px 12px;
   scrollbar-width: thin;
 }
 
-
+.Scroll_dock
+{
+	    max-height: 700px!important;
+		overflow-x:hidden;
+}
 /* Scrollbar for News page div */
 .ScrollBar::-webkit-scrollbar {
     width:6px;
@@ -644,21 +643,130 @@ details[open] .content {
 .redctor_place
 {
 	background-color: gray!important;
+	padding: 0px!important;
+}
+
+.Navbar_Moder
+{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	padding: 10px 0px 10px 0px!important;
+}
+
+.place_form
+{
+	margin-top: 0px!important;
+	padding-top: 0px!important;
+}
+.decorate_form
+{
+	background-color: #f0f4fa!important;	
+}
+
+.labels_for_form
+{
+	font-size: 20px;
+	margin: 0px 20px 0px 20px;
+	color: black;
+}
+.input_for_form
+{
+	text-indent: 10px;
+	margin: 0px 20px 0px 20px;
+	border: 2px solid black!important;
+	border-radius:15px!important;
+	color: black;
+}
+.input_for_form_img
+{
+	margin: 0px 20px 0px 20px;
+	border: 2p black!important;
+	color: black;
+}
+
+.color_news
+{
+	background-color: #b7cfeb!important;
+}
+.underform
+{
+	display: flex;
+	flex-direction: row;
+}
+.intounderform
+{
+	display: flex;
+	flex-direction: column;
 }
 .links
 {
+	max-width: 150px;
+	padding: 10px;
+	position: relative;
+	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: gray!important;
-	border-radius: 10px;
+	background-color: #6996d3;
+	border-radius: 10px; 
+	box-shadow: 0px 2px rgba(1, 0, 0, 0.7);
 }
 .links > a
 {
 	text-decoration: none;
-	color: black;
-	text-align: center;
+	color: white;
+	align-self: center;
+}
+.Second
+{
+	padding-right: 10px;
+}
+.Intoform
+{
+	display: flex;
+	padding: 20px;
+	flex-flow: row wrap;
+	justify-content: space-between;
 }
 
+.form_all
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.btn_publikate
+{
+	background-color: #bbd9fa!important;
+}
+.Second > h1
+{
+	color: black;
+}
+.submit_all
+{
+	align-self: flex-end!important;
+	background-color: #bbd9fa!important;
+	margin-bottom: 20px;
+}
+.form-control > option
+{
+	color: black;
+}
+
+.textarea
+{
+	height: 200px;
+	border-radius: 15px;
+}
+.First
+{
+	display: flex;
+	flex-flow: column;
+	justify-content: space-between;
+}
+
+/* Admin Panel*/
 .filter-btn{
   background-color: var(--nav-bg);
   border:none;
@@ -720,8 +828,21 @@ details[open] .content {
   border: 1px dashed white;
   color: white;
   width:100%;
+  text-align: left;
   -webkit-appearance: none;
   background-color:var(--nav-bg);
+}
+.pl_hrefs
+{
+	background-color: #99c2f0!important;
+	height: 50px!impotant;
+	text-align: left!impotant;
+}
+.pl_hrefs > a
+{
+	color: black;
+	text-decoration: none;
+	margin-left: 5px;
 }
 .category option{
   padding: 15px;
