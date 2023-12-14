@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from info.models import Institute, Scientist, Grant
 
 
@@ -20,5 +20,16 @@ def organization(request):
     return render(request, 'info/organization.html')
     
     
-def institute_info(request):
-    return render(request, 'info/institute_info.html')
+def institute_info(request, inst_id):
+    try:
+        inst = Institute.objects.get(id=inst_id)
+        scientists = (Scientist.objects.filter(institute_id=inst_id)
+                      .order_by('name'))
+    except:
+        return Http404('Институт не найден')
+        
+    return render(request, 'info/institute_info.html',
+                  {
+                      'institute': inst,
+                      'scientists': scientists
+                   })
