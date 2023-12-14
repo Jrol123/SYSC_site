@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'smu_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # потом переименовать
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS':{"read_default_file": "D:/utilities/ospanel/userdata/MySQL-8.0-Win10/auto.cnf"}
     }
 }
 
