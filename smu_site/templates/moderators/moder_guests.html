@@ -27,20 +27,19 @@
 					<div class="First plates ScrollBar col-lg-4 col-sm-4 col-md-4 col-xs-4">
 						<label class="labels_for_form" for="grant_name">Новости на модерации</label>
 						<br>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
-						
+						{% if queue %}
+							{% for type, obj in queue %}
+								{% if type in 'НовостьМероприятие' %}
+									<button type="button" class="btn input_for_form color_news">{{type}}: {{obj.title}}</button>
+								{% else %}
+									<button type="button" class="btn input_for_form color_news">{{type}}: {{obj.name}}</button>
+								{% endif %}
+							{% endfor %}
+						{% else %}
+							{% for i in range %}
+								<button type="button" class="btn input_for_form color_news">Пр. Новость #</button>
+							{% endfor %}
+						{% endif %}
 					</div>
 					<div class="Second plates col-lg-7 col-sm-7 col-md-7 col-xs-7">
 						<h1> Вид ОТОБРАЖЕНИЯ НОВОСТИ Как отображается ? </h1>
