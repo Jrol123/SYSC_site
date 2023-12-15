@@ -101,28 +101,66 @@ class CreateGrantForm(ModelForm):
             return end_result_date
 
 
-class CreateInstituteForm(ModelForm):
+class CreateInstituteForm(forms.Form):
     name = forms.CharField(help_text="Введите название института",
+                           widget=forms.TextInput(
+                               attrs={'class': "input_for_form",
+                                      'type': "text", 'id': "inst_name",
+                                      'name': "grant_name"}),
                            required=True)
-    description = forms.CharField(help_text="Введите писание института",
-                                  widget=forms.Textarea, required=False)
+    description = forms.CharField(
+        help_text="Введите писание института",
+        widget=forms.Textarea(attrs={
+            'class': "textarea m-1 col-lg-12 col-sm-12 col-md-12 "
+                     "col-xs-12",
+            'id': "description", 'name': "description"}),
+        required=True)
     employees_count = forms.IntegerField(
-        help_text="Введите число сотрудников", required=True)
+        help_text="Введите число сотрудников",
+        widget=forms.NumberInput(attrs={
+            'type': "number", 'class': "input_for_form",
+            'id': "numberInput", 'placeholder': "Введите число",
+            'min': "0"}), required=True)
     scientist_count = forms.IntegerField(
-        help_text="Введите число молодых ученых", required=True)
+        help_text="Введите число молодых ученых",
+        widget=forms.NumberInput(attrs={
+            'type': "number", 'class': "input_for_form",
+            'id': "numberInput2", 'placeholder': "Введите число",
+            'min': "0"}), required=True)
     chairman = forms.CharField(help_text="Введите ФИО представителя",
+                               widget=forms.TextInput(
+                                   attrs={'type': "text",
+                                          'class': "input_for_form",
+                                          'id': "chairman",
+                                          'name': "Chairman"}),
                                required=True)
     link = forms.URLField(help_text="Введите ссылку на сайт института",
+                          widget=forms.URLInput(
+                              attrs={'class': "input_for_form",
+                                     'type': "url",
+                                     'id': "institute_link",
+                                     'name': "institute_link"}),
                           required=True)
     smu_link = forms.URLField(
         help_text="Введите ссылку на сайт СМУ института",
-        required=False)
+        widget=forms.URLInput(attrs={
+            'class': "input_for_form", 'type': "url",
+            'id': "smu_link", 'name': "smu_link"}), required=False)
     
-    class Meta:
-        model = Image
-        fields = ['name', 'url_path', 'alt', 'description',
-                  'employees_count',
-                  'scientist_count', 'chairman', 'link', 'smu_link']
+    img = forms.ImageField(help_text="Изображение Института",
+                           widget=forms.FileInput(
+                               attrs={'class': "input_for_form_img",
+                                      'type': "file",
+                                      'id': "imageInput",
+                                      'name': "image",
+                                      'accept': ".jpg, .jpeg, .png"}),
+                           required=False)
+    
+    # class Meta:
+    #     model = Image
+    #     fields = ['name', 'url_path', 'alt', 'description',
+    #               'employees_count',
+    #               'scientist_count', 'chairman', 'link', 'smu_link']
     
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -165,6 +203,23 @@ class CreateInstituteForm(ModelForm):
     def clean_smu_link(self):
         link = self.cleaned_data['smu_link']
         return link
+    
+    def save(self, commit=True):
+        cd = self.cleaned_data
+        url_path = cd['img']
+        
+        inst = Institute(name=cd['name'], description=cd['description'],
+                         employees_count=cd['employees_count'],
+                         scientist_count=cd['scientist_count'],
+                         chairman=cd['chairman'],
+                         link=cd['link'], smu_link=cd['smu_link'])
+        if commit:
+            inst.save()
+            
+            img = Image(institute_id=inst.id, alt=cd['name'])
+            img.url_path.save(url_path.name, url_path, save=True)
+        
+        return inst
 
 
 class CreateScientistForm(ModelForm):

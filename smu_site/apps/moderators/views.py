@@ -82,26 +82,25 @@ def create_new_grant(request):
 def create_new_institute(request):
 
     if request.method == 'POST':
-
-        form = CreateInstituteForm(request.POST)
-
+        form = CreateInstituteForm(request.POST, request.FILES)
         if form.is_valid():
-
-            institute = Institute(name=form.cleaned_data['name'],
-                                  description=form.cleaned_data['description'],
-                                  emplotees_count=form.cleaned_data['employees_count'],
-                                  scientist_count=form.cleaned_data['scientist_count'],
-                                  chairman=form.cleaned_data['chairman'],
-                                  link=form.cleaned_data['link'],
-                                  smu_link=form.cleaned_data['smu_link'])
-            institute.save()
-
+            # institute = Institute(name=form.cleaned_data['name'],
+            #                       description=form.cleaned_data['description'],
+            #                       emplotees_count=form.cleaned_data['employees_count'],
+            #                       scientist_count=form.cleaned_data['scientist_count'],
+            #                       chairman=form.cleaned_data['chairman'],
+            #                       link=form.cleaned_data['link'],
+            #                       smu_link=form.cleaned_data['smu_link'])
+            # institute.save()
+            form.save()
+            
             return HttpResponseRedirect('/moderators/account')
 
     else:
         form = CreateInstituteForm()
 
-    return render(request, 'moderators/create_new_institute.html', {'form': form})
+    return render(request, 'moderators/create_new_institute.html',
+                  {'form': form})
 
 
 @login_required
