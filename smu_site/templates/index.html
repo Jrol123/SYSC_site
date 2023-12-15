@@ -22,7 +22,7 @@
 
     {% include "navbar.html" %}
 
-        <div class="plates_home container-custom plate-container ">
+        <div class="plates_home main_plate container-custom plate-container ">
           <div class="row">
             <div class="col-lg-main col-md-12 col-sm-12"></div>
             <div  style="margin-top:3em; color:none; border-top:5px solid var(--nav-bg)" class="plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
@@ -38,25 +38,31 @@
                     </form>
                   <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="news-left-div container rounded">
-                      <h2 style="color:whitesmoke" class="text-center pt-2">объявления</h2>
+                      <h2 style="color:whitesmoke" class="text-center pt-2">Мероприятия</h2>
                       <hr>
                     </div>
+                    {% if events %}
+                        {% for e, text in events %}
+                        <div class="mt-3 event-card rounded ">
+                          <h3>{{e.title}}</h3>
 
-                    {% for e in events %}
-                    <div class="mt-3 event-card rounded ">
-                      <h3>{{e.title}}</h3>
-                     
-                      <div class="mt-3 container">
-                        <p style="float:left; margin-right:7em">{{e.begin_date}}</P>
-                   
-                        <p>{{e.end_date}}</P>
-                       
-                        <hr style="color:black">
-                        <p>{{e.text}}</p>
+                          <div class="mt-3 container">
+                            <p style="float:left; margin-right:7em">{{e.begin_date}}</P>
 
-                      </div>
-                    </div>
-                    {% endfor %}
+                            <p>{{e.end_date}}</P>
+
+                            <hr style="color:black">
+                            <p>{{text}}</p>
+
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="container plates" style="margin-top:-12em; max-width:700px">
+                        <h4 style="margin-top:15em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey; text-align: center;">Мероприятия не найдены</h4>
+                        <h1 style="margin-top:-1em; color:black; background-color: rgba(146,0,0,0.5); text-align: center;" class="rounded"><i class="fa fa-exclamation-triangle" style="margin: 0 auto;"></i></h1><br/>
+                        </div>
+                    {% endif %}
                   </div>
                 <!--
                 <div class="mt-5 mb-5 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -92,32 +98,37 @@
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
                 {% if last_news_month %}
-                  {% for n, m in last_news_month %}
+                  {% for n, m, text, img in last_news_month %}
                   <div class="mt-5 plates" style="border-radius:0px;">
                       <figure class="news-card">
-                        <div class="frame">
-                          <fieldset>
-                            <div class="function"><br>
-                              <a href="#">Click Me</a>
+                        {% if img %}
+                            <div class="frame" style="background-image: url('/media/{{img.url_path}}');">
+                        {% else %}
+                            <div class="frame">
+                        {% endif %}
+                                <fieldset>
+                                    <div class="function"><br>
+                                        <a href="#">Click Me</a>
+                                    </div>
+                                </fieldset>
                             </div>
-                          </fieldset>
-                        </div>
 
                         <div class="container news-sec">
                           <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
                           <h2 class="text_compress">{{n.title}}</h2>
-                          <p>{{n.text}}</p><hr>
+                            <p>{{text}}</p>
+                            <hr>
                           <a href="" class="readmore-btn">Read More</a>
                         </div>
                       </figure>
                   </div>
                   {% endfor %}
-                  {% else %}
+                {% else %}
                
                     <div class="container plates mt-5 " style="max-width:700px">
-                    <h4 style="margin-top:15em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">У меня для вас плохие новости... А, стоп, они не найдены. Не может быть плохим то, чего нет</h4>
+                    <h4 style="margin-top:15em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">Новости или мероприятия не найдены</h4>
                     <h1 style="margin-top:-1em; color:black; background-color: rgba(146,0,0,0.5)" class="rounded"><i class="fa fa-exclamation-triangle "></i></h1><br/>
-                  </div>
+                    </div>
              
                 {% endif %}
             </div>

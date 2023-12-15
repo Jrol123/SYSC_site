@@ -28,52 +28,82 @@
     <!--//-->
 
 
-    <div class="plates_home container-custom plate-container">
+    <div class="plates_home main_plate container-custom plate-container">
 
-        {% for i in '123456789' %} <!--This loop repeats the div below exactly 9 times--> 
-
+        {% for i, img in institutes %} <!--This loop repeats the div below exactly 9 times-->
         <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
             <div class="row container-custom">
                 <div class="mt-4 mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8">
                     <div class="row">
                    
-                        <div class="col-lg-2 mt-5 mb-3 col-md-2 col-sm-12">
-                            <div class="text-center">
-                                <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid"  style="border-radius:100px; border:4px solid black" width="100px" alt="...">
-                            </div>
-                         </div>
-                         
-
-                        <div class="col-lg-9 col-md-9 col-sm-12">
-                            <h3 style="color:var(--nav-bg); font-size:14px">Описание гранта</h3><hr style="color:silver">
+                        <div class="col-lg-11 col-md-11S col-sm-12 rounded" style="">
+                            <h3 style="color:var(--nav-bg); font-size:14px">{{i.name}}</h3><hr style="color:silver">
                             <div class="mt-2">
-                                <p style="color:black">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
+                                <p style="color:black">{{i.description}}</p>
                             </div>
                             
                             <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">сотрудников <span style="color:black">: 2000</span></h3><hr style="color:silver">
+                                <h3 style="color:var(--nav-bg); font-size:14px">Количество сотрудников<span style="color:black">: {{i.employees_count}}</span></h3><hr style="color:silver">
                             </div>
 
                             <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">молодых учёных <span style="color:black">: 2000</span></h3><hr style="color:silver">
+                                <h3 style="color:var(--nav-bg); font-size:14px">Количество молодых учёных<span style="color:black">: {{i.scientist_count}}</span></h3><hr style="color:silver">
                             </div>
 
                             <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">ФИО председателя СМУ <span style="color:black">: 2000</span></h3><hr style="color:silver">
+                                <h3 style="color:var(--nav-bg); font-size:14px">ФИО председателя<span style="color:black">: {{i.chairman}}</span></h3><hr style="color:silver">
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div">
-                    <a href="readmore">Ссылка на сайт института</a>
-                    <a href="readmore">Ссылка на сайт института</a>
+                    <div class="text-center mt-3 mb-3">
+                        {% if img %}
+                            <img src="/media/{{img.url_path}}" class=" img-fluid"  style=" border:4px solid black" width="100%" alt="{{img.alt}}">
+                        {% else %}
+                            <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid"  style=" border:4px solid black" width="100%" alt="...">
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <a class="stretched-link" href="{% url 'info:institute_info' %}"></a>
+            <a class="stretched-link" href="{% url 'info:institute_info' i.id %}"></a>
         </div>
-
         {% endfor %}
+<!--        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">-->
+<!--            <div class="row container-custom">-->
+<!--                <div class="mt-4 mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8">-->
+<!--                    <div class="row">-->
+<!--                   -->
+<!--                        <div class="col-lg-11 col-md-11S col-sm-12 rounded" style="">-->
+<!--                            <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Описание гранта</h3><hr style="color:silver">-->
+<!--                            <div class="mt-2">-->
+<!--                                <p style="color:black">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley </p>-->
+<!--                            </div>-->
+<!--                            -->
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Количество сотрудников<span style="color:black">: 2000</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Количество молодых учёных<span style="color:black">: 2000</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">ФИО председателя<span style="color:black">: Фамилия Имя Отчество</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div">-->
+<!--                    <div class="text-center mt-3 mb-3">-->
+<!--                        <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid"  style=" border:4px solid black" width="100%" alt="...">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <a class="stretched-link" href="{% url 'info:institute_info' 1 %}"></a>-->
+<!--        </div>-->
     </div>
 
 

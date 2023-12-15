@@ -24,13 +24,13 @@
     {% include "navbar.html" %}
 
 
-    <div class="plates_home container-custom plate-container" >
+    <div class="plates_home main_plate container-custom plate-container" >
 
         <div class="mt-5">
             <h4 class="mb-4 text-center" style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
             <hr style="color:var(--nav-btn-bg)">
             {% if grants %}
-                {% for grant in grants %}
+                {% for grant, img in grants %}
                 <section>
                     <div class="grantees plates mt-5 rounded" style="border-left:5px solid var(--nav-bg)">
                        <div class="title"><h3>{{grant.name}}</h3></div>
@@ -39,7 +39,11 @@
 
                                 <div class="mt-4  col-lg-2 col-md-2">
                                     <div class="text-center">
-                                        <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black" width="100px" alt="...">
+                                        {% if img %}
+                                            <img src="/media/{{img.url_path}}" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black" width="200px" alt="{{img.alt}}">
+                                            {% else %}
+                                            <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black" width="100px" alt="...">
+                                        {% endif %}
                                     </div>
                                 </div>
 
@@ -63,7 +67,7 @@
                                 <div class="mt-4 col-lg-2 col-md-2" style="border-left:0.1px dashed silver">
                                     <h3 style="color:black; font-size:14px">Дата</h3><hr style="color:silver">
                                     <div class="mt-4">
-                                        <p style="color:var(--nav-btn-bg)">Окончания:</p>
+                                        <p style="color:var(--nav-btn-bg)">Окончание подачи заявки:</p>
                                         <p style="color:black">{{grant.end_doc_date}}</p>
                                     </div>
                                     <hr style="color:silver">
@@ -83,7 +87,7 @@
                 {% endfor%}
             {% else %}
             <div class="container plates mt-2 " style="max-width:700px">
-                <h4 class="text-center" style="margin-top:6em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">Гранты не найдены (как и твой отец, который ушёл за хлебом, когда тебе было 3 года).</h4>
+                <h4 class="text-center" style="margin-top:6em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">Гранты не найдены.</h4>
                 <h1 style="margin-top:-1em; color:black; background-color: rgba(146,0,0,0.5)" class="text-center rounded"><i class="fa fa-exclamation-triangle "></i></h1><br/>
               </div>
                

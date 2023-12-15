@@ -1,15 +1,14 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm,
-                    UploadDocForm, CreateScientistForm)
+from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm
 from django.contrib.auth.decorators import login_required, permission_required
-from django.views.generic import ListView, CreateView
-from info.models import Grant, Institute, Scientist, ScientistLink
-from news.models import News, Image
 from documents.models import Doc
 from .models import Queue
 from django.db import transaction
+from info.models import Grant, Institute
+from news.models import News
+from SHC.models import Doc as SHCDoc
 
 
 @transaction.atomic
@@ -37,7 +36,16 @@ def moder_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def gzs(request):
-    return render(request, 'moderators/gzs.html')
+    if request.method == 'POST':
+        form = UploadSHCDocForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/moderators/account')
+    else:
+        form = UploadSHCDocForm()
+
+    return render(request, 'moderators/gzs.html',
+                  {'form': form})
 
 
 @transaction.atomic
@@ -61,11 +69,13 @@ def add_new_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_grant(request):
+
     if request.method == 'POST':
 
-        form = CreateGrantForm(request.POST, request.FILES)
+        form = CreateGrantForm(request.POST)
 
         if form.is_valid():
+
             grant = Grant(name=form.cleaned_data['name'],
                           criteria=form.cleaned_data['criteria'],
                           description=form.cleaned_data['description'],
@@ -73,10 +83,6 @@ def create_new_grant(request):
                           end_result_date=form.cleaned_data['end_result_date'],
                           link=form.cleaned_data['link'])
             grant.save()
-            img = Image(grant_id=grant.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
-            img.save()
 
             return HttpResponseRedirect('/moderators/account')  # редирект
     else:
@@ -89,24 +95,20 @@ def create_new_grant(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_institute(request):
+
     if request.method == 'POST':
-
         form = CreateInstituteForm(request.POST, request.FILES)
-
         if form.is_valid():
-            institute = Institute(name=form.cleaned_data['name'],
-                                  description=form.cleaned_data['description'],
-                                  employees_count=form.cleaned_data['employees_count'],
-                                  scientist_count=form.cleaned_data['scientist_count'],
-                                  chairman=form.cleaned_data['chairman'],
-                                  link=form.cleaned_data['link'],
-                                  smu_link=form.cleaned_data['smu_link'])
-            institute.save()
-            img = Image(institute_id=institute.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
-            img.save()
-
+            # institute = Institute(name=form.cleaned_data['name'],
+            #                       description=form.cleaned_data['description'],
+            #                       emplotees_count=form.cleaned_data['employees_count'],
+            #                       scientist_count=form.cleaned_data['scientist_count'],
+            #                       chairman=form.cleaned_data['chairman'],
+            #                       link=form.cleaned_data['link'],
+            #                       smu_link=form.cleaned_data['smu_link'])
+            # institute.save()
+            form.save()
+            
             return HttpResponseRedirect('/moderators/account')
 
     else:
@@ -155,13 +157,17 @@ def create_scientist(request, institute_id):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
+
     if request.method == 'POST':
 
         form = CreateNewsForm(request.POST)
 
         if form.is_valid():
-            news = News(title='Text',
-                        text=form.cleaned_data['text'],
+
+            news = News(title=form.cleaned_data['name'],
+                        text=form.cleaned_data['description'],
+                        pub_date=form.cleaned_data['date'],
+                        link=form.cleaned_data['link'],
                         user_id=request.user.id)
             news.save()
 
@@ -169,7 +175,6 @@ def create_news(request):
 
     else:
         form = CreateNewsForm()
-    return render(request, 'moderators/news.html', {'form': form})
 
 
 @transaction.atomic
