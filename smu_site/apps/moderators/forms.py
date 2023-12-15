@@ -79,26 +79,6 @@ class CreateGrantForm(ModelForm):
         name = self.cleaned_data['name']
         return name
 
-    def clean_structure(self):
-        criteria = self.cleaned_data['criteria']
-        return criteria
-
-    def clean_description(self):
-        description = self.cleaned_data['description']
-        return description
-
-    def clean_link(self):
-        link = self.cleaned_data['link']
-        return link
-
-    def clean_end_doc_date(self):
-        end_doc_date = self.cleaned_data['end_doc_date']
-        return end_doc_date
-
-    def clean_end_result_date(self):
-        end_result_date = self.cleaned_data['end_result_date']
-        return end_result_date
-
 
 class CreateInstituteForm(forms.Form):
     name = forms.CharField(help_text="Введите название института",
@@ -155,17 +135,16 @@ class CreateInstituteForm(forms.Form):
                                       'accept': ".jpg, .jpeg, .png"}),
                            required=True)
     
-    # class Meta:
-    #     model = Image
-    #     fields = ['name', 'url_path', 'alt', 'description',
-    #               'employees_count',
-    #               'scientist_count', 'chairman', 'link', 'smu_link']
+    class Meta:
+        model = Image
+        fields = ['name', 'url_path', 'alt', 'description',
+                  'employees_count',
+                  'scientist_count', 'chairman', 'link', 'smu_link']
     
     def clean_name(self):
         name = self.cleaned_data['name']
         
-        name_list = Institute.objects.values(
-            'name')  # список свойств в формате:
+        name_list = Institute.objects.values('name')  # список свойств в формате:
         # [{'name': 'Name1'}, {'name': 'Name2'}, ...]
         for val in name_list:
             if name == val['name']:
@@ -176,8 +155,7 @@ class CreateInstituteForm(forms.Form):
     def clean_employees_count(self):
         employees_count = self.cleaned_data['employees_count']
         if employees_count < 1:
-            raise ValidationError(
-                'Количество сотрудников не может быть меньше 1')
+            raise ValidationError('Количество сотрудников не может быть меньше 1')
         return employees_count
     
     def clean_scientist_count(self):
@@ -278,8 +256,7 @@ class UploadSHCDocForm(forms.Form):
             'accept': ".doc, .docx, .xls, .txt, .rtf, .pdf",
             'id': "documentUpload", 'name': "documentUpload"}),
         required=True)
-    description = forms.CharField(
-        help_text='Описание',
+    description = forms.CharField(help_text='Описание',
         widget=forms.Textarea(attrs={
             'class': "textarea col-lg-12 col-sm-12 col-md-12 col-xs-12",
             'id': "description", 'name': "description"}), required=True)
