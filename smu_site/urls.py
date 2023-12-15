@@ -24,10 +24,10 @@ from . import views, settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
+    path('news/', views.index, name='news'),
     path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
     path('moderators/', include('moderators.urls')),
-    path('news/', include('news.urls')),
     path('accounts/login', include('django.contrib.auth.urls')),
     path('accounts/login', views.user_login, name='user_login'),
     # path('representatives/', include(

@@ -97,8 +97,8 @@
             
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
-                {% if last_news_month %}
-                  {% for n, m, text, img in last_news_month %}
+                {% if last_news %}
+                  {% for n, m, text, img in last_news.object_list %}
                   <div class="mt-5 plates" style="border-radius:0px;">
                       <figure class="news-card">
                         {% if img %}
@@ -123,6 +123,18 @@
                       </figure>
                   </div>
                   {% endfor %}
+                  <div style="text-align: center; font-size: 2.5em;">
+                      {% if last_news.has_previous %}
+                          {# whether the previous page exists #}
+                          <a href="?page={{last_news.previous_page_number}}"><</a> {# link to the prev page #}
+                      {% endif %}
+
+                      <span style="color: blue;">{{last_news.number}}</span> {# the current page number #}
+
+                      {%if last_news.has_next %} {# whether the next page exists #}
+                          <a href="?page={{last_news.next_page_number}}">></a> {# link to the next page #}
+                      {% endif %}
+                  </div>
                 {% else %}
                
                     <div class="container plates mt-5 " style="max-width:700px">

@@ -4,6 +4,7 @@ from datetime import date, timedelta
 
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.shortcuts import render
@@ -37,8 +38,6 @@ def index(request):
     # в будущем нужно реализовать pagination
     last_news = list(sorted(last_news, key=lambda x: x[0].pub_date,
                             reverse=True))
-    if len(last_news) > 5:
-        last_news = last_news[:5]
     
     # функция для сокращения текста
     def trim_text(text: str, limit):
@@ -74,6 +73,17 @@ def index(request):
                             .select_one('p').text, 280), img)
                  for n, img in last_news]
     
+    p = Paginator(last_news, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        # Если page_number не является целым числом, то присваивается 1
+        page_obj = p.page(1)
+    except EmptyPage:
+        # Если страница пустая, возвращает последнюю страницу
+        page_obj = p.page(p.num_pages)
+    
     # переводим даты в изначальный формат
     sdate = sdate.isoformat()
     edate -= timedelta(days=1)
@@ -90,7 +100,7 @@ def index(request):
     
     return render(request, 'index.html',
                   {
-                      "last_news_month": last_news,
+                      "last_news": page_obj,
                       "sdate": sdate,
                       "edate": edate,
                       "events": events,
