@@ -11,8 +11,7 @@ from SHC.models import Doc as SHCDoc
 class CreateUserForm(forms.Form):
     user_group = forms.ChoiceField(help_text="Выберите тип аккаунта",
                                    choices=(
-                                       ("representative",
-                                        "Representative"),
+                                       ("representative", "Representative"),
                                        ("moderator", "Moderator")))
     user_name = forms.CharField(help_text="Введите имя аккаунта",
                                 required=True)
@@ -76,29 +75,29 @@ class CreateGrantForm(ModelForm):
         fields = ['name', 'url_path', 'alt', 'description',
                   'end_doc_date', 'end_result_date', 'criteria', 'link']
         
-        def clean_name(self):
-            name = self.cleaned_data['name']
-            return name
-        
-        def clean_structure(self):
-            criteria = self.cleaned_data['criteria']
-            return criteria
-        
-        def clean_description(self):
-            description = self.cleaned_data['description']
-            return description
-        
-        def clean_link(self):
-            link = self.cleaned_data['link']
-            return link
-        
-        def clean_end_doc_date(self):
-            end_doc_date = self.cleaned_data['end_doc_date']
-            return end_doc_date
-        
-        def clean_end_result_date(self):
-            end_result_date = self.cleaned_data['end_result_date']
-            return end_result_date
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        return name
+
+    def clean_structure(self):
+        criteria = self.cleaned_data['criteria']
+        return criteria
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+        return description
+
+    def clean_link(self):
+        link = self.cleaned_data['link']
+        return link
+
+    def clean_end_doc_date(self):
+        end_doc_date = self.cleaned_data['end_doc_date']
+        return end_doc_date
+
+    def clean_end_result_date(self):
+        end_result_date = self.cleaned_data['end_result_date']
+        return end_result_date
 
 
 class CreateInstituteForm(forms.Form):
@@ -154,7 +153,7 @@ class CreateInstituteForm(forms.Form):
                                       'id': "imageInput",
                                       'name': "image",
                                       'accept': ".jpg, .jpeg, .png"}),
-                           required=False)
+                           required=True)
     
     # class Meta:
     #     model = Image
