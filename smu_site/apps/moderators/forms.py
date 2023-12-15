@@ -208,32 +208,6 @@ class UploadDocForm(ModelForm):
 
 
 class UploadSHCDocForm(forms.Form):
-    # class Meta:
-    #     model = Doc
-    #     fields = ['name', 'path', 'description']
-    #     labels = {
-    #         'name': 'Название документа', 'path': 'Загрузить документ'
-    #     }
-    #     help_texts = {
-    #         'name': 'Название документа', 'path': 'Загрузить документ'
-    #     }
-    #     widgets = {
-    #         'name': forms.TextInput(
-    #             attrs={
-    #                 'class': "input_for_form col-lg-3 col-sm-3 "
-    #                          "col-md-3 col-xs-3",
-    #                 'type': "text", 'id': "grant_name",
-    #                 'name': "doc_name"}),
-    #         'path': forms.FileInput(
-    #             attrs={
-    #                 'class': "input_for_form_img col-lg-6 col-sm-6 "
-    #                          "col-md-6 col-xs-6",
-    #                 'type': "file",
-    #                 'accept': ".doc, .docx, .xls, .txt, .rtf, .pdf",
-    #                 'id': "documentUpload", 'name': "documentUpload"})
-    #     }
-    #
-    
     name = forms.CharField(
         help_text='Название документа',
         widget=forms.TextInput(attrs={
@@ -261,7 +235,6 @@ class UploadSHCDocForm(forms.Form):
         path = self.cleaned_data['path']
         description = self.cleaned_data['description']
         
-        print(description)
         doc = Doc(name=name, category='GZS')
         if commit:
             # Создаем объект Doc из documents.models и сохраняем файл

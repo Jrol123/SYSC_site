@@ -9,8 +9,8 @@ from django.template import loader
 from django.shortcuts import render
 from django.utils.timezone import localdate
 
-from news.models import News, Event
 from .forms import LoginForm
+from news.models import News, Event, Image
 from info.models import Grant
 
 
@@ -23,15 +23,19 @@ def index(request):
     edate += timedelta(days=1)
     
     # Выбираем те новости и события, которые не находятся в очереди
-    last_news = list(News.objects.filter(
-        pub_date__range=(sdate, edate), queue_id__isnull=True))
-    last_events = list(Event.objects.filter(
-        pub_date__range=(sdate, edate), queue_id__isnull=True))
+    last_news = News.objects.filter(
+        pub_date__range=(sdate, edate), queue_id__isnull=True)
+    last_news = [(n, Image.objects.filter(news_id=n.id).first())
+                 for n in last_news]
+    last_events = Event.objects.filter(
+        pub_date__range=(sdate, edate), queue_id__isnull=True)
+    last_events = [(e, Image.objects.filter(event_id=e.id).first())
+                   for e in last_events]
     last_news += last_events
     
     # Сортируем по дате и выбираем первые 5 для первой страницы новостей
     # в будущем нужно реализовать pagination
-    last_news = list(sorted(last_news, key=lambda x: x.pub_date,
+    last_news = list(sorted(last_news, key=lambda x: x[0].pub_date,
                             reverse=True))
     if len(last_news) > 5:
         last_news = last_news[:5]
@@ -67,8 +71,8 @@ def index(request):
              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     last_news = [(n, month[n.pub_date.month - 1],
                   trim_text(BS(n.text, 'html.parser')
-                            .select_one('p').text, 280))
-                 for n in last_news]
+                            .select_one('p').text, 280), img)
+                 for n, img in last_news]
     
     # переводим даты в изначальный формат
     sdate = sdate.isoformat()

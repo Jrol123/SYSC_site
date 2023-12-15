@@ -27,7 +27,6 @@ def gzs(request):
     if request.method == 'POST':
         form = UploadSHCDocForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
             form.save()
             return HttpResponseRedirect('/moderators/account')
     else:

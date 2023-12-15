@@ -98,16 +98,20 @@
             <div class="ScrollBar col-lg-8 col-sm-12 col-md-12 col-xs-12">
               <div>
                 {% if last_news_month %}
-                  {% for n, m, text in last_news_month %}
+                  {% for n, m, text, img in last_news_month %}
                   <div class="mt-5 plates" style="border-radius:0px;">
                       <figure class="news-card">
-                        <div class="frame">
-                          <fieldset>
-                            <div class="function"><br>
-                              <a href="#">Click Me</a>
+                        {% if img %}
+                            <div class="frame" style="background-image: url('/media/{{img.url_path}}');">
+                        {% else %}
+                            <div class="frame">
+                        {% endif %}
+                                <fieldset>
+                                    <div class="function"><br>
+                                        <a href="#">Click Me</a>
+                                    </div>
+                                </fieldset>
                             </div>
-                          </fieldset>
-                        </div>
 
                         <div class="container news-sec">
                           <div class="date"><span class="day">{{n.pub_date.day}}</span><span class="month">{{m}}</span></div>
@@ -119,7 +123,7 @@
                       </figure>
                   </div>
                   {% endfor %}
-                  {% else %}
+                {% else %}
                
                     <div class="container plates mt-5 " style="max-width:700px">
                     <h4 style="margin-top:15em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">Новости или мероприятия не найдены</h4>

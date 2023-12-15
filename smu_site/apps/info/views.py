@@ -5,6 +5,9 @@ from news.models import Image
 
 def institutes(request):
     inst = Institute.objects.all().order_by('name')
+    inst = [(i, Image.objects.filter(institute_id=i.id)
+            .order_by('id').first())
+            for i in inst]
     return render(request, 'info/institutes.html',
                   {'institutes': inst})
 
@@ -26,13 +29,18 @@ def organization(request):
 def institute_info(request, inst_id):
     try:
         inst = Institute.objects.get(id=inst_id)
-        scientists = (Scientist.objects.filter(institute_id=inst_id)
-                      .order_by('name'))
     except:
         return Http404('Институт не найден')
-        
+    
+    inst_img = Image.objects.filter(institute_id=inst_id).first()
+    scientists = (Scientist.objects.filter(institute_id=inst_id)
+                  .order_by('name'))
+    scientists = [(s, Image.objects.filter(scientist_id=s.id)
+                   .order_by('id').first())
+                  for s in scientists]
     return render(request, 'info/institute_info.html',
                   {
                       'institute': inst,
+                      'inst_img': inst_img,
                       'scientists': scientists
                    })
