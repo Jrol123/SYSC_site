@@ -1,13 +1,14 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
-from .forms import CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm
+from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm,
+                    CreateScientistForm, UploadDocForm)
 from django.contrib.auth.decorators import login_required, permission_required
 from documents.models import Doc
 from .models import Queue
 from django.db import transaction
-from info.models import Grant, Institute
-from news.models import News
+from info.models import Grant, Institute, Scientist, ScientistLink
+from news.models import News, Image
 from SHC.models import Doc as SHCDoc
 
 
@@ -175,6 +176,7 @@ def create_news(request):
 
     else:
         form = CreateNewsForm()
+    return render(request, "moderators/news.html", {"form": form})
 
 
 @transaction.atomic
