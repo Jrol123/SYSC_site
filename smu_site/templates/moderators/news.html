@@ -119,10 +119,7 @@
 
     
 	<div class="place_form main_plate plates_home container-custom plate-container">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em"
-                   placeholder="Название новости" required/>
+		{% csrf_token %}
 		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
 			<div style="position:relative; z-index:1 " class="container-custom">
 				<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
@@ -134,6 +131,7 @@
 			<div class="container-custom">
 				<form class="form_all" action="" method="POST">
 					{% csrf_token %}
+					<input type="text" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
 					<label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
 					<input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png">
 					<input class="labels_for_form mt-1 mb-1 plates col-lg-5 col-sm-5 col-md-5 col-xs-5 btn" type="button" onclick="call()" value="Показать сгенерированный HRML-код">
