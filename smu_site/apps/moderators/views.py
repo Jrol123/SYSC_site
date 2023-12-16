@@ -30,6 +30,11 @@ def news(request):
 def add_new_documents(request):
     return render(request, 'moderators/add_new_documents.html')
 
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def create_scientist(request):
+    return render(request, 'moderators/create_scientist.html')
 
 @transaction.atomic
 @login_required
