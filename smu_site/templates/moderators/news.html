@@ -105,7 +105,21 @@
 			  document.body.removeChild(a);
 			}
 		  </script>
-
+		  
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+		$(document).ready(function() {
+			$('.for_event').hide();
+				// Show/hide institute-related elements based on user group selection
+				$('#NewEvents').change(function() {
+					  if ($(this).val() === 'News') {
+						$('.for_event').hide();
+					  } else {
+						$('.for_event').show();
+					  }
+				});
+			});
+		</script>
 {% endblock %}
 <!--//-->
 
@@ -135,6 +149,17 @@
 					<label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
 					<input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png">
 					<input class="labels_for_form mt-1 mb-1 plates col-lg-5 col-sm-5 col-md-5 col-xs-5 btn" type="button" onclick="call()" value="Показать сгенерированный HRML-код">
+					<label  class="mt-2 labels_for_form inst" for="institute">Категория документа</label>
+					<select class="form-control input_for_form text-dark" id="NewEvents" name="institute">
+						<option value="News">Новость</option>
+						<option value="Num_2">Событие</option>
+					</select>
+					<div class="for_event">
+						<label class="labels_for_form" for="startDate">Дата начала события:</label>
+						<input class="input_for_form"type="datetime-local" id="startDate" name="startDate">
+						<label class="labels_for_form" for="endDate">Дата окончания события:</label>
+						<input class="input_for_form"type="datetime-local" id="endDate" name="endDate">
+					</div>
 					<input class="submit_all labels_for_form plates mb-3  col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Опубликовать">
 				</form>
 			</div>
