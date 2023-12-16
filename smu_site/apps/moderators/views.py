@@ -33,12 +33,6 @@ def add_new_documents(request):
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
-def create_scientist(request):
-    return render(request, 'moderators/create_scientist.html')
-
-@transaction.atomic
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
 def moder_guests(request):
     moder_queue = []
     obtp = {'doc': ('Документ', Doc), 'news': ('Новость', News),
@@ -142,7 +136,7 @@ def create_new_institute(request):
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
-def create_scientist(request, institute_id):
+def create_scientist(request):
     if request.method == 'POST':
 
         form = CreateScientistForm(request.POST, request.FILES)
