@@ -31,8 +31,9 @@ urlpatterns = [
     path('accounts/login', include('django.contrib.auth.urls')),
     path('accounts/login', views.user_login, name='user_login'),
     # path('representatives/', include(
-    #     ('representatives.urls', 'representatives'),
-    #     namespace='representatives')),
+    #      ('representatives.urls', 'representatives'),
+    #      namespace='representatives')),
+    path('representatives/', include('representatives.urls')),
     path('SHC/', include('SHC.urls')),
 ]
 
