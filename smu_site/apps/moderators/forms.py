@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from documents.models import Doc
 from info.models import Institute, Grant
-from news.models import Image
+from news.models import Image, News
 from SHC.models import Doc as SHCDoc
 
 
@@ -253,10 +253,12 @@ class CreateScientistForm(ModelForm):
                   'service_name']
 
 
-class CreateNewsForm(forms.Form):
-    name = forms.CharField(help_text="Введите название", required=True)
-    description = forms.CharField(help_text="Введите текст",
-                                  widget=forms.Textarea)
+class CreateNewsForm(ModelForm):
+    title = forms.CharField(help_text="Заголовок новости", required=True)
+
+    class Meta:
+        model = Image
+        fields = ['url_path']
 
 
 class UploadDocForm(ModelForm):

@@ -104,7 +104,7 @@
 			  a.click();
 			  document.body.removeChild(a);
 			}
-		  </script>
+        </script>
 
 {% endblock %}
 <!--//-->
@@ -113,34 +113,56 @@
 
 {% block content %}
 	<div class="z-index:3">
-    {% include "navbar.html" %}
-	{% include "moderators/moder_navbar.html" %}
-</div>
+        {% include "navbar.html" %}
+        {% include "moderators/moder_navbar.html" %}
+    </div>
 
     
 	<div class="place_form main_plate plates_home container-custom plate-container">
-        <form action="" method="POST">
+        <form class="form_all" action="" method="POST">
             {% csrf_token %}
-            <input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em"
-                   placeholder="Название новости" required/>
-		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
-			<div style="position:relative; z-index:1 " class="container-custom">
-				<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
-					<textarea id="myTextarea" style="width:100%"></textarea>
-				</div> 
+            <input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em" placeholder="Название новости" id="myTitle" required/>
+            <div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+                <div style="position:relative; z-index:1 " class="container-custom">
+                    <div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+                        <textarea id="myTextarea" style="width:100%"></textarea>
+                    </div>
+                </div>
 
-			</div>
+                <div class="container-custom">
+                        <label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
+                        <input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png">
+                        <input class="labels_for_form mt-1 mb-1 plates col-lg-5 col-sm-5 col-md-5 col-xs-5 btn" type="button" onclick="call()" value="Показать сгенерированный HRML-код">
+                        <input class="submit_all labels_for_form plates mb-3  col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" onclick="save()" value="Опубликовать">
+                    <script>
+                      function save() {
+                        var content = tinymce.get('myTextarea').getContent();
+                        var data = {
+                          content: content
+                        };
 
-			<div class="container-custom">
-				<form class="form_all" action="" method="POST">
-					{% csrf_token %}
-					<label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
-					<input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png">
-					<input class="labels_for_form mt-1 mb-1 plates col-lg-5 col-sm-5 col-md-5 col-xs-5 btn" type="button" onclick="call()" value="Показать сгенерированный HRML-код">
-					<input class="submit_all labels_for_form plates mb-3  col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Опубликовать">
-				</form>
-			</div>
-		</div>
+                        fetch('{% url 'moderators:news' %}', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify(data)
+                        })
+                        .then(response => {
+                          if (response.ok) {
+                            console.log('Данные успешно сохранены');
+                          } else {
+                            console.error('Ошибка сохранения данных');
+                          }
+                        })
+                        .catch(error => {
+                          console.error('Ошибка сети:', error);
+                        });
+                      }
+                    </script>
+                </div>
+            </div>
+        </form>
 	</div>
     {% include "footer.html" %}
 

@@ -10,6 +10,11 @@ from django.db import transaction
 from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Image
 from SHC.models import Doc as SHCDoc
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+from django.views import View
 
 
 @transaction.atomic
@@ -154,29 +159,29 @@ def create_scientist(request, institute_id):
     return render(request, 'moderators/create_scientist.html', {'form': form})
 
 
-@transaction.atomic
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def create_news(request):
-
-    if request.method == 'POST':
-
-        form = CreateNewsForm(request.POST)
-
-        if form.is_valid():
-
-            news = News(title=form.cleaned_data['name'],
-                        text=form.cleaned_data['description'],
-                        pub_date=form.cleaned_data['date'],
-                        link=form.cleaned_data['link'],
-                        user_id=request.user.id)
-            news.save()
-
-            return HttpResponseRedirect('/moderators/account')
-
-    else:
-        form = CreateNewsForm()
-    return render(request, "moderators/news.html", {"form": form})
+# @transaction.atomic
+# @login_required
+# @permission_required('auth.moderator', raise_exception=True)
+# def create_news(request):
+#
+#     if request.method == 'POST':
+#
+#         form = CreateNewsForm(request.POST)
+#
+#         if form.is_valid():
+#
+#             news = News(title=form.cleaned_data['name'],
+#                         text=form.cleaned_data['description'],
+#                         pub_date=form.cleaned_data['date'],
+#                         link=form.cleaned_data['link'],
+#                         user_id=request.user.id)
+#             news.save()
+#
+#             return HttpResponseRedirect('/moderators/account')
+#
+#     else:
+#         form = CreateNewsForm()
+#     return render(request, "moderators/news.html", {"form": form})
 
 
 @transaction.atomic
@@ -194,3 +199,18 @@ def upload_doc(request):
     else:
         form = UploadDocForm()
     return render(request, "moderators/upload_doc.html", {"form": form})
+
+
+@require_POST
+def save_news(request):
+    try:
+        data = json.loads(request.body)
+        content = data.get('content')  # Получение содержимого из запроса
+        obj = News(user_id=request.user.id,
+                   title='sdf',
+                   text=content)
+        obj.save()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+e
