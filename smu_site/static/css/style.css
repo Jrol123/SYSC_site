@@ -767,6 +767,12 @@ details[open] .content {
 	height: 200px;
 	border-radius: 15px;
 }
+
+.new_guest
+{
+	align-items: center!important;
+}
+
 .First
 {
 	display: flex;

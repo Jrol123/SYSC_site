@@ -21,38 +21,30 @@
 	{% include "moderators/moder_navbar.html" %}
 	<div class="place_form main_plate plates_home container-custom plate-container">
 		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12">
-			<form class="form_all" action="" method="POST">
+			<form class="form_all new_guest" action="" method="POST">
 				{% csrf_token %}
-				<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<div class="form-group">
-						<label  class="labels_for_form" for="userGroup">Группа пользователя</label>
-						<select class="form-control input_for_form" id="userGroup" name="userGroup">
-							<option value="representative">Представитель</option>
-							<option value="moderator">Модератор</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label  class="labels_for_form" for="institute">Название института</label>
-						<select class="form-control input_for_form" id="institute" name="institute">
-							<option value="DVFU">ДВФУ</option>
-							<option value="MGU">МГУ</option>
-							<option value="SPBGU">СПБГУ</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label class="labels_for_form" for="username">Имя или юзернейм (Логин)</label>
-						<input type="text" class="form-control input_for_form" id="username" name="username">
-					</div>
-					<div class="form-group">
-						<label  class="labels_for_form" for="password">Пароль</label>
-						<input type="password" class="form-control input_for_form" id="password" name="password">
-					</div>
-					<div class="form-group">
-						<label  class="labels_for_form" for="confirmPassword">Повторите пароль</label>
-						<input type="password" class="form-control input_for_form" id="confirmPassword" name="confirmPassword">
-					</div>
-					<input class="submit_all m-1 labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2 btn" type="submit" value="Зарегистрировать">
+				<div class="Intoform col-lg-6 col-sm-6 col-md-6 col-xs-6">
+					<label  class="labels_for_form" for="userGroup">Группа пользователя</label>
+					<select class="form-control input_for_form" id="userGroup" name="userGroup">
+						<option value="representative">Представитель</option>
+						<option value="moderator">Модератор</option>
+					</select>
+					<label  class="labels_for_form" for="institute">Название института</label>
+					<select class="form-control input_for_form" id="institute" name="institute">
+						<option value="DVFU">ДВФУ</option>
+						<option value="MGU">МГУ</option>
+						<option value="SPBGU">СПБГУ</option>
+					</select>
+					<label class="labels_for_form" for="username">Имя или юзернейм (Логин)</label>
+					<input type="text" class="form-control input_for_form" id="username" name="username">
+					<label class="labels_for_form" for="username">Почта</label>
+					<input type="text" class="form-control input_for_form" id="Email" name="Email">
+					<label  class="labels_for_form" for="password">Пароль</label>
+					<input type="password" class="form-control input_for_form" id="password" name="password">
+					<label  class="labels_for_form" for="confirmPassword">Повторите пароль</label>
+					<input type="password" class="form-control input_for_form" id="confirmPassword" name="confirmPassword">
 				</div>
+				<input class="submit_all labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Зарегистрировать">
 			</form>
 		</div>
 	</div>
