@@ -205,11 +205,12 @@ def upload_doc(request):
 @require_POST
 def save_news(request):
     try:
+        # Получение содержимого из запроса
         data = json.loads(request.body)
-        text = data.get('text')  # Получение содержимого из запроса
+        title = data.get('title')
+        text = data.get('text')
         obj = News(user_id=request.user.id,
-                   title='sdf',
-                   text=text)
+                   title=title, text=text)
         obj.save()
         return JsonResponse({'success': True})
     except Exception as e:

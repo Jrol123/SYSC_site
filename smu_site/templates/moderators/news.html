@@ -137,8 +137,10 @@
                     <script>
                       function save() {
                         var content = tinymce.get('myTextarea').getContent();
+                        var title = document.getElementById('myTitle')
                         var data = {
-                          text: content
+                            text: content,
+                            title: title
                         };
 
                         fetch('{% url 'moderators:save_news' %}', {
