@@ -141,7 +141,7 @@
                           content: content
                         };
 
-                        fetch('{% url 'moderators:news' %}', {
+                        fetch('{% url 'moderators:save_news' %}', {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json'
