@@ -15,6 +15,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		// Hide institute-related elements on page load
+			$('#institute').closest('.Intoform').show();
+
+			// Show/hide institute-related elements based on user group selection
+			$('#userGroup').change(function() {
+				  if ($(this).val() === 'moderator') {
+					$('#institute').hide();
+					$('.inst').hide();
+				  } else {
+					$('#institute').show();
+					$('.inst').show();
+				  }
+			});
+		});
+	</script>
+	
 {% endblock %}	
 {% block content %}
 	{% include "navbar.html" %}
@@ -29,7 +48,7 @@
 						<option value="representative">Представитель</option>
 						<option value="moderator">Модератор</option>
 					</select>
-					<label  class="labels_for_form" for="institute">Название института</label>
+					<label  class="labels_for_form inst" for="institute">Название института</label>
 					<select class="form-control input_for_form" id="institute" name="institute">
 						<option value="DVFU">ДВФУ</option>
 						<option value="MGU">МГУ</option>
