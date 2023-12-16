@@ -138,7 +138,7 @@
                       function save() {
                         var content = tinymce.get('myTextarea').getContent();
                         var data = {
-                          content: content
+                          text: content
                         };
 
                         fetch('{% url 'moderators:save_news' %}', {

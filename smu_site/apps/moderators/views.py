@@ -206,10 +206,10 @@ def upload_doc(request):
 def save_news(request):
     try:
         data = json.loads(request.body)
-        content = data.get('content')  # Получение содержимого из запроса
+        text = data.get('text')  # Получение содержимого из запроса
         obj = News(user_id=request.user.id,
                    title='sdf',
-                   text=content)
+                   text=text)
         obj.save()
         return JsonResponse({'success': True})
     except Exception as e:
