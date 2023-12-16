@@ -24,6 +24,12 @@ def profile(request):
 def news(request):
     return render(request, 'moderators/news.html')
 
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def add_new_documents(request):
+    return render(request, 'moderators/add_new_documents.html')
+
 
 @transaction.atomic
 @login_required
