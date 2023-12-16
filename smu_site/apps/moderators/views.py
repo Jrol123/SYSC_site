@@ -213,4 +213,3 @@ def save_news(request):
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
-e
