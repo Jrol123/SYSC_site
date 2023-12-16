@@ -698,10 +698,13 @@ details[open] .content {
 {
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
 }
 .intounderform
 {
 	display: flex;
+	margin-right: 20px;
+	margin-bottom: 20px;
 	flex-direction: column;
 }
 .links
@@ -734,6 +737,11 @@ details[open] .content {
 	justify-content: space-between;
 }
 
+.ScrollBar_formoder
+{
+	max-height: 700px!important;
+}
+
 .form_all
 {
 	display: flex;
@@ -754,7 +762,7 @@ details[open] .content {
 	background-color: #bbd9fa!important;
 	margin-bottom: 20px;
 }
-.form-control > option
+.finput_for_form > option
 {
 	color: black;
 }
@@ -777,7 +785,28 @@ details[open] .content {
 {
 	display: flex;
 	flex-flow: column;
-	justify-content: space-between;
+	overflow-x: hidden;
+}
+.First_m
+{
+	height: 800px;
+}
+.Second_m
+{
+	height: 800px;
+}
+
+.color_event
+{
+	background-color: #a4c5eb!important;
+}
+.color_docs
+{
+	background-color: #8abbf2!important;
+}
+.color_sceints
+{
+	background-color: #74aff2!important;
 }
 
 /* Admin Panel*/
