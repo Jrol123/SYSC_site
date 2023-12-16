@@ -213,8 +213,8 @@ def save_news(request):
         obj = News(user_id=request.user.id,
                    title=title, text=text)
         obj.save()
-        img = Image(url_path=image)
-        img.save()
+        doc = Doc(url_path=image)
+        doc.save()
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})

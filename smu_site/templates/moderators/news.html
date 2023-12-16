@@ -137,11 +137,11 @@
                     <script>
                       function save() {
                         var content = tinymce.get('myTextarea').getContent();
-                        var title = document.getElementById('myTitle').value
+                        var title = document.getElementById('myTitle')
                         var image = document.getElementById('imageInput').files[0]
                         var data = {
                             text: content,
-                            title: title,
+                            title: title.value,
                             image: image
                         };
 
@@ -152,16 +152,6 @@
                           },
                           body: JSON.stringify(data)
                         })
-                        .then(response => {
-                          if (response.ok) {
-                            console.log('Данные успешно сохранены');
-                          } else {
-                            console.error('Ошибка сохранения данных');
-                          }
-                        })
-                        .catch(error => {
-                          console.error('Ошибка сети:', error);
-                        });
                       }
                     </script>
                 </div>
