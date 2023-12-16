@@ -201,6 +201,7 @@ def upload_doc(request):
     return render(request, "moderators/upload_doc.html", {"form": form})
 
 
+@csrf_exempt
 @require_POST
 def save_news(request):
     try:
