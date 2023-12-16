@@ -14,7 +14,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
-from django.views import View
+from django.core.files.base import ContentFile
+import base64
+from django.core.files.storage import default_storage
 
 
 @transaction.atomic
@@ -205,16 +207,50 @@ def upload_doc(request):
 @require_POST
 def save_news(request):
     try:
-        # Получение содержимого из запроса
-        data = json.loads(request.body)
-        title = data.get('title')
-        text = data.get('text')
-        image = data.get('image')
-        obj = News(user_id=request.user.id,
-                   title=title, text=text)
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        image = request.FILES.get('image')  # Получаем файл изображения из request.FILES
+
+        # Создаем объект News
+        obj = News(title=title, text=text,
+                   user_id=request.user.id)
         obj.save()
-        doc = Doc(url_path=image)
-        doc.save()
+
+        # Если изображение предоставлено, сохраняем его
+        if image:
+            # Сохраняем файл на сервере
+            img = Image(url_path=image,
+                        news_id=obj.id)
+            img.save()
+
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
+    # try:
+    #     # Получение содержимого из запроса
+    #     data = json.loads(request.body)
+    #     title = data.get('title')
+    #     text = data.get('text')
+    #     image_data = data.get('image')  # получение данных о изображении
+    #
+    #     # Создаём новость
+    #     obj = News(user_id=request.user.id, title=title, text=text)
+    #     obj.save()
+    #
+    #     # Если изображение предоставлено, обрабатываем и сохраняем его
+    #     if image_data:
+    #         # Декодируем Base64 и создаём ContentFile
+    #         format, imgstr = image_data.split(';base64,')  # определение формата изображения и само изображение в формате base64
+    #         ext = format.split('/')[-1]  # получаем расширение файла из формата
+    #         image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+    #
+    #         # Сохраняем файл изображения на сервере в заданное место и получаем путь
+    #         image_path = default_storage.save('images/news/{}.{}'.format(obj.id, ext), image)
+    #
+    #         # Создаем объект модели Doc, связанный с новостью и содержащий путь к изображению
+    #         doc = Doc(url_path=image_path, news_id=obj.id)
+    #         doc.save()
+    #
+    #     return JsonResponse({'success': True})
+    # except Exception as e:
+    #     return JsonResponse({'success': False, 'error': str(e)})
