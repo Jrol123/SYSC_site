@@ -222,25 +222,81 @@ class CreateInstituteForm(forms.Form):
 
 
 class CreateScientistForm(ModelForm):
-    name = forms.CharField(help_text="Введите ФИО учёного",
+    name = forms.CharField(widget=forms.TextInput(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      'placeholder': "Введите ФИО учёного"}),
                            required=True)
-    lab = forms.CharField(help_text="?", required=False)
-    position = forms.IntegerField(help_text="?", required=True)
-    degree = forms.IntegerField(help_text="Введите учёную степень",
-                                required=True)
-    teaching_info = forms.CharField(help_text="?", required=True,
-                                    widget=forms.Textarea)
-    scientific_interests = forms.CharField(help_text="Интересы",
-                                           required=True,
-                                           widget=forms.Textarea)
-    achievements = forms.CharField(help_text="Достижения",
-                                   required=True, widget=forms.Textarea)
-    future_plans = forms.CharField(help_text="Планы", required=True,
-                                   widget=forms.Textarea)
-    link = forms.URLField(help_text="Введите ссылку", required=False)
-    service_name = forms.CharField(help_text="Введите название сервиса",
-                                   required=False)
-    
+
+    lab = forms.CharField(widget=forms.TextInput(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    position = forms.CharField(widget=forms.TextInput(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      'placeholder': "Введите должность"}),
+                           required=True)
+
+    degree = forms.IntegerField(widget=forms.NumberInput(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    teaching_info = forms.CharField(widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    scientific_interests = forms.CharField(
+                                widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    achievements = forms.CharField(widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    future_plans = forms.CharField(widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    link = forms.URLField(widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    service_name = forms.CharField(widget=forms.Textarea(
+                               attrs={'class': "input_for_form",
+                                      'type': "text",
+                                      }),
+                           required=True)
+
+    institute = forms.CharField(widget=forms.TextInput(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    img = forms.ImageField(help_text="Фотография учёного",
+                           widget=forms.FileInput(
+                               attrs={'class': "input_for_form_img",
+                                      'type': "file",
+                                      'id': "imageInput",
+                                      'name': "image",
+                                      'accept': ".jpg, .jpeg, .png"}),
+                           required=True)
     class Meta:
         model = Image
         fields = ['name', 'url_path', 'alt', 'lab', 'position',
