@@ -213,9 +213,7 @@ def save_news(request):
         obj = News(user_id=request.user.id,
                    title=title, text=text)
         obj.save()
-        img = Image(url_path=image, news_id=news.id)
-        # Создаем объект Doc из documents.models и сохраняем файл
-        img.path.save(image.name, image, save=True)
+        img = Image(url_path=image)
         img.save()
         return JsonResponse({'success': True})
     except Exception as e:
