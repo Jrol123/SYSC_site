@@ -8,49 +8,81 @@ from news.models import Image
 from SHC.models import Doc as SHCDoc
 
 
+INSTITUTE_CHOICE = []
+institutes_list = Institute.objects.values('id', 'name')
+for obj in institutes_list:
+    INSTITUTE_CHOICE.append((str(obj['id']), obj['name']))
+
+
 class CreateUserForm(forms.Form):
-    user_group = forms.ChoiceField(help_text="Выберите тип аккаунта",
-                                   choices=(
-                                       ("representative", "Representative"),
-                                       ("moderator", "Moderator")))
-    user_name = forms.CharField(help_text="Введите имя аккаунта",
-                                required=True)
-    password = forms.CharField(help_text="Введите пароль",
-                               required=True,
-                               widget=forms.PasswordInput)
+    user_group = forms.ChoiceField(
+        help_text="Выберите тип аккаунта",
+        choices=(
+            ("representative", "Представитель"),
+            ("moderator", "Модератор")),
+        widget=forms.Select(attrs={
+            'class': "form-control input_for_form",
+            'id': "userGroup", 'name': "userGroup"
+        }))
+    user_institute = forms.ChoiceField(
+        help_text="Выберите институт",
+        choices=INSTITUTE_CHOICE,
+        widget=forms.Select(attrs={
+            'class': "form-control input_for_form",
+            'id': "institute", 'name': "institute"
+        }))
+    user_name = forms.CharField(
+        help_text="Введите имя аккаунта",
+        required=True,
+        widget=forms.TextInput(attrs={
+            'type': "text",
+            'class': "form-control input_for_form",
+            'id': "username", 'name': "username",
+        }))
+    password = forms.CharField(
+        help_text="Введите пароль",
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'type': "password",
+            'class': "form-control input_for_form",
+            'id': "password", 'name': "password"
+        }))
     password_repeat = forms.CharField(
         help_text="Введите пароль еще раз", required=True,
-        widget=forms.PasswordInput)
-    
+        widget=forms.PasswordInput(attrs={
+            'type': "password",
+            'class': "form-control input_for_form",
+            'id': "confirmPassword", 'name': "confirmPassword"
+        }))
+
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
-        
-        name_list = User.objects.values(
-            'username')  # список свойств в формате:
+
+        name_list = User.objects.values('username')  # список свойств в формате:
         # [{'username': 'MyUsername1'}, {'username': 'MyUsername2'}, ...]
         for val in name_list:
             if name == val['username']:
                 raise ValidationError('Такой username уже существует')
-        
+
         return name
-    
+
     def clean_password(self):
         password = self.cleaned_data['password']
-        
+
         return password
-    
+
     def clean_password_repeat(self):
         password = self.cleaned_data['password']
         password_rep = self.cleaned_data['password_repeat']
-        
+
         if password_rep != password:
             raise ValidationError('Пароли должны совпадать')
-        
+
         return password_rep
-    
+
     def clean_user_group(self):
         group = self.cleaned_data['user_group']
-        
+
         return group
 
 
@@ -69,12 +101,12 @@ class CreateGrantForm(ModelForm):
                                widget=forms.Textarea)
     link = forms.URLField(help_text="Введите ссылку на грант",
                           required=True)
-    
+
     class Meta:
         model = Image
         fields = ['name', 'url_path', 'alt', 'description',
                   'end_doc_date', 'end_result_date', 'criteria', 'link']
-        
+
     def clean_name(self):
         name = self.cleaned_data['name']
         return name
@@ -125,7 +157,7 @@ class CreateInstituteForm(forms.Form):
         widget=forms.URLInput(attrs={
             'class': "input_for_form", 'type': "url",
             'id': "smu_link", 'name': "smu_link"}), required=False)
-    
+
     img = forms.ImageField(help_text="Изображение Института",
                            widget=forms.FileInput(
                                attrs={'class': "input_for_form_img",
@@ -134,57 +166,51 @@ class CreateInstituteForm(forms.Form):
                                       'name': "image",
                                       'accept': ".jpg, .jpeg, .png"}),
                            required=True)
-    
-    class Meta:
-        model = Image
-        fields = ['name', 'url_path', 'alt', 'description',
-                  'employees_count',
-                  'scientist_count', 'chairman', 'link', 'smu_link']
-    
+
     def clean_name(self):
         name = self.cleaned_data['name']
-        
+
         name_list = Institute.objects.values('name')  # список свойств в формате:
         # [{'name': 'Name1'}, {'name': 'Name2'}, ...]
         for val in name_list:
             if name == val['name']:
                 raise ValidationError('Такое название уже существует')
-        
+
         return name
-    
+
     def clean_employees_count(self):
         employees_count = self.cleaned_data['employees_count']
         if employees_count < 1:
             raise ValidationError('Количество сотрудников не может быть меньше 1')
         return employees_count
-    
+
     def clean_scientist_count(self):
         scientist_count = self.cleaned_data['scientist_count']
         if scientist_count < 0:
             raise ValidationError(
                 'Количество сотрудников не может быть отрицательным')
         return scientist_count
-    
+
     def clean_chairman(self):
         chairman = self.cleaned_data['chairman']
         return chairman
-    
+
     def clean_description(self):
         description = self.cleaned_data['description']
         return description
-    
+
     def clean_link(self):
         link = self.cleaned_data['link']
         return link
-    
+
     def clean_smu_link(self):
         link = self.cleaned_data['smu_link']
         return link
-    
+
     def save(self, commit=True):
         cd = self.cleaned_data
         url_path = cd['img']
-        
+
         inst = Institute(name=cd['name'], description=cd['description'],
                          employees_count=cd['employees_count'],
                          scientist_count=cd['scientist_count'],
@@ -192,10 +218,10 @@ class CreateInstituteForm(forms.Form):
                          link=cd['link'], smu_link=cd['smu_link'])
         if commit:
             inst.save()
-            
+
             img = Image(institute_id=inst.id, alt=cd['name'])
             img.url_path.save(url_path.name, url_path, save=True)
-        
+
         return inst
 
 
@@ -218,7 +244,7 @@ class CreateScientistForm(ModelForm):
     link = forms.URLField(help_text="Введите ссылку", required=False)
     service_name = forms.CharField(help_text="Введите название сервиса",
                                    required=False)
-    
+
     class Meta:
         model = Image
         fields = ['name', 'url_path', 'alt', 'lab', 'position',
@@ -257,21 +283,21 @@ class UploadSHCDocForm(forms.Form):
             'id': "documentUpload", 'name': "documentUpload"}),
         required=True)
     description = forms.CharField(help_text='Описание',
-        widget=forms.Textarea(attrs={
-            'class': "textarea col-lg-12 col-sm-12 col-md-12 col-xs-12",
-            'id': "description", 'name': "description"}), required=True)
-    
+                                  widget=forms.Textarea(attrs={
+                                      'class': "textarea col-lg-12 col-sm-12 col-md-12 col-xs-12",
+                                      'id': "description", 'name': "description"}), required=True)
+
     def save(self, commit=True):
         name = self.cleaned_data['name']
         path = self.cleaned_data['path']
         description = self.cleaned_data['description']
-        
+
         doc = Doc(name=name, category='GZS')
         if commit:
             # Создаем объект Doc из documents.models и сохраняем файл
             doc.path.save(path.name, path, save=True)
-            
+
             shc_doc = SHCDoc(doc=doc, description=description)
             shc_doc.save()
-            
+
         return doc
