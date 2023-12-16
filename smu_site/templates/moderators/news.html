@@ -138,9 +138,11 @@
                       function save() {
                         var content = tinymce.get('myTextarea').getContent();
                         var title = document.getElementById('myTitle').value
+                        var image = document.getElementById('imageInput').files[0]
                         var data = {
                             text: content,
-                            title: title
+                            title: title,
+                            image: image
                         };
 
                         fetch('{% url 'moderators:save_news' %}', {
