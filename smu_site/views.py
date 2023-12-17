@@ -52,7 +52,7 @@ def index(request):
             if si < limit:
                 return text[:si + 2] + trim_text(text[si + 2:],
                                                  limit - si - 1)
-            
+        
         if ' ' in text:
             t = ''
             for w in text.split(' '):
@@ -100,6 +100,10 @@ def index(request):
     
     return render(request, 'index.html',
                   {
+                      "is_moder": request.user.groups
+                      .filter(name='moderator').exists(),
+                      "is_repr": request.user.groups
+                      .filter(name='representative').exists(),
                       "last_news": page_obj,
                       "sdate": sdate,
                       "edate": edate,

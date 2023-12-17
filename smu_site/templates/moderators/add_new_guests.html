@@ -44,24 +44,17 @@
 				{% csrf_token %}
 				<div class="Intoform col-lg-6 col-sm-6 col-md-6 col-xs-6">
 					<label  class="labels_for_form" for="userGroup">Группа пользователя</label>
-					<select class="form-control input_for_form" id="userGroup" name="userGroup">
-						<option value="representative">Представитель</option>
-						<option value="moderator">Модератор</option>
-					</select>
+                    {{ form.user_group }}
 					<label  class="labels_for_form inst" for="institute">Название института</label>
-					<select class="form-control input_for_form" id="institute" name="institute">
-						<option value="DVFU">ДВФУ</option>
-						<option value="MGU">МГУ</option>
-						<option value="SPBGU">СПБГУ</option>
-					</select>
+                    {{ form.user_institute }}
 					<label class="labels_for_form" for="username">Имя или юзернейм (Логин)</label>
-					<input type="text" class="form-control input_for_form" id="username" name="username">
+					{{ form.user_name }}
 					<label class="labels_for_form" for="username">Почта</label>
-					<input type="text" class="form-control input_for_form" id="Email" name="Email">
+					{{ form.email }}
 					<label  class="labels_for_form" for="password">Пароль</label>
-					<input type="password" class="form-control input_for_form" id="password" name="password">
+					{{ form.password }}
 					<label  class="labels_for_form" for="confirmPassword">Повторите пароль</label>
-					<input type="password" class="form-control input_for_form" id="confirmPassword" name="confirmPassword">
+					{{ form.password_repeat }}
 				</div>
 				<input class="submit_all labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Зарегистрировать">
 			</form>

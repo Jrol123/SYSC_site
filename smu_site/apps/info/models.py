@@ -53,12 +53,6 @@ class ScientistLink(models.Model):
     service_name = models.CharField("Краткое описание", max_length=250)
 
 
-class ScientistPublication(models.Model):
-    scientist = models.ForeignKey(Scientist,
-                                  on_delete=models.CASCADE)
-    pub_link = models.TextField("Ссылка на публикацию")
-    
-
 class Grant(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)

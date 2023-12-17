@@ -7,74 +7,149 @@ from info.models import Institute, Grant
 from news.models import Image
 from SHC.models import Doc as SHCDoc
 
+INSTITUTE_CHOICE = []
+institutes_list = Institute.objects.values('id', 'name')
+for obj in institutes_list:
+    INSTITUTE_CHOICE.append((str(obj['id']), obj['name']))
+
 
 class CreateUserForm(forms.Form):
-    user_group = forms.ChoiceField(help_text="Выберите тип аккаунта",
-                                   choices=(
-                                       ("representative", "Representative"),
-                                       ("moderator", "Moderator")))
-    user_name = forms.CharField(help_text="Введите имя аккаунта",
-                                required=True)
-    password = forms.CharField(help_text="Введите пароль",
-                               required=True,
-                               widget=forms.PasswordInput)
+    user_group = forms.ChoiceField(
+        help_text="Выберите тип аккаунта",
+        choices=(
+            ("representative", "Представитель"),
+            ("moderator", "Модератор")),
+        widget=forms.Select(attrs={
+            'class': "form-control input_for_form",
+            'id': "userGroup", 'name': "userGroup"
+        }))
+    user_institute = forms.ChoiceField(
+        help_text="Выберите институт",
+        choices=INSTITUTE_CHOICE,
+        widget=forms.Select(attrs={
+            'class': "form-control input_for_form",
+            'id': "institute", 'name': "institute"
+        }))
+    user_name = forms.CharField(
+        help_text="Введите имя аккаунта",
+        required=True,
+        widget=forms.TextInput(attrs={
+            'type': "text",
+            'class': "form-control input_for_form",
+            'id': "username", 'name': "username",
+        }))
+    email = forms.EmailField(
+        help_text="Введите имя аккаунта",
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'type': "email",
+            'class': "form-control input_for_form",
+            'id': "Email", 'name': "Email",
+        }))
+    password = forms.CharField(
+        help_text="Введите пароль",
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'type': "password",
+            'class': "form-control input_for_form",
+            'id': "password", 'name': "password"
+        }))
     password_repeat = forms.CharField(
         help_text="Введите пароль еще раз", required=True,
-        widget=forms.PasswordInput)
-    
+        widget=forms.PasswordInput(attrs={
+            'type': "password",
+            'class': "form-control input_for_form",
+            'id': "confirmPassword", 'name': "confirmPassword"
+        }))
+
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
-        
-        name_list = User.objects.values(
-            'username')  # список свойств в формате:
+
+        name_list = User.objects.values('username')  # список свойств в формате:
         # [{'username': 'MyUsername1'}, {'username': 'MyUsername2'}, ...]
         for val in name_list:
             if name == val['username']:
                 raise ValidationError('Такой username уже существует')
-        
+
         return name
-    
+
     def clean_password(self):
         password = self.cleaned_data['password']
-        
+
         return password
-    
+
     def clean_password_repeat(self):
         password = self.cleaned_data['password']
         password_rep = self.cleaned_data['password_repeat']
-        
+
         if password_rep != password:
             raise ValidationError('Пароли должны совпадать')
-        
+
         return password_rep
-    
+
     def clean_user_group(self):
         group = self.cleaned_data['user_group']
-        
+
         return group
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        return email
 
 
 class CreateGrantForm(ModelForm):
-    name = forms.CharField(help_text="Введите название гранта",
-                           required=True)
-    description = forms.CharField(help_text="Введите описание гранта",
-                                  widget=forms.Textarea)
-    end_doc_date = forms.DateField(
+    name = forms.CharField(
+        help_text="Введите название гранта",
+        required=True, widget=forms.TextInput(attrs={
+            'class': "input_for_form",
+            'id': "grant_name", 'name': "grant_name",
+            'type': "text"
+        }))
+    description = forms.CharField(
+        help_text="Введите описание гранта",
+        widget=forms.Textarea(attrs={
+            'class': "textarea m-1 col-lg-12 col-sm-12 col-md-12 col-xs-12",
+            'id': "description", 'name': "description",
+        }))
+    end_doc_date = forms.DateTimeField(
         help_text="Введите дату окончания приема заявок", required=True,
-        widget=forms.SelectDateWidget)
-    end_result_date = forms.DateField(
+        widget=forms.TextInput(attrs={
+            'class': "input_for_form",
+            'id': "start_date", 'name': "start_date",
+            'type': "datetime-local", 'step': "60"
+        }))
+    end_result_date = forms.DateTimeField(
         help_text="Введите дату подведения итогов", required=True,
-        widget=forms.SelectDateWidget)
-    criteria = forms.CharField(help_text="Введите критерии",
-                               widget=forms.Textarea)
-    link = forms.URLField(help_text="Введите ссылку на грант",
-                          required=True)
-    
+        widget=forms.TextInput(attrs={
+            'class': "input_for_form",
+            'id': "end_date", 'name': "end_date",
+            'type': "datetime-local", 'step': "60"
+        }))
+    criteria = forms.CharField(
+        help_text="Введите критерии",
+        widget=forms.Textarea(attrs={
+            'class': "textarea m-1 col-lg-12 col-sm-12 col-md-12 col-xs-12",
+            'id': "criteria", 'name': "criteria",
+        }))
+    link = forms.URLField(
+        help_text="Введите ссылку на грант",
+        required=True, widget=forms.URLInput(attrs={
+            'class': "input_for_form",
+            'id': "grant_link", 'name': "grant_link",
+            'type': "url"
+        }))
+
     class Meta:
         model = Image
-        fields = ['name', 'url_path', 'alt', 'description',
+        fields = ['name', 'url_path', 'description',
                   'end_doc_date', 'end_result_date', 'criteria', 'link']
-        
+        widgets = {'url_path': forms.FileInput(attrs={
+            'class': "input_for_form_img", 'type': "file",
+            'id': "imageInput", 'name': "image",
+            'accept': ".jpg, .jpeg, .png"
+        })}
+
     def clean_name(self):
         name = self.cleaned_data['name']
         return name
@@ -145,7 +220,7 @@ class CreateInstituteForm(forms.Form):
         widget=forms.URLInput(attrs={
             'class': "input_for_form", 'type': "url",
             'id': "smu_link", 'name': "smu_link"}), required=False)
-    
+
     img = forms.ImageField(help_text="Изображение Института",
                            widget=forms.FileInput(
                                attrs={'class': "input_for_form_img",
@@ -154,59 +229,59 @@ class CreateInstituteForm(forms.Form):
                                       'name': "image",
                                       'accept': ".jpg, .jpeg, .png"}),
                            required=True)
-    
+
     # class Meta:
     #     model = Image
     #     fields = ['name', 'url_path', 'alt', 'description',
     #               'employees_count',
     #               'scientist_count', 'chairman', 'link', 'smu_link']
-    
+
     def clean_name(self):
         name = self.cleaned_data['name']
-        
+
         name_list = Institute.objects.values(
             'name')  # список свойств в формате:
         # [{'name': 'Name1'}, {'name': 'Name2'}, ...]
         for val in name_list:
             if name == val['name']:
                 raise ValidationError('Такое название уже существует')
-        
+
         return name
-    
+
     def clean_employees_count(self):
         employees_count = self.cleaned_data['employees_count']
         if employees_count < 1:
             raise ValidationError(
                 'Количество сотрудников не может быть меньше 1')
         return employees_count
-    
+
     def clean_scientist_count(self):
         scientist_count = self.cleaned_data['scientist_count']
         if scientist_count < 0:
             raise ValidationError(
                 'Количество сотрудников не может быть отрицательным')
         return scientist_count
-    
+
     def clean_chairman(self):
         chairman = self.cleaned_data['chairman']
         return chairman
-    
+
     def clean_description(self):
         description = self.cleaned_data['description']
         return description
-    
+
     def clean_link(self):
         link = self.cleaned_data['link']
         return link
-    
+
     def clean_smu_link(self):
         link = self.cleaned_data['smu_link']
         return link
-    
+
     def save(self, commit=True):
         cd = self.cleaned_data
         url_path = cd['img']
-        
+
         inst = Institute(name=cd['name'], description=cd['description'],
                          employees_count=cd['employees_count'],
                          scientist_count=cd['scientist_count'],
@@ -214,80 +289,81 @@ class CreateInstituteForm(forms.Form):
                          link=cd['link'], smu_link=cd['smu_link'])
         if commit:
             inst.save()
-            
+
             img = Image(institute_id=inst.id, alt=cd['name'])
             img.url_path.save(url_path.name, url_path, save=True)
-        
+
         return inst
 
 
 class CreateScientistForm(ModelForm):
-    name = forms.CharField(widget=forms.TextInput(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      'placeholder': "Введите ФИО учёного"}),
-                           required=True)
+    name = forms.CharField(
+        widget=forms.TextInput(attrs=
+                               {'class': "input_for_form",
+                                'type': "text",
+                                'placeholder': "Введите ФИО учёного"}),
+        required=True)
 
     lab = forms.CharField(widget=forms.TextInput(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    position = forms.CharField(widget=forms.TextInput(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      'placeholder': "Введите должность"}),
-                           required=True)
-
-    degree = forms.IntegerField(widget=forms.NumberInput(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    teaching_info = forms.CharField(widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    scientific_interests = forms.CharField(
-                                widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    achievements = forms.CharField(widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    future_plans = forms.CharField(widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    link = forms.URLField(widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    service_name = forms.CharField(widget=forms.Textarea(
-                               attrs={'class': "input_for_form",
-                                      'type': "text",
-                                      }),
-                           required=True)
-
-    institute = forms.CharField(widget=forms.TextInput(
         attrs={'class': "input_for_form",
                'type': "text",
                }),
         required=True)
+
+    position = forms.CharField(widget=forms.TextInput(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               'placeholder': "Введите должность"}),
+        required=True)
+
+    degree = forms.IntegerField(widget=forms.NumberInput(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    teaching_info = forms.CharField(widget=forms.Textarea(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    scientific_interests = forms.CharField(
+        widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+        required=True)
+
+    achievements = forms.CharField(widget=forms.Textarea(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    future_plans = forms.CharField(widget=forms.Textarea(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    link = forms.URLField(widget=forms.Textarea(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    service_name = forms.CharField(widget=forms.Textarea(
+        attrs={'class': "input_for_form",
+               'type': "text",
+               }),
+        required=True)
+
+    institute = forms.ChoiceField(widget=forms.Select(
+        attrs={'class': "input_for_form",
+               }),
+        required=True,
+        choices=INSTITUTE_CHOICE)
 
     img = forms.ImageField(help_text="Фотография учёного",
                            widget=forms.FileInput(
@@ -297,6 +373,7 @@ class CreateScientistForm(ModelForm):
                                       'name': "image",
                                       'accept': ".jpg, .jpeg, .png"}),
                            required=True)
+
     class Meta:
         model = Image
         fields = ['name', 'url_path', 'alt', 'lab', 'position',
@@ -339,18 +416,18 @@ class UploadSHCDocForm(forms.Form):
         widget=forms.Textarea(attrs={
             'class': "textarea col-lg-12 col-sm-12 col-md-12 col-xs-12",
             'id': "description", 'name': "description"}), required=True)
-    
+
     def save(self, commit=True):
         name = self.cleaned_data['name']
         path = self.cleaned_data['path']
         description = self.cleaned_data['description']
-        
+
         doc = Doc(name=name, category='GZS')
         if commit:
             # Создаем объект Doc из documents.models и сохраняем файл
             doc.path.save(path.name, path, save=True)
-            
+
             shc_doc = SHCDoc(doc=doc, description=description)
             shc_doc.save()
-            
+
         return doc
