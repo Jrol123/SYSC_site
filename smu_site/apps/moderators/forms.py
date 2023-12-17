@@ -360,7 +360,7 @@ class CreateScientistForm(ModelForm):
         required=True)
 
     institute = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "input_for_form",
+        attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
                }),
         required=True,
         choices=INSTITUTE_CHOICE)
