@@ -72,6 +72,7 @@ def add_new_guests(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(username=form.cleaned_data['user_name'],
+                                            email=form.cleaned_data['email'],
                                             password=form.cleaned_data['password'])
             user_group = Group.objects.get(name=form.cleaned_data['user_group'])
             user.groups.add(user_group)
@@ -88,7 +89,7 @@ def create_new_grant(request):
 
     if request.method == 'POST':
 
-        form = CreateGrantForm(request.POST)
+        form = CreateGrantForm(request.POST, request.FILES)
 
         if form.is_valid():
 
@@ -99,6 +100,9 @@ def create_new_grant(request):
                           end_result_date=form.cleaned_data['end_result_date'],
                           link=form.cleaned_data['link'])
             grant.save()
+            img = Image(grant_id=grant.id,
+                        url_path=request.FILES['url_path'])
+            img.save()
 
             return HttpResponseRedirect('/moderators/account')  # редирект
     else:
@@ -142,7 +146,7 @@ def create_scientist(request):
         form = CreateScientistForm(request.POST, request.FILES)
 
         if form.is_valid():
-            scientist = Scientist(institute_id=institute_id,
+            scientist = Scientist(institute_id=form.cleaned_data['institute'],
                                   name=form.cleaned_data['name'],
                                   lab=form.cleaned_data['lab'],
                                   position=form.cleaned_data['position'],
