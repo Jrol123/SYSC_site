@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+<<<<<<< Updated upstream
 app_name = 'representatives'
 
 urlpatterns = [
@@ -10,4 +11,11 @@ urlpatterns = [
     path('account/create_new_grant', views.create_new_grant, name='create_new_grant'),
     path('account/upload_doc', views.upload_doc, name='upload_doc'),
     # path('<int:institute_id>/', views.create_scientist, name='index'),
+=======
+
+app_name = 'representatives'
+
+urlpatterns = [
+    # path('', views.index, name='index'),
+>>>>>>> Stashed changes
 ]

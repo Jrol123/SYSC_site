@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import ReprInst
 
-# Register your models here.
+
+admin.register(ReprInst)
