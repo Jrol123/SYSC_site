@@ -31,12 +31,18 @@
 					$('.sel_cat').hide();
 					$('#New_categoty').show();
 					$('.new_cat').show();
-				  } else {
+				  } if ($(this).val() === 'No') {
 					$('#Category').show();
 					$('.sel_cat').show();
 					$('#New_categoty').hide();
 					$('.new_cat').hide();
 				  }
+					if ($(this).val() === 'Choose'){
+						$('#Category').hide();
+						$('.sel_cat').hide();
+						$('#New_categoty').hide();
+						$('.new_cat').hide();
+					}
 			});
 		});
 	</script>
@@ -55,6 +61,7 @@
 					<input type="text" class="form-control input_for_form" id="Name_doc" name="Name_doc">
 					<label  class="mt-2 labels_for_form inst" for="Choose_Category">Создать новую категорию?</label>
 					<select class="form-control input_for_form text-dark" id="Choose_Category" name="Choose_Category">
+						<option value="Choose">Выбрать</option>
 						<option value="Yes">Да</option>
 						<option value="No">Нет</option>
 					</select>
