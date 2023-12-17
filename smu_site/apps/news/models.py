@@ -6,7 +6,7 @@ from django.db import models
 class News(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.TextField("Текст разметки новости")
     pub_date = models.DateTimeField("Дата и время публикации",
@@ -28,7 +28,7 @@ class News(models.Model):
 class Event(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.TextField("Текст разметки мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")

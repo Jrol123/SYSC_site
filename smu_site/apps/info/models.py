@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -23,6 +24,7 @@ class Institute(models.Model):
 
 
 class Scientist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
     institute = models.ForeignKey(Institute, on_delete=models.CASCADE,

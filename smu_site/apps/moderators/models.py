@@ -6,8 +6,7 @@ class Queue(models.Model):
         ('doc', 'Документ'),
         ('news', 'Новость'),
         ('event', 'Мероприятие/событие'),
-        ('scientist', 'Учёный'),
-        ('grant', 'Грант'),
+        ('scientist', 'Учёный')
     )
     obj_type = models.CharField("Тип объекта",
                                 max_length=10, choices=CHOICES)

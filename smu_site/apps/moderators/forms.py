@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
-from documents.models import Doc
+from documents.models import Doc, Category
 from info.models import Institute, Grant
 from news.models import Image
 from SHC.models import Doc as SHCDoc
@@ -391,7 +391,7 @@ class CreateNewsForm(forms.Form):
 class UploadDocForm(ModelForm):
     class Meta:
         model = Doc
-        fields = ['name', 'category', 'path']
+        fields = ['name', 'path']  # 'category'
 
 
 class UploadSHCDocForm(forms.Form):
@@ -422,7 +422,7 @@ class UploadSHCDocForm(forms.Form):
         path = self.cleaned_data['path']
         description = self.cleaned_data['description']
 
-        doc = Doc(name=name, category='GZS')
+        doc = Doc(name=name)  # category='GZS'
         if commit:
             # Создаем объект Doc из documents.models и сохраняем файл
             doc.path.save(path.name, path, save=True)
