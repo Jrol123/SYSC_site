@@ -9,26 +9,15 @@ from .models import Queue
 from documents.models import Doc
 from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Event, Image
+from representatives.models import ReprInst
 
-
-@transaction.atomic
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def profile(request):
-    return render(request, 'moderators/moder_panel_main.html')
-
-
-@transaction.atomic
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def news(request):
-    return render(request, 'moderators/news.html')
 
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def add_new_documents(request):
     return render(request, 'moderators/add_new_documents.html')
+
 
 @transaction.atomic
 @login_required
@@ -76,6 +65,8 @@ def add_new_guests(request):
                                             password=form.cleaned_data['password'])
             user_group = Group.objects.get(name=form.cleaned_data['user_group'])
             user.groups.add(user_group)
+            rep_inst = ReprInst(user_id=user.id, institute_id=form.cleaned_data['user_institute'])
+            rep_inst.save()
     else:
         form = CreateUserForm()
 
@@ -161,8 +152,7 @@ def create_scientist(request):
                                  link=form.cleaned_data['link'])
             link.save()
             img = Image(scientist_id=scientist.id,
-                        url_path=request.FILES['url_path'],
-                        alt=form.cleaned_data['alt'])
+                        url_path=request.FILES['url_path'])
             img.save()
 
             return HttpResponseRedirect('/moderators/account')

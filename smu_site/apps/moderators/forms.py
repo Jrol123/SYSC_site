@@ -10,7 +10,7 @@ from SHC.models import Doc as SHCDoc
 INSTITUTE_CHOICE = []
 institutes_list = Institute.objects.values('id', 'name')
 for obj in institutes_list:
-    INSTITUTE_CHOICE.append((str(obj['id']), obj['name']))
+    INSTITUTE_CHOICE.append((obj['id'], obj['name']))
 
 
 class CreateUserForm(forms.Form):
@@ -365,21 +365,18 @@ class CreateScientistForm(ModelForm):
         required=True,
         choices=INSTITUTE_CHOICE)
 
-    img = forms.ImageField(help_text="Фотография учёного",
-                           widget=forms.FileInput(
-                               attrs={'class': "input_for_form_img",
-                                      'type': "file",
-                                      'id': "imageInput",
-                                      'name': "image",
-                                      'accept': ".jpg, .jpeg, .png"}),
-                           required=True)
-
     class Meta:
         model = Image
         fields = ['name', 'url_path', 'alt', 'lab', 'position',
                   'degree', 'teaching_info', 'scientific_interests',
                   'achievements', 'future_plans', 'link',
                   'service_name']
+        widgets = {'url_path': forms.FileInput(
+            attrs={'class': "input_for_form_img",
+                   'type': "file",
+                   'id': "imageInput",
+                   'name': "image",
+                   'accept': ".jpg, .jpeg, .png"})}
 
 
 class CreateNewsForm(forms.Form):
