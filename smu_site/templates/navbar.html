@@ -34,9 +34,9 @@
            {% if user.is_authenticated %}
            <li class="nav-item">
                {% if is_moder or user.is_superuser %}
-               <a class="nav-link" href="{% url 'moderators:news' %}">Профиль</a>
+                    <a class="nav-link" href="{% url 'moderators:news' %}">Профиль</a>
                {% elif is_repr %}
-               <a class="nav-link" href="{% url 'representatives:news' %}">Профиль</a>
+                    <a class="nav-link" href="{% url 'representatives:news' %}">Профиль</a>
                {% endif %}
            </li>
            {% endif %}
