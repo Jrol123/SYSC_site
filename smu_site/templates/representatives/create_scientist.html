@@ -36,9 +36,14 @@
 						{{form.degree}}
 						<br>
 						<label class="labels_for_form" for="institute">Институт:</label>
-						{{form.institute}}
+						<select class="input_for_form" id="institute" name="institute">
+                            <option value="DVFU">ДВФУ</option>
+                            <option value="MGU">МГУ</option>
+                            <option value="SPBGU">СПБГУ</option>
+					    </select>
 						<br>
 						<label class="labels_for_form" for="lab">Лаборатория:</label>
+						{{form.lab}}
 						<br>
 						<label class="labels_for_form" for="imageInput">Фотография учёного:</label>
 						{{form.img}}
