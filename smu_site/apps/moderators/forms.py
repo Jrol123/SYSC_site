@@ -1,16 +1,19 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db import connection
 from django.forms import ModelForm
 from documents.models import Doc, Category
 from info.models import Institute, Grant
 from news.models import Image
 from SHC.models import Doc as SHCDoc
 
+
 INSTITUTE_CHOICE = []
-institutes_list = Institute.objects.values('id', 'name')
-for obj in institutes_list:
-    INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+if Institute._meta.db_table in connection.introspection.table_names():
+    institutes_list = Institute.objects.values('id', 'name')
+    for obj in institutes_list:
+        INSTITUTE_CHOICE.append((obj['id'], obj['name']))
 
 
 class CreateUserForm(forms.Form):
