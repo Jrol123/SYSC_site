@@ -422,7 +422,12 @@ class UploadSHCDocForm(forms.Form):
         path = self.cleaned_data['path']
         description = self.cleaned_data['description']
 
-        doc = Doc(name=name)  # category='GZS'
+        if not Category.objects.filter(name='ГЖС').exist():
+            c = Category('ГЖС')
+            c.save()
+        
+        doc = Doc(name=name,
+                  category_id=Category.objects.get(name='ГЖС').id)
         if commit:
             # Создаем объект Doc из documents.models и сохраняем файл
             doc.path.save(path.name, path, save=True)
