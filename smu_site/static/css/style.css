@@ -676,7 +676,8 @@ details[open] .content {
 }
 .input_for_form
 {
-	text-indent: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 	margin: 0px 20px 0px 20px;
 	border: 2px solid black!important;
 	border-radius:15px!important;
@@ -697,10 +698,13 @@ details[open] .content {
 {
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
 }
 .intounderform
 {
 	display: flex;
+	margin-right: 20px;
+	margin-bottom: 20px;
 	flex-direction: column;
 }
 .links
@@ -733,6 +737,11 @@ details[open] .content {
 	justify-content: space-between;
 }
 
+.ScrollBar_formoder
+{
+	max-height: 700px!important;
+}
+
 .form_all
 {
 	display: flex;
@@ -753,21 +762,51 @@ details[open] .content {
 	background-color: #bbd9fa!important;
 	margin-bottom: 20px;
 }
-.form-control > option
+.input_for_form > option
 {
 	color: black;
 }
 
 .textarea
 {
+	padding-left: 10px;
+	padding-right: 11px;
+	color: black;
 	height: 200px;
 	border-radius: 15px;
 }
+
+.new_guest
+{
+	align-items: center!important;
+}
+
 .First
 {
 	display: flex;
 	flex-flow: column;
-	justify-content: space-between;
+	overflow-x: hidden;
+}
+.First_m
+{
+	height: 800px;
+}
+.Second_m
+{
+	height: 800px;
+}
+
+.color_event
+{
+	background-color: #a4c5eb!important;
+}
+.color_docs
+{
+	background-color: #8abbf2!important;
+}
+.color_sceints
+{
+	background-color: #74aff2!important;
 }
 
 /* Admin Panel*/

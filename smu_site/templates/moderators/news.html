@@ -104,8 +104,22 @@
 			  a.click();
 			  document.body.removeChild(a);
 			}
-        </script>
-
+		  </script>
+		  
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+		$(document).ready(function() {
+			$('.for_event').hide();
+				// Show/hide institute-related elements based on user group selection
+				$('#NewEvents').change(function() {
+					  if ($(this).val() === 'News') {
+						$('.for_event').hide();
+					  } else {
+						$('.for_event').show();
+					  }
+				});
+			});
+		</script>
 {% endblock %}
 <!--//-->
 
@@ -119,15 +133,12 @@
 
     
 	<div class="place_form main_plate plates_home container-custom plate-container">
-        <form class="form_all" action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" class="form-control mt-2" style="height:4em; margin-bottom:1em" placeholder="Название новости" id="myTitle" required/>
-            <div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
-                <div style="position:relative; z-index:1 " class="container-custom">
-                    <div class="pt-4 col-lg-12 col-md-12 col-sm-12">
-                        <textarea id="myTextarea" style="width:100%"></textarea>
-                    </div>
-                </div>
+		{% csrf_token %}
+		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12" >
+			<div style="position:relative; z-index:1" class="labels_for_form container-custom">
+				<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+					<textarea id="myTextarea" style="width:100%"></textarea>
+				</div> 
 
                 <div class="container-custom">
                         <label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
@@ -143,24 +154,28 @@
                           data.append('text', content);
                           data.append('title', titleElement.value);
                           data.append('image', imageInput.files[0]);
-
-                        fetch('{% url 'moderators:save_news' %}', {
-                            method: 'POST',
-                            body: data  // Теперь мы отправляем объект FormData, а не JSON
-                            // Заголовок 'Content-Type' не указываем, т.к. браузер автоматически определит правильный тип контента для FormData
-                          })
-                          .then(response => response.json())
-                          .then(data => {
-                            console.log('Успешно:', data);
-                          })
-                          .catch((error) => {
-                            console.error('Ошибка:', error);
-                          });
-                      }
-                    </script>
-                </div>
-            </div>
-        </form>
+			<div class="container-custom">
+				<form class="form_all" action="" method="POST">
+					{% csrf_token %}
+					<input type="text" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
+					<label class="labels_for_form" for="files"> Прикрепление основного изображения: </label>
+					<input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png">
+					<input class="labels_for_form mt-1 mb-1 plates col-lg-5 col-sm-5 col-md-5 col-xs-5 btn" type="button" onclick="call()" value="Показать сгенерированный HRML-код">
+					<label  class="mt-2 labels_for_form inst" for="institute">Категория публикации</label>
+					<select class="form-control input_for_form text-dark" id="NewEvents" name="NewEvents">
+						<option value="News">Новость</option>
+						<option value="Num_2">Событие</option>
+					</select>
+					<div class="for_event">
+						<label class="labels_for_form" for="startDate">Дата начала события:</label>
+						<input class="input_for_form"type="datetime-local" id="startDate" name="startDate">
+						<label class="labels_for_form" for="endDate">Дата окончания события:</label>
+						<input class="input_for_form"type="datetime-local" id="endDate" name="endDate">
+					</div>
+					<input class="submit_all labels_for_form plates mt-3 mb-3  col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Опубликовать">
+				</form>
+			</div>
+		</div>
 	</div>
     {% include "footer.html" %}
 

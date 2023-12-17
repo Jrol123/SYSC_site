@@ -1,12 +1,12 @@
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User, Group
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth.models import User, Group
 from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
-from django.contrib.auth.decorators import login_required, permission_required
-from documents.models import Doc
 from .models import Queue
-from django.db import transaction
+from documents.models import Doc
 from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Image
 from SHC.models import Doc as SHCDoc
@@ -17,6 +17,7 @@ import json
 from django.core.files.base import ContentFile
 import base64
 from django.core.files.storage import default_storage
+from news.models import News, Event, Image
 
 
 @transaction.atomic
@@ -32,12 +33,28 @@ def profile(request):
 def news(request):
     return render(request, 'moderators/news.html')
 
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def add_new_documents(request):
+    return render(request, 'moderators/add_new_documents.html')
 
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def moder_guests(request):
-    return render(request, 'moderators/moder_guests.html')
+    moder_queue = []
+    obtp = {'doc': ('Документ', Doc), 'news': ('Новость', News),
+            'event': ('Мероприятие', Event),
+            'scientist': ('Учёный', Scientist),
+            'grant': ('Грант', Grant)}
+    for q in Queue.objects.all():
+        moder_queue.append((obtp[q.obj_type][0],
+                            obtp[q.obj_type][1]
+                            .objects.get(queue_id=q.id)))
+    
+    return render(request, 'moderators/moder_guests.html',
+                  {'queue': moder_queue, 'range': range(20)})
 
 
 @transaction.atomic
@@ -128,7 +145,7 @@ def create_new_institute(request):
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
-def create_scientist(request, institute_id):
+def create_scientist(request):
     if request.method == 'POST':
 
         form = CreateScientistForm(request.POST, request.FILES)
