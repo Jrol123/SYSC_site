@@ -9,5 +9,5 @@ urlpatterns = [
     path('account/create_new_institute', views.create_new_institute, name='create_institute'),
     path('account/create_new_grant', views.create_new_grant, name='create_new_grant'),
     path('account/upload_doc', views.upload_doc, name='upload_doc'),
-    #path('<int:institute_id>/', views.create_scientist, name='index'),
+    # path('<int:institute_id>/', views.create_scientist, name='index'),
 ]
