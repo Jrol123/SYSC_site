@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group
 from django.db import transaction
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
 from .models import Queue
-from documents.models import Doc
+from documents.models import Doc, Category
 from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Event, Image
 from representatives.models import ReprInst
@@ -16,7 +16,26 @@ from representatives.models import ReprInst
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def add_new_documents(request):
-    return render(request, 'moderators/add_new_documents.html')
+    if request.method == "POST":
+        form = UploadDocForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data['Choose_Category']:
+                cat = Category(name=form.cleaned_data['New_category'])
+                cat.save()
+                doc = Doc(path=request.FILES["path"],
+                          name=form.cleaned_data['name'],
+                          category_id=cat.id, user_id=request.user.id)
+                doc.save()
+            else:
+                doc = Doc(path=request.FILES["path"],
+                          name=form.cleaned_data['name'],
+                          category_id=form.cleaned_data['Category'],
+                          user_id=request.user.id)
+                doc.save()
+            return HttpResponseRedirect('/moderators/account')
+    else:
+        form = UploadDocForm()
+    return render(request, "moderators/add_new_documents.html", {"form": form})
 
 
 @transaction.atomic
@@ -142,13 +161,9 @@ def create_scientist(request):
                                   lab=form.cleaned_data['lab'],
                                   position=form.cleaned_data['position'],
                                   degree=form.cleaned_data['degree'],
-                                  teaching_info=form.cleaned_data['teaching_info'],
-                                  scientific_interests=form.cleaned_data['scientific_interests'],
-                                  achievements=form.cleaned_data['achievements'],
-                                  future_plans=form.cleaned_data['future_plans'])
+                                  scientific_interests=form.cleaned_data['scientific_interests'])
             scientist.save()
             link = ScientistLink(scientist_id=scientist.id,
-                                 service_name=form.cleaned_data['service_name'],
                                  link=form.cleaned_data['link'])
             link.save()
             img = Image(scientist_id=scientist.id,
@@ -188,18 +203,18 @@ def create_news(request):
     return render(request, "moderators/news.html", {"form": form})
 
 
-@transaction.atomic
-@login_required
-@permission_required('auth.moderator', raise_exception=True)
-def upload_doc(request):
-    if request.method == "POST":
-        form = UploadDocForm(request.POST, request.FILES)
-        if form.is_valid():
-            doc = Doc(path=request.FILES["path"],
-                      name=form.cleaned_data['name'],
-                      category=form.cleaned_data['category'])
-            doc.save()
-            return HttpResponseRedirect('/moderators/account')
-    else:
-        form = UploadDocForm()
-    return render(request, "moderators/upload_doc.html", {"form": form})
+# @transaction.atomic
+# @login_required
+# @permission_required('auth.moderator', raise_exception=True)
+# def upload_doc(request):
+#     if request.method == "POST":
+#         form = UploadDocForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             doc = Doc(path=request.FILES["path"],
+#                       name=form.cleaned_data['name'],
+#                       category=form.cleaned_data['category'])
+#             doc.save()
+#             return HttpResponseRedirect('/moderators/account')
+#     else:
+#         form = UploadDocForm()
+#     return render(request, "moderators/add_new_documents.html", {"form": form})
