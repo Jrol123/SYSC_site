@@ -14,8 +14,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-	<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-{% endblock %}	
+	<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>	
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		// Hide institute-related elements on page load
+				$('#Category').hide();
+				$('.sel_cat').hide();
+				$('#New_categoty').hide();
+				$('.new_cat').hide();
+			// Show/hide institute-related elements based on user group selection
+			$('#Choose_Category').change(function() {
+				  if ($(this).val() === 'Yes') {
+					$('#Category').hide();
+					$('.sel_cat').hide();
+					$('#New_categoty').show();
+					$('.new_cat').show();
+				  } else {
+					$('#Category').show();
+					$('.sel_cat').show();
+					$('#New_categoty').hide();
+					$('.new_cat').hide();
+				  }
+			});
+		});
+	</script>
+{% endblock %}
+
 
 {% block content %}
 	{% include "navbar.html" %}
@@ -27,13 +53,18 @@
 				<div class="Intoform col-lg-6 col-sm-6 col-md-6 col-xs-6">
 					<label class="labels_for_form" for="Name_doc">Название документа</label>
 					<input type="text" class="form-control input_for_form" id="Name_doc" name="Name_doc">
-					<label  class="mt-2 labels_for_form inst" for="institute">Категория документа</label>
-					<select class="form-control input_for_form text-dark" id="institute" name="institute">
+					<label  class="mt-2 labels_for_form inst" for="Choose_Category">Создать новую категорию?</label>
+					<select class="form-control input_for_form text-dark" id="Choose_Category" name="Choose_Category">
+						<option value="Yes">Да</option>
+						<option value="No">Нет</option>
+					</select>
+					<label  class="mt-2 labels_for_form inst sel_cat" for="Category">Категория документа</label>
+					<select class="form-control input_for_form text-dark" id="Category" name="Category">
 						<option value="Num_1">Категория_1</option>
 						<option value="Num_2">Категория_2</option>
 						<option value="Num_3">Категория_3</option>
 					</select>
-					<label class="mt-2 labels_for_form" for="New_categoty">Новая категория</label>
+					<label class="mt-2 labels_for_form new_cat" for="New_categoty">Новая категория</label>
 					<input type="text" class="form-control input_for_form" id="New_categoty" name="New_categoty">
 					<label class="mt-2 labels_for_form" for="documentUpload">Загрузить документ:</label>
 					<input class="mt-2 input_for_form_img col-lg-6 col-sm-6 col-md-6 col-xs-6" type="file" accept=".doc, .docx, .xls, .txt, .rtf, .pdf" id="documentUpload" name="documentUpload">
