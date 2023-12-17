@@ -34,11 +34,7 @@ class Scientist(models.Model):
     position = models.CharField("Должность", max_length=300)
     degree = models.CharField("Учёная степень", max_length=200,
                               null=True)
-    teaching_info = models.TextField("Информация о преподавании",
-                                     null=True)
     scientific_interests = models.TextField("Сфера научных интересов")
-    achievements = models.TextField("Достижения", null=True)
-    future_plans = models.TextField("Планы на будущее", null=True)
     
     def __str__(self):
         return (f"ScientistInfo(id={self.id}, "
