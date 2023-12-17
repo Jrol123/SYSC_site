@@ -8,15 +8,6 @@ from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, Create
 from .models import Queue
 from documents.models import Doc
 from info.models import Grant, Institute, Scientist, ScientistLink
-from news.models import News, Image
-from SHC.models import Doc as SHCDoc
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-import json
-from django.core.files.base import ContentFile
-import base64
-from django.core.files.storage import default_storage
 from news.models import News, Event, Image
 
 
@@ -178,29 +169,29 @@ def create_scientist(request):
     return render(request, 'moderators/create_scientist.html', {'form': form})
 
 
-# @transaction.atomic
-# @login_required
-# @permission_required('auth.moderator', raise_exception=True)
-# def create_news(request):
-#
-#     if request.method == 'POST':
-#
-#         form = CreateNewsForm(request.POST)
-#
-#         if form.is_valid():
-#
-#             news = News(title=form.cleaned_data['name'],
-#                         text=form.cleaned_data['description'],
-#                         pub_date=form.cleaned_data['date'],
-#                         link=form.cleaned_data['link'],
-#                         user_id=request.user.id)
-#             news.save()
-#
-#             return HttpResponseRedirect('/moderators/account')
-#
-#     else:
-#         form = CreateNewsForm()
-#     return render(request, "moderators/news.html", {"form": form})
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def create_news(request):
+
+    if request.method == 'POST':
+
+        form = CreateNewsForm(request.POST)
+
+        if form.is_valid():
+
+            news = News(title=form.cleaned_data['name'],
+                        text=form.cleaned_data['description'],
+                        pub_date=form.cleaned_data['date'],
+                        link=form.cleaned_data['link'],
+                        user_id=request.user.id)
+            news.save()
+
+            return HttpResponseRedirect('/moderators/account')
+
+    else:
+        form = CreateNewsForm()
+    return render(request, "moderators/news.html", {"form": form})
 
 
 @transaction.atomic
@@ -218,56 +209,3 @@ def upload_doc(request):
     else:
         form = UploadDocForm()
     return render(request, "moderators/upload_doc.html", {"form": form})
-
-
-@csrf_exempt
-@require_POST
-def save_news(request):
-    try:
-        title = request.POST.get('title')
-        text = request.POST.get('text')
-        image = request.FILES.get('image')  # Получаем файл изображения из request.FILES
-
-        # Создаем объект News
-        obj = News(title=title, text=text,
-                   user_id=request.user.id)
-        obj.save()
-
-        # Если изображение предоставлено, сохраняем его
-        if image:
-            # Сохраняем файл на сервере
-            img = Image(url_path=image,
-                        news_id=obj.id)
-            img.save()
-
-        return JsonResponse({'success': True})
-    except Exception as e:
-        return JsonResponse({'success': False, 'error': str(e)})
-    # try:
-    #     # Получение содержимого из запроса
-    #     data = json.loads(request.body)
-    #     title = data.get('title')
-    #     text = data.get('text')
-    #     image_data = data.get('image')  # получение данных о изображении
-    #
-    #     # Создаём новость
-    #     obj = News(user_id=request.user.id, title=title, text=text)
-    #     obj.save()
-    #
-    #     # Если изображение предоставлено, обрабатываем и сохраняем его
-    #     if image_data:
-    #         # Декодируем Base64 и создаём ContentFile
-    #         format, imgstr = image_data.split(';base64,')  # определение формата изображения и само изображение в формате base64
-    #         ext = format.split('/')[-1]  # получаем расширение файла из формата
-    #         image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-    #
-    #         # Сохраняем файл изображения на сервере в заданное место и получаем путь
-    #         image_path = default_storage.save('images/news/{}.{}'.format(obj.id, ext), image)
-    #
-    #         # Создаем объект модели Doc, связанный с новостью и содержащий путь к изображению
-    #         doc = Doc(url_path=image_path, news_id=obj.id)
-    #         doc.save()
-    #
-    #     return JsonResponse({'success': True})
-    # except Exception as e:
-    #     return JsonResponse({'success': False, 'error': str(e)})
