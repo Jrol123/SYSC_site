@@ -21,28 +21,28 @@
 	{% include "moderators/moder_navbar.html" %}
 	<div class="place_form plates_home main_plate container-custom plate-container">
 		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12">
-			<form class="form_all" action="" method="POST">
+			<form class="form_all" action="" method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
 					<div class="First plates col-lg-4 col-sm-4 col-md-4 col-xs-4">
 						<br>
 						<label class="labels_for_form" for="grant_name">Название гранта:</label>
-						<input class="input_for_form" type="text" id="grant_name" name="grant_name"><br>
+						{{ form.name }}<br>
 						<label class="labels_for_form" for="start_date">Дата начала подачи заявок:</label>
-						<input class="input_for_form" type="datetime-local" id="start_date" name="start_date" step="60"><br>
+						{{ form.end_doc_date }}<br>
 						<label class="labels_for_form" for="end_date">Дата окончания подачи заявок:</label>
-						<input class="input_for_form" type="datetime-local" id="end_date" name="end_date" step="60"><br>
+						{{ form.end_result_date }}<br>
 						<label class="labels_for_form" for="grant_link">Ссылка на грант:</label>
-						<input class="input_for_form" type="url" id="grant_link" name="grant_link"><br>
+						{{ form.link }}<br>
 						<label class="labels_for_form" for="grant_link">Изображение гранта:</label>
-						<input class="input_for_form_img" type="file" id="imageInput" name="image" accept=".jpg, .jpeg, .png"><br>
+						{{ form.url_path }}<br>
 					</div>
 					<div class="Second plates col-lg-7 col-sm-7 col-md-7 col-xs-7">
 						<br>
 						<label class="labels_for_form" for="description">Описание:</label>
-						<textarea class="textarea m-1 col-lg-12 col-sm-12 col-md-12 col-xs-12" id="description" name="description"></textarea><br>
+						{{ form.description }}<br>
 						<label class="labels_for_form" for="criteria">Критерии:</label>
-						<textarea class="textarea m-1 col-lg-12 col-sm-12 col-md-12 col-xs-12" id="criteria" name="criteria"></textarea><br>
+						{{ form.criteria }}<br>
 					</div>
 				</div>
 				<input class="submit_all labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Отправить">
