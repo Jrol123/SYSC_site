@@ -34,8 +34,9 @@ def create_scientist(request):
             q = Queue(obj_type='scientist')
             q.save()
             scientist = Scientist(
-                institute_id=ReprInst.objects.get(user_id=request.user.id).institute_id,
-                queue_id=q.id,
+                institute_id=ReprInst.objects.get(
+                    user_id=request.user.id).institute_id,
+                queue_id=q,
                 name=form.cleaned_data['name'],
                 lab=form.cleaned_data['lab'],
                 position=form.cleaned_data['position'],
@@ -54,7 +55,12 @@ def create_scientist(request):
                         alt=form.cleaned_data['alt'])
             img.save()
             
-            return HttpResponseRedirect('/representatives/account')
+            return HttpResponseRedirect(
+                '/representatives/account',
+                {"is_moder": request.user.groups
+                      .filter(name='moderator').exists(),
+                      "is_repr": request.user.groups
+                      .filter(name='representative').exists(),})
     
     else:
         form = CreateScientistForm()
@@ -150,7 +156,7 @@ def upload_doc(request):
             doc = Doc(path=request.FILES["path"],
                       name=form.cleaned_data['name'],
                       category=form.cleaned_data['category'],
-                      queue_id=q.id)
+                      queue_id=q)
             doc.save()
             return HttpResponseRedirect('/representatives/account')
     else:
