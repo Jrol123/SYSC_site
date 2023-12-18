@@ -51,10 +51,10 @@ def add_new_documents(request):
 @permission_required('auth.moderator', raise_exception=True)
 def moder_guests(request):
     moder_queue = []
-    obtp = {'doc': ('Документ', Doc), 'news': ('Новость', News),
+    obtp = {'doc': ('Документ', Doc),
+            'news': ('Новость', News),
             'event': ('Мероприятие', Event),
-            'scientist': ('Учёный', Scientist),
-            'grant': ('Грант', Grant)}
+            'scientist': ('Учёный', Scientist)}
     for q in Queue.objects.all():
         moder_queue.append((obtp[q.obj_type][0],
                             obtp[q.obj_type][1]

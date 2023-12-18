@@ -24,38 +24,38 @@
 			// Show/hide institute-related elements based on user group selection
 			$('#moder').change(function() {
 				  if ($(this).val() === 'All') {
-					$('#News').show();
-					$('#Events').show();
-					$('#Docs').show();
-					$('#Sceints').show();
+					$('.color_news').show();
+					$('.color_event').show();
+					$('.color_docs').show();
+					$('.color_scientists').show();
 				  }
 				  if ($(this).val() === 'News')
 				  {
-					$('#News').show();
-					$('#Events').hide();
-					$('#Docs').hide();
-					$('#Sceints').hide();
+					$('.color_news').show();
+					$('.color_event').hide();
+					$('.color_docs').hide();
+					$('.color_scientists').hide();
 				  }
 				  if ($(this).val() === 'Events')
 				  {
-					$('#News').hide();
-					$('#Events').show();
-					$('#Docs').hide();
-					$('#Sceints').hide();
+					$('.color_news').hide();
+					$('.color_event').show();
+					$('.color_docs').hide();
+					$('.color_scientists').hide();
 				  }
 				  if ($(this).val() === 'Docs')
 				  {
-					$('#News').hide();
-					$('#Events').hide();
-					$('#Sceints').hide();
-					$('#Docs').show();
+					$('.color_news').hide();
+					$('.color_event').hide();
+					$('.color_docs').show();
+					$('.color_scientists').hide();
 				  }
 				  if ($(this).val() === 'Sceints')
 				  {
-					$('#News').hide();
-					$('#Events').hide();
-					$('#Docs').hide();
-					$('#Sceints').show();
+					$('.color_news').hide();
+					$('.color_event').hide();
+					$('.color_docs').hide();
+					$('.color_scientists').show();
 				  }
 			});
 		});
@@ -82,17 +82,21 @@
 							<br>
 							{% if queue %}
 								{% for type, obj in queue %}
-									{% if type in 'НовостьМероприятие' %}
+									{% if type == 'Новость' %}
 										<button type="button" class="btn input_for_form color_news">{{type}}: {{obj.title}}</button>
-									{% else %}
-										<button type="button" class="btn input_for_form color_news">{{type}}: {{obj.name}}</button>
+									{% elif type == 'Мероприятие' %}
+										<button type="button" class="btn input_for_form color_event">{{type}}: {{obj.title}}</button>
+									{% elif type == 'Документ' %}
+										<button type="button" class="btn input_for_form color_docs">{{type}}: {{obj.name}}</button>
+									{% elif type == 'Учёный' %}
+										<button type="button" class="btn input_for_form color_scientists">{{type}}: {{obj.name}}</button>
 									{% endif %}
 								{% endfor %}
 							{% else %}
 								<button type="button" class="btn input_for_form color_news mb-2" id="News">Пр. Новость #{{ i }}</button>
 								<button type="button" class="btn input_for_form color_event mb-2" id="Events">Пр. Событие #{{ i }}</button>
 								<button type="button" class="btn input_for_form color_docs mb-2" id="Docs">Пр. Доки #{{ i }}</button>
-								<button type="button" class="btn input_for_form color_sceints mb-2" id="Sceints">Пр. Ученые #{{ i }}</button>
+								<button type="button" class="btn input_for_form color_scientists mb-2" id="Scientists">Пр. Ученые #{{ i }}</button>
 							{% endif %}
 						</div>
 					</div>
