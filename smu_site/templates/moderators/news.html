@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Responsive Animated Navbar{% endblock %}
+{% block title %}Добавление новостей и мероприятий{% endblock %}
 {% block meta %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -182,12 +182,12 @@
                         <label  class="mt-2 labels_for_form inst" for="institute">Категория публикации</label>
                         <select class="form-control input_for_form text-dark" id="NewEvents" name="NewEvents">
                             <option value="News">Новость</option>
-                            <option value="Events">Событие</option>
+                            <option value="Events">Мероприятие</option>
                         </select>
                         <div class="for_event">
-                            <label class="labels_for_form" for="startDate">Дата начала события:</label>
+                            <label class="labels_for_form" for="startDate">Дата начала мероприятия:</label>
                             <input class="input_for_form" type="datetime-local" id="startDate" name="startDate">
-                            <label class="labels_for_form" for="endDate">Дата окончания события:</label>
+                            <label class="labels_for_form" for="endDate">Дата окончания мероприятия:</label>
                             <input class="input_for_form" type="datetime-local" id="endDate" name="endDate">
                         </div>
                         <input class="submit_all labels_for_form plates mt-3 mb-3  col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" onclick="save()" value="Опубликовать">

@@ -66,8 +66,8 @@ def index(request):
         return text[:limit - 3] + '...'
     
     # объединяем со списков месяцев и кратким текстом
-    month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    month = ['Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
+             'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек']
     last_news = [(n, month[n.pub_date.month - 1],
                   trim_text(BS(n.text, 'html.parser')
                             .select_one('p').text, 280), img)
