@@ -1,3 +1,9 @@
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                      'SYSC_site.smu_site.settings')
+import django
+django.setup()
+
 from django.contrib.auth.models import Group, Permission, ContentType
 
 
