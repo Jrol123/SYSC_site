@@ -12,11 +12,11 @@ from news.models import News, Event, Image
 from representatives.models import ReprInst
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-import json
-from django.views import View
-from django.core.files.base import ContentFile
-import base64
-from django.core.files.storage import default_storage
+# import json
+# from django.views import View
+# from django.core.files.base import ContentFile
+# import base64
+# from django.core.files.storage import default_storage
 
 
 @transaction.atomic
@@ -26,7 +26,7 @@ def add_new_documents(request):
     if request.method == "POST":
         form = UploadDocForm(request.POST, request.FILES)
         if form.is_valid():
-            if form.cleaned_data['Choose_Category']:
+            if form.cleaned_data['Choose_Category'] == 'True':
                 cat = Category(name=form.cleaned_data['New_category'])
                 cat.save()
                 doc = Doc(path=request.FILES["path"],
@@ -34,11 +34,14 @@ def add_new_documents(request):
                           category_id=cat.id, user_id=request.user.id)
                 doc.save()
             else:
+                print(repr(form.cleaned_data['Category']),
+                      form.cleaned_data['Category'].__class__)
                 doc = Doc(path=request.FILES["path"],
                           name=form.cleaned_data['name'],
                           category_id=form.cleaned_data['Category'],
                           user_id=request.user.id)
                 doc.save()
+                
             return HttpResponseRedirect('/moderators/account')
     else:
         form = UploadDocForm()
@@ -83,7 +86,7 @@ def gzs(request):
     else:
         form = UploadSHCDocForm()
 
-    return render(request, 'moderators/gzs.html',{
+    return render(request, 'moderators/gzs.html', {
         'form': form,
         "is_moder": request.user.groups.filter(name='moderator').exists(),
         "is_repr": request.user.groups.filter(name='representative').exists()
@@ -102,7 +105,9 @@ def add_new_guests(request):
                                             password=form.cleaned_data['password'])
             user_group = Group.objects.get(name=form.cleaned_data['user_group'])
             user.groups.add(user_group)
-            rep_inst = ReprInst(user_id=user.id, institute_id=form.cleaned_data['user_institute'])
+            rep_inst = ReprInst(
+                user_id=user.id,
+                institute_id=form.cleaned_data['user_institute'])
             rep_inst.save()
     else:
         form = CreateUserForm()
@@ -266,4 +271,5 @@ def save_news(request):
 #             return HttpResponseRedirect('/moderators/account')
 #     else:
 #         form = UploadDocForm()
-#     return render(request, "moderators/add_new_documents.html", {"form": form})
+#     return render(request, "moderators/add_new_documents.html",
+#                   {"form": form})

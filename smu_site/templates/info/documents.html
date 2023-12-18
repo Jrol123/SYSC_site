@@ -60,6 +60,17 @@
 					<div id="doc-container">
 						Документы
 						<!-- Document content will be displayed here -->
+						{% if categories %}
+							{% for c, content in categories %}
+								{{content | safe}}
+							{% endfor %}
+						{% else %}
+							<a href=""><h1>Document1</h1></a>
+							<a href=""><h1>Document2</h1></a>
+							<a href=""><h1>Document3</h1></a>
+							<a href=""><h1>Document4</h1></a>
+							<a href=""><h1>Document5</h1></a>
+						{% endif %}
 					</div>
 				</div>
 			

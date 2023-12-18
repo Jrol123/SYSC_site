@@ -436,7 +436,7 @@ class UploadSHCDocForm(forms.Form):
         description = self.cleaned_data['description']
 
         if not Category.objects.filter(name='ГЖС').exist():
-            c = Category('ГЖС')
+            c = Category(name-'ГЖС')
             c.save()
 
         doc = Doc(name=name,

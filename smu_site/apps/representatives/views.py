@@ -36,7 +36,7 @@ def create_scientist(request):
             scientist = Scientist(
                 institute_id=ReprInst.objects.get(
                     user_id=request.user.id).institute_id,
-                queue_id=q,
+                queue_id=q.id,
                 name=form.cleaned_data['name'],
                 lab=form.cleaned_data['lab'],
                 position=form.cleaned_data['position'],
@@ -124,8 +124,8 @@ def save_news(request):
             q.save()
             start = request.POST.get('start')
             end = request.POST.get('end')
-            obj = Event(queue_id=q, title=title, text=text,
-                        user_id=request.user,
+            obj = Event(queue_id=q.id, title=title, text=text,
+                        user_id=request.user.id,
                         begin_date=start, end_date=end)
             obj.save()
             img = Image(url_path=image, event_id=obj)
@@ -133,8 +133,8 @@ def save_news(request):
         else:
             q = Queue(obj_type='news')
             q.save()
-            obj = News(queue_id=q, title=title, text=text,
-                       user_id=request.user)
+            obj = News(queue_id=q.id, title=title, text=text,
+                       user_id=request.user.id)
             obj.save()
             img = Image(url_path=image, news_id=obj)
             img.save()
@@ -156,7 +156,7 @@ def upload_doc(request):
             doc = Doc(path=request.FILES["path"],
                       name=form.cleaned_data['name'],
                       category=form.cleaned_data['category'],
-                      queue_id=q)
+                      queue_id=q.id)
             doc.save()
             return HttpResponseRedirect('/representatives/account')
     else:
