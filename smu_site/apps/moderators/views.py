@@ -42,6 +42,7 @@ def add_new_documents(request):
             return HttpResponseRedirect('/moderators/account')
     else:
         form = UploadDocForm()
+        
     return render(request, "moderators/add_new_documents.html", {
         "form": form,
         "is_moder": request.user.groups.filter(name='moderator').exists(),
@@ -247,6 +248,7 @@ def save_news(request):
             img.save()
 
         return JsonResponse({'success': True})
+    
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
 
