@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group
 from django.db import transaction
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
@@ -17,7 +17,6 @@ from django.views import View
 from django.core.files.base import ContentFile
 import base64
 from django.core.files.storage import default_storage
-from django.http import JsonResponse
 
 
 @transaction.atomic

@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required, \
     permission_required
 from django.contrib.auth.models import User, Group
 from django.db import transaction
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from .forms import (CreateNewsForm, CreateScientistForm, UploadDocForm)
 from documents.models import Doc
 from info.models import Institute, Scientist, ScientistLink
@@ -69,31 +71,76 @@ def create_scientist(request):
                   {'form': form})
 
 
+# @transaction.atomic
+# @login_required
+# @permission_required('auth.representative', raise_exception=True)
+# def create_news(request):
+#     if request.method == 'POST':
+#         form = CreateNewsForm(request.POST)
+#
+#         if form.is_valid():
+#             q = Queue(obj_type='news')
+#             q.save()
+#
+#             news = News(title=form.cleaned_data['name'],
+#                         text=form.cleaned_data['description'],
+#                         pub_date=form.cleaned_data['date'],
+#                         link=form.cleaned_data['link'],
+#                         user_id=request.user.id, queue_id=q.id)
+#             news.save()
+#
+#             return HttpResponseRedirect('/representatives/account')
+#
+#     else:
+#         form = CreateNewsForm()
+#
+#     return render(request, "representatives/news.html",
+#                   {"form": form})
+
+
 @transaction.atomic
 @login_required
 @permission_required('auth.representative', raise_exception=True)
 def create_news(request):
-    if request.method == 'POST':
-        form = CreateNewsForm(request.POST)
-        
-        if form.is_valid():
+    return render(request, "representatives/news.html")
+
+
+@csrf_exempt
+@transaction.atomic
+@require_POST
+def save_news(request):
+    try:
+        # Получение содержимого из запроса
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        image = request.FILES.get('image')
+        category = request.POST.get('category')
+        if category == 'Events':
+            q = Queue(obj_type='event')
+            q.save()
+            
+            start = request.POST.get('start')
+            end = request.POST.get('end')
+            obj = Event(queue_id=q, title=title, text=text,
+                        user_id=request.user,
+                        begin_date=start, end_date=end)
+            obj.save()
+            
+            img = Image(url_path=image, event_id=obj)
+            img.save()
+        else:
             q = Queue(obj_type='news')
             q.save()
             
-            news = News(title=form.cleaned_data['name'],
-                        text=form.cleaned_data['description'],
-                        pub_date=form.cleaned_data['date'],
-                        link=form.cleaned_data['link'],
-                        user_id=request.user.id, queue_id=q.id)
-            news.save()
-            
-            return HttpResponseRedirect('/representatives/account')
-    
-    else:
-        form = CreateNewsForm()
-    
-    return render(request, "representatives/news.html",
-                  {"form": form})
+            obj = News(queue_id=q, title=title, text=text,
+                       user_id=request.user)
+            obj.save()
+            img = Image(url_path=image, news_id=obj)
+            img.save()
+
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
 
 
 @transaction.atomic

@@ -6,6 +6,7 @@ app_name = 'representatives'
 
 urlpatterns = [
     path('account', views.create_news, name='news'),
+    path('account/save_news', views.save_news, name='save_news'),
     path('account/create_scientist', views.create_scientist, name='create_scientist'),
     # path('account/create_new_institute', views.create_new_institute, name='create_institute'),
     # path('account/create_new_grant', views.create_new_grant, name='create_new_grant'),
