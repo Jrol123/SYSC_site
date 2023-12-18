@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db import transaction
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
-from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, CreateNewsForm, UploadSHCDocForm,
+from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
 from .models import Queue
 from documents.models import Doc, Category
@@ -42,7 +42,11 @@ def add_new_documents(request):
             return HttpResponseRedirect('/moderators/account')
     else:
         form = UploadDocForm()
-    return render(request, "moderators/add_new_documents.html", {"form": form})
+    return render(request, "moderators/add_new_documents.html", {
+        "form": form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -59,8 +63,11 @@ def moder_guests(request):
                             obtp[q.obj_type][1]
                             .objects.get(queue_id=q.id)))
 
-    return render(request, 'moderators/moder_guests.html',
-                  {'queue': moder_queue, 'range': range(20)})
+    return render(request, 'moderators/moder_guests.html', {
+        'queue': moder_queue, 'range': range(20),
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -75,8 +82,11 @@ def gzs(request):
     else:
         form = UploadSHCDocForm()
 
-    return render(request, 'moderators/gzs.html',
-                  {'form': form})
+    return render(request, 'moderators/gzs.html',{
+        'form': form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -96,7 +106,11 @@ def add_new_guests(request):
     else:
         form = CreateUserForm()
 
-    return render(request, 'moderators/add_new_guests.html', {'form': form})
+    return render(request, 'moderators/add_new_guests.html', {
+        'form': form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -123,7 +137,11 @@ def create_new_grant(request):
     else:
         form = CreateGrantForm()
 
-    return render(request, 'moderators/create_new_grant.html', {'form': form})
+    return render(request, 'moderators/create_new_grant.html', {
+        'form': form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -148,7 +166,11 @@ def create_new_institute(request):
     else:
         form = CreateInstituteForm()
 
-    return render(request, 'moderators/create_new_institute.html', {'form': form})
+    return render(request, 'moderators/create_new_institute.html', {
+        'form': form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @transaction.atomic
@@ -179,14 +201,22 @@ def create_scientist(request):
     else:
         form = CreateScientistForm()
 
-    return render(request, 'moderators/create_scientist.html', {'form': form})
+    return render(request, 'moderators/create_scientist.html', {
+            'form': form,
+            "is_moder": request.user.groups.filter(name='moderator').exists(),
+            "is_repr": request.user.groups.filter(name='representative').exists()
+        })
 
 
 @transaction.atomic
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
-    return render(request, "moderators/news.html")
+    return render(request, "moderators/news.html",
+                  {
+                      "is_moder": request.user.groups.filter(name='moderator').exists(),
+                      "is_repr": request.user.groups.filter(name='representative').exists()
+                  })
 
 
 @csrf_exempt

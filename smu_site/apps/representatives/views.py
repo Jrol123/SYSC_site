@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from .forms import (CreateNewsForm, CreateScientistForm, UploadDocForm)
+from .forms import CreateScientistForm, UploadDocForm
 from documents.models import Doc
 from info.models import Institute, Scientist, ScientistLink
 from moderators.models import Queue
@@ -14,18 +14,14 @@ from news.models import News, Event, Image
 from representatives.models import ReprInst
 
 
-@transaction.atomic
-@login_required
-@permission_required('auth.representative', raise_exception=True)
-def profile(request):
-    return render(request, 'representatives/moder_panel_main.html')
-
-
-@transaction.atomic
-@login_required
-@permission_required('auth.representative', raise_exception=True)
-def news(request):
-    return render(request, 'representatives/news.html')
+# @transaction.atomic
+# @login_required
+# @permission_required('auth.representative', raise_exception=True)
+# def news(request):
+#     return render(request, 'representatives/news.html', {
+#         "is_moder": request.user.groups.filter(name='moderator').exists(),
+#         "is_repr": request.user.groups.filter(name='representative').exists()
+#     })
 
 
 @transaction.atomic
@@ -37,24 +33,20 @@ def create_scientist(request):
         if form.is_valid():
             q = Queue(obj_type='scientist')
             q.save()
-            
             scientist = Scientist(
-                institute_id=ReprInst.objects.get(
-                    user_id=request.user.id).institute_id,
+                institute_id=ReprInst.objects.get(user_id=request.user.id).institute_id,
                 queue_id=q.id,
                 name=form.cleaned_data['name'],
                 lab=form.cleaned_data['lab'],
                 position=form.cleaned_data['position'],
                 degree=form.cleaned_data['degree'],
                 teaching_info=form.cleaned_data['teaching_info'],
-                scientific_interests=form.cleaned_data[
-                    'scientific_interests'],
+                scientific_interests=form.cleaned_data['scientific_interests'],
                 achievements=form.cleaned_data['achievements'],
                 future_plans=form.cleaned_data['future_plans'])
             scientist.save()
             link = ScientistLink(scientist_id=scientist.id,
-                                 service_name=form.cleaned_data[
-                                     'service_name'],
+                                 service_name=form.cleaned_data['service_name'],
                                  link=form.cleaned_data['link'])
             link.save()
             img = Image(scientist_id=scientist.id,
@@ -67,8 +59,11 @@ def create_scientist(request):
     else:
         form = CreateScientistForm()
     
-    return render(request, 'representatives/create_scientist.html',
-                  {'form': form})
+    return render(request, 'representatives/create_scientist.html', {
+        'form': form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 # @transaction.atomic
@@ -102,7 +97,10 @@ def create_scientist(request):
 @login_required
 @permission_required('auth.representative', raise_exception=True)
 def create_news(request):
-    return render(request, "representatives/news.html")
+    return render(request, "representatives/news.html", {
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })
 
 
 @csrf_exempt
@@ -118,20 +116,17 @@ def save_news(request):
         if category == 'Events':
             q = Queue(obj_type='event')
             q.save()
-            
             start = request.POST.get('start')
             end = request.POST.get('end')
             obj = Event(queue_id=q, title=title, text=text,
                         user_id=request.user,
                         begin_date=start, end_date=end)
             obj.save()
-            
             img = Image(url_path=image, event_id=obj)
             img.save()
         else:
             q = Queue(obj_type='news')
             q.save()
-            
             obj = News(queue_id=q, title=title, text=text,
                        user_id=request.user)
             obj.save()
@@ -152,7 +147,6 @@ def upload_doc(request):
         if form.is_valid():
             q = Queue(obj_type='doc')
             q.save()
-            
             doc = Doc(path=request.FILES["path"],
                       name=form.cleaned_data['name'],
                       category=form.cleaned_data['category'],
@@ -162,5 +156,8 @@ def upload_doc(request):
     else:
         form = UploadDocForm()
     
-    return render(request, "representatives/upload_doc.html",
-                  {"form": form})
+    return render(request, "representatives/upload_doc.html", {
+        "form": form,
+        "is_moder": request.user.groups.filter(name='moderator').exists(),
+        "is_repr": request.user.groups.filter(name='representative').exists()
+    })

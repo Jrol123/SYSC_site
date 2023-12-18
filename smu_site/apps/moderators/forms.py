@@ -368,10 +368,10 @@ class CreateScientistForm(ModelForm):
                    'accept': ".jpg, .jpeg, .png"})}
 
 
-class CreateNewsForm(forms.Form):
-    name = forms.CharField(help_text="Введите название", required=True)
-    description = forms.CharField(help_text="Введите текст",
-                                  widget=forms.Textarea)
+# class CreateNewsForm(forms.Form):
+#     name = forms.CharField(help_text="Введите название", required=True)
+#     description = forms.CharField(help_text="Введите текст",
+#                                   widget=forms.Textarea)
 
 
 class UploadDocForm(ModelForm):

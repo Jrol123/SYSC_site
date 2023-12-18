@@ -13,11 +13,14 @@ def index(request):
     for d in docs:
         if not docs_content.get(d.category.name):
             docs_content[d.category.name] = ""
-        
+
         docs_content[d.category.name] += (
             f"<a href='{settings.MEDIA_URL}"
             f"{d.path}'><h1>{d.name}</h1></a>\n")
-        
+
     return render(request, 'info/documents.html',
                   {'title': "Документы",
-                   'categories': docs_content.items()})
+                   'categories': docs_content.items(),
+                   "is_moder": request.user.groups.filter(name='moderator').exists(),
+                   "is_repr": request.user.groups.filter(name='representative').exists()
+                   })
