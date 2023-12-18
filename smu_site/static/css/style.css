@@ -878,14 +878,40 @@ details[open] .content {
 .pl_hrefs
 {
 	background-color: #99c2f0!important;
-	height: 50px!important;
+	/*height: 50px!important;*/
 	text-align: left!important;
+	border-radius: 15px;
+
 }
-.pl_hrefs > a
+#doc-container {
+    padding: 10px !important;
+
+}
+.categories_here {
+    margin-bottom: 25px;
+    /*justify-content: center !important;*/
+    color: black !important;
+    /*display: flex;*/
+}
+.doc_content_stuff{
+    font-size: 30px; !important;
+    margin: 10px !important;
+    background: #cfe2ff !important;
+    border-radius: 15px !important;
+    padding-left: 20px !important;
+    max-width: 50%;
+}
+.kostyl, {
+    margin-bottom: 5px !important;
+}
+.pl_hrefs a
 {
 	color: black;
-	text-decoration: none;
-	margin-left: 5px;
+	text-decoration: none !important;
+	/*padding: 10px !important;*/
+}
+.list-group {
+    font-size: 35px; !important;
 }
 .category option{
   padding: 15px;

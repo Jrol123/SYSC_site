@@ -15,8 +15,8 @@ def index(request):
             docs_content[d.category.name] = ""
 
         docs_content[d.category.name] += (
-            f"<a href='{settings.MEDIA_URL}"
-            f"{d.path}'><h1>{d.name}</h1></a>\n")
+            f"<div class='doc_content_stuff'><a href='{settings.MEDIA_URL}"
+            f"{d.path}'>{d.name}</a></div>\n")
 
     return render(request, 'info/documents.html',
                   {'title': "Документы",
