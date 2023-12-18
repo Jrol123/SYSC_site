@@ -10,6 +10,14 @@ from documents.models import Doc, Category
 from info.models import Grant, Institute, Scientist, ScientistLink
 from news.models import News, Event, Image
 from representatives.models import ReprInst
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+from django.views import View
+from django.core.files.base import ContentFile
+import base64
+from django.core.files.storage import default_storage
+from django.http import JsonResponse
 
 
 @transaction.atomic
@@ -51,7 +59,7 @@ def moder_guests(request):
         moder_queue.append((obtp[q.obj_type][0],
                             obtp[q.obj_type][1]
                             .objects.get(queue_id=q.id)))
-    
+
     return render(request, 'moderators/moder_guests.html',
                   {'queue': moder_queue, 'range': range(20)})
 
@@ -96,13 +104,11 @@ def add_new_guests(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_grant(request):
-
     if request.method == 'POST':
 
         form = CreateGrantForm(request.POST, request.FILES)
 
         if form.is_valid():
-
             grant = Grant(name=form.cleaned_data['name'],
                           criteria=form.cleaned_data['criteria'],
                           description=form.cleaned_data['description'],
@@ -125,7 +131,6 @@ def create_new_grant(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_new_institute(request):
-
     if request.method == 'POST':
         form = CreateInstituteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -138,7 +143,7 @@ def create_new_institute(request):
             #                       smu_link=form.cleaned_data['smu_link'])
             # institute.save()
             form.save()
-            
+
             return HttpResponseRedirect('/moderators/account')
 
     else:
@@ -182,26 +187,39 @@ def create_scientist(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def create_news(request):
+    return render(request, "moderators/news.html")
 
-    if request.method == 'POST':
 
-        form = CreateNewsForm(request.POST)
+@csrf_exempt
+@transaction.atomic
+@require_POST
+def save_news(request):
+    try:
+        # Получение содержимого из запроса
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        image = request.FILES.get('image')
+        category = request.POST.get('category')
+        if category == 'Events':
+            start = request.POST.get('start')
+            end = request.POST.get('end')
+            obj = Event(title=title, text=text,
+                        user_id=request.user.id,
+                        begin_date=start,
+                        end_date=end)
+            obj.save()
+            img = Image(url_path=image, event_id=obj.id)
+            img.save()
+        else:
+            obj = News(title=title, text=text,
+                       user_id=request.user.id)
+            obj.save()
+            img = Image(url_path=image, news_id=obj.id)
+            img.save()
 
-        if form.is_valid():
-
-            news = News(title=form.cleaned_data['name'],
-                        text=form.cleaned_data['description'],
-                        pub_date=form.cleaned_data['date'],
-                        link=form.cleaned_data['link'],
-                        user_id=request.user.id)
-            news.save()
-
-            return HttpResponseRedirect('/moderators/account')
-
-    else:
-        form = CreateNewsForm()
-    return render(request, "moderators/news.html", {"form": form})
-
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
 
 # @transaction.atomic
 # @login_required
