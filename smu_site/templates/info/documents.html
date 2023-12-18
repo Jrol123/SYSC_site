@@ -32,13 +32,18 @@
 						<div class="container">
 							
 							<div class="list-group">
-								<a href="#" class="list-group-item list-group-item-action link-item" data-doc="Document for Link 1">Link 1</a>
-								<a href="#" class="list-group-item list-group-item-action link-item" data-doc="Document for Link 2">Link 2</a>
-								<a href="#" class="list-group-item list-group-item-action link-item" data-doc="Document for Link 3">Link 3</a>
-								<a href="#" class="list-group-item list-group-item-action link-item" data-doc="Document for Link 4">Link 4</a>
-								<a href="#" class="list-group-item list-group-item-action link-item" data-doc="Document for Link 5">Link 5</a>
-							  </div>
-
+								{% if categories %}
+									{% for c, content in categories %}
+										<a href="#" class="list-group-item list-group-item-action link-item" data-doc="{{content}}">{{c}}</a>
+									{% endfor %}
+								{% else %}
+									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 1</h1>>">Link 1</a>
+									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 2</h1>>">Link 2</a>
+									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 3</h1>>">Link 3</a>
+									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 4</h1>>">Link 4</a>
+									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 5</h1>>">Link 5</a>
+								{% endif %}
+							</div>
 							<div class="result"></div>
 
 						</div>
@@ -48,11 +53,11 @@
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
 
             <div class="ScrollBar Scroll_dock mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12">
-				
+
                 <div class="pl_hrefs plates col-sm-12 col-md-12 col-xs-12 m-2">
 					<div id="doc-container">
 						<!-- Document content will be displayed here -->
-					  </div>
+					</div>
 				</div>
 			
             </div>      
@@ -60,13 +65,13 @@
     </div>
         
 	<script>
-		
+
 		  $(".link-item").on("click", function() {
-			
+
 			const docContent = $(this).data("doc");
-			$("#doc-container").html(`<h1>${docContent}</h1>`);
+			$("#doc-container").html(`${docContent}`);
 		  });
-	
+
 	  </script>
     
 	 

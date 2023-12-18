@@ -1,5 +1,21 @@
 from django.shortcuts import render
+from django.conf import settings
+from .models import Category, Doc
 
 
 def index(request):
-    return render(request, 'info/documents.html')
+    # kitkat = Category.objects.all().order_by('name')
+    docs = (Doc.objects.select_related('category')
+            .filter(category__isnull=False))  # .order_by('category__name',
+                                                    # 'doc__name')
+    docs_content = {}
+    for d in docs:
+        if not docs_content.get(d.category.name):
+            docs_content[d.category.name] = ""
+        
+        docs_content[d.category.name] += (
+            f"<a href='{settings.MEDIA_URL}"
+            f"{d.path}'><h1>{d.name}</h1></a>\n")
+        
+    return render(request, 'info/documents.html',
+                  {'categories': docs_content.items()})

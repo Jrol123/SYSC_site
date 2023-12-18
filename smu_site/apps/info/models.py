@@ -67,4 +67,3 @@ class Grant(models.Model):
         return (f"Grant(id={self.id}, name=\"{self.name}\", "
                 f"end_doc_date=\"{self.end_doc_date}\", "
                 f"end_result_date=\"{self.end_result_date}\")")
-
