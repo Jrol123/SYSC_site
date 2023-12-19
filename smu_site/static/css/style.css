@@ -8,6 +8,7 @@
 }
 :root{
     --nav-bg: #6996D3;
+    --nav-bg-darker: #4b77b4;
     --nav-btn-bg: #284C7E;
     --footer-bg: #05316D;
     --dark: #131418;
@@ -218,9 +219,12 @@ body{
     background-color: var(--nav-bg);
     color:white;
     font-size:14px;
-    width:200px;
+    max-width:400px;
     padding:12px 12px;
-    clip-path: polygon(100% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+    width:322px;
+    border-radius:5px;
+    word-wrap: break-word;
+   
 }
 
 .event-grant h3{
