@@ -27,12 +27,12 @@
     <div class="plates_home main_plate container-custom plate-container" >
 
         <div class="mt-5">
-            <h4 class="mb-4 text-center" style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
+            <h4 class="mb-4 " style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
             <hr style="color:var(--nav-btn-bg)">
             {% if grants %}
                 {% for grant, img in grants %}
                 <section>
-                    <div class="grantees plates mt-5 rounded" style="border-left:5px solid var(--nav-bg)">
+                    <div class="grantees plates mt-4 rounded" style="border-left:5px solid var(--nav-bg)">
                        <div class="title"><h3>{{grant.name}}</h3></div>
                         <div class="content rounded" style="background-color:white">
                             <div class="row" style="padding:15px">
