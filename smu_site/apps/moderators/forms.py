@@ -8,67 +8,78 @@ from info.models import Institute, Grant
 from news.models import Image
 from SHC.models import Doc as SHCDoc
 
-INSTITUTE_CHOICE = []
-if Institute._meta.db_table in connection.introspection.table_names():
-    institutes_list = Institute.objects.values('id', 'name')
-    for obj in institutes_list:
-        INSTITUTE_CHOICE.append((obj['id'], obj['name']))
-
 CATEGORY_CHOICE = []
 if Category._meta.db_table in connection.introspection.table_names():
     categories_list = Category.objects.values('id', 'name')
     for obj in categories_list:
         CATEGORY_CHOICE.append((obj['id'], obj['name']))
 
+INSTITUTE_CHOICE = []
+if Institute._meta.db_table in connection.introspection.table_names():
+    institutes_list = Institute.objects.values('id', 'name')
+    for obj in institutes_list:
+        INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+
 
 class CreateUserForm(forms.Form):
-    user_group = forms.ChoiceField(
-        help_text="Выберите тип аккаунта",
-        choices=(
-            ("representative", "Представитель"),
-            ("moderator", "Модератор")),
-        widget=forms.Select(attrs={
-            'class': "form-control input_for_form",
-            'id': "userGroup", 'name': "userGroup"
-        }))
-    user_institute = forms.ChoiceField(
-        help_text="Выберите институт",
-        choices=INSTITUTE_CHOICE,
-        widget=forms.Select(attrs={
-            'class': "form-control input_for_form",
-            'id': "institute", 'name': "institute"
-        }))
-    user_name = forms.CharField(
-        help_text="Введите имя аккаунта",
-        required=True,
-        widget=forms.TextInput(attrs={
-            'type': "text",
-            'class': "form-control input_for_form",
-            'id': "username", 'name': "username",
-        }))
-    email = forms.EmailField(
-        help_text="Введите имя аккаунта",
-        required=True,
-        widget=forms.EmailInput(attrs={
-            'type': "email",
-            'class': "form-control input_for_form",
-            'id': "Email", 'name': "Email",
-        }))
-    password = forms.CharField(
-        help_text="Введите пароль",
-        required=True,
-        widget=forms.PasswordInput(attrs={
-            'type': "password",
-            'class': "form-control input_for_form",
-            'id': "password", 'name': "password"
-        }))
-    password_repeat = forms.CharField(
-        help_text="Введите пароль еще раз", required=True,
-        widget=forms.PasswordInput(attrs={
-            'type': "password",
-            'class': "form-control input_for_form",
-            'id': "confirmPassword", 'name': "confirmPassword"
-        }))
+    def get_dynamic_choices(self):
+        INSTITUTE_CHOICE = []
+        if Institute._meta.db_table in connection.introspection.table_names():
+            institutes_list = Institute.objects.values('id', 'name')
+            for obj in institutes_list:
+                INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+        return INSTITUTE_CHOICE
+
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['user_institute'] = forms.ChoiceField(choices=self.get_dynamic_choices())
+        self.fields['user_group'] = forms.ChoiceField(
+            help_text="Выберите тип аккаунта",
+            choices=(
+                ("representative", "Представитель"),
+                ("moderator", "Модератор")),
+            widget=forms.Select(attrs={
+                'class': "form-control input_for_form",
+                'id': "userGroup", 'name': "userGroup"
+            }))
+        self.fields['user_institute'] = forms.ChoiceField(
+            help_text="Выберите институт",
+            choices=self.get_dynamic_choices(),
+            widget=forms.Select(attrs={
+                'class': "form-control input_for_form",
+                'id': "institute", 'name': "institute"
+            }))
+        self.fields['user_name'] = forms.CharField(
+            help_text="Введите имя аккаунта",
+            required=True,
+            widget=forms.TextInput(attrs={
+                'type': "text",
+                'class': "form-control input_for_form",
+                'id': "username", 'name': "username",
+            }))
+        self.fields['email'] = forms.EmailField(
+            help_text="Введите имя аккаунта",
+            required=True,
+            widget=forms.EmailInput(attrs={
+                'type': "email",
+                'class': "form-control input_for_form",
+                'id': "Email", 'name': "Email",
+            }))
+        self.fields['password'] = forms.CharField(
+            help_text="Введите пароль",
+            required=True,
+            widget=forms.PasswordInput(attrs={
+                'type': "password",
+                'class': "form-control input_for_form",
+                'id': "password", 'name': "password"
+            }))
+        self.fields['password_repeat'] = forms.CharField(
+            help_text="Введите пароль еще раз", required=True,
+            widget=forms.PasswordInput(attrs={
+                'type': "password",
+                'class': "form-control input_for_form",
+                'id': "confirmPassword", 'name': "confirmPassword"
+            }))
 
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
