@@ -14,12 +14,6 @@ if Category._meta.db_table in connection.introspection.table_names():
     for obj in categories_list:
         CATEGORY_CHOICE.append((obj['id'], obj['name']))
 
-INSTITUTE_CHOICE = []
-if Institute._meta.db_table in connection.introspection.table_names():
-    institutes_list = Institute.objects.values('id', 'name')
-    for obj in institutes_list:
-        INSTITUTE_CHOICE.append((obj['id'], obj['name']))
-
 
 class CreateUserForm(forms.Form):
     def get_dynamic_choices(self):
@@ -316,61 +310,70 @@ class CreateInstituteForm(forms.Form):
 
 
 class CreateScientistForm(ModelForm):
-    name = forms.CharField(
-        widget=forms.TextInput(attrs=
-                               {'class': "input_for_form",
-                                'type': "text",
-                                'placeholder': "Введите ФИО учёного"}),
-        required=True)
+    def get_dynamic_choices(self):
+        INSTITUTE_CHOICE = []
+        if Institute._meta.db_table in connection.introspection.table_names():
+            institutes_list = Institute.objects.values('id', 'name')
+            for obj in institutes_list:
+                INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+        return INSTITUTE_CHOICE
 
-    lab = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+    def __init__(self, *args, **kwargs):
+        super(CreateScientistForm, self).__init__(*args, **kwargs)
 
-    position = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               'placeholder': "Введите должность"}),
-        required=True)
+        self.fields['name'] = forms.CharField(
+            widget=forms.TextInput(attrs=
+                                   {'class': "input_for_form",
+                                    'type': "text",
+                                    'placeholder': "Введите ФИО учёного"}),
+            required=True)
 
-    degree = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
-
-    scientific_interests = forms.CharField(
-        widget=forms.Textarea(
+        self.fields['lab'] = forms.CharField(widget=forms.TextInput(
             attrs={'class': "input_for_form",
                    'type': "text",
                    }),
-        required=True)
+            required=True)
 
-    link = forms.URLField(widget=forms.Textarea(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+        self.fields['position'] = forms.CharField(widget=forms.TextInput(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   'placeholder': "Введите должность"}),
+            required=True)
 
-    service_name = forms.CharField(widget=forms.Textarea(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+        self.fields['degree'] = forms.IntegerField(widget=forms.NumberInput(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
 
-    institute = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
-               }),
-        required=True,
-        choices=INSTITUTE_CHOICE)
+        self.fields['scientific_interests'] = forms.CharField(
+            widget=forms.Textarea(
+                attrs={'class': "input_for_form",
+                       'type': "text",
+                       }),
+            required=True)
+
+        self.fields['link'] = forms.URLField(widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
+
+        self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
+
+        self.fields['institute'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
+                   }),
+            required=True,
+            choices=self.get_dynamic_choices())
 
     class Meta:
         model = Image
-        fields = ['name', 'url_path', 'alt', 'lab', 'position',
-                  'degree', 'scientific_interests',
-                  'link', 'service_name']
+        fields = ['url_path']
         widgets = {'url_path': forms.FileInput(
             attrs={'class': "input_for_form_img",
                    'type': "file",
