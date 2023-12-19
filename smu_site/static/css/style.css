@@ -22,7 +22,18 @@
 .black-lives-meter{
     color: black !important;
 }
+.modal-backdrop{
+  width:100%!important;
+  height:100%
+}
+.modal{
+  margin-top:3em !important;
+}
+.modal-dialog {
+  max-width:75%;
+  width:900px !important;
 
+}
 *{
     margin: 0;
     padding: 0;
