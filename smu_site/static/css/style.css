@@ -151,6 +151,10 @@ body{
     width:750px;
     word-wrap: break-word;
 }
+.limitp{
+  width:850px;
+  word-wrap: break-word;
+}
 .plates{
     background-color: whitesmoke;
     border-radius:17px;
