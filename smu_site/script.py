@@ -1,6 +1,6 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'SYSC_site.smu_site.settings')
+                      'settings')
 import django
 django.setup()
 
