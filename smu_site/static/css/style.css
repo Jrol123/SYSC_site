@@ -221,7 +221,8 @@ body{
     font-size:14px;
     max-width:400px;
     padding:12px 12px;
-    width:322px;
+   
+    max-width: 100%;
     border-radius:5px;
     word-wrap: break-word;
    
