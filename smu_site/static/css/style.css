@@ -147,7 +147,10 @@ body{
     flex: 0 0 2.333333%;
     max-width: 2.333333%;
   }
-
+.limit{
+    width:750px;
+    word-wrap: break-word;
+}
 .plates{
     background-color: whitesmoke;
     border-radius:17px;
