@@ -114,12 +114,13 @@ body{
  .logo{
     padding:0.5vh 9vw;
     text-align: center;
+     width: auto;
 }
 .logo img {
     height: 3.3rem;
-    width: 3.3rem;
-    
-    
+    width: 4rem;
+
+
 }
 
 .col-lg-grant {
