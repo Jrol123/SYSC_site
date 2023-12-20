@@ -943,20 +943,19 @@ details[open] .content {
   text-align:left;
   background-color:none;
 }
+
+.doc_content_stuff{
+  text-align:left;
+  padding:15px;
+  font-size:16px;
+}
 .categories_here {
     margin-bottom: 25px;
     /*justify-content: center !important;*/
     color: black !important;
     /*display: flex;*/
 }
-.doc_content_stuff{
-    font-size: 30px; !important;
-    margin: 10px !important;
-    background: #cfe2ff !important;
-    border-radius: 15px !important;
-    padding-left: 20px !important;
-    max-width: 50%;
-}
+
 .kostyl, {
     margin-bottom: 5px !important;
 }
@@ -1053,3 +1052,28 @@ details[open] .content {
 input{
   display:block;
 }
+
+
+/* table */
+/* ------------------------------------------------------------------ */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+ 
+  text-align: left;
+  padding: 8px;
+  color:black
+}
+td a{
+  text-decoration:none;
+}
+
+tr:nth-child(even) {
+  background-color: #284c7e42;
+}
+
+/* ---------------------------------------
