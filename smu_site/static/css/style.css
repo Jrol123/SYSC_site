@@ -702,7 +702,10 @@ details[open] .content {
 {
 	background-color: #f0f4fa!important;	
 }
-
+.Second_m
+{
+	padding-right: 30px;
+}
 .labels_for_form
 {
 	font-size: 20px;
@@ -797,6 +800,11 @@ details[open] .content {
 	background-color: #bbd9fa!important;
 	margin-bottom: 20px;
 }
+.flex_costume
+{
+	display: flex;
+	flex-direction: column;
+}
 .input_for_form > option
 {
 	color: black;
@@ -823,10 +831,6 @@ details[open] .content {
 	overflow-x: hidden;
 }
 .First_m
-{
-	height: 800px;
-}
-.Second_m
 {
 	height: 800px;
 }
@@ -1047,7 +1051,7 @@ details[open] .content {
 
 }
 .redactor{
-  background-color:rgb(206, 204, 204);
+	margin:0px;
 }
 input{
   display:block;
