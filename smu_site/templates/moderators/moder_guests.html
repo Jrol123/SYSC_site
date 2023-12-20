@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+	{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Модерация{% endblock %}
@@ -60,6 +60,128 @@
 			});
 		});
 	</script>
+	<script>
+			document.addEventListener("DOMContentLoaded", function() {
+		  // При загрузке страницы оставить видимым только Moders и скрыть остальные классы
+		  document.querySelector('.Moders').style.display = 'block';
+		  document.querySelector('.Events').style.display = 'none';
+		  document.querySelector('.News').style.display = 'none';
+		  document.querySelector('.Docs').style.display = 'none';
+		  document.querySelector('.Scientist').style.display = 'none';
+
+		  // При нажатии кнопки с классом color_news показывать только News
+		  document.querySelectorAll('.color_news').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'block';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_event показывать только Events
+		  document.querySelectorAll('.color_event').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'block';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_docs показывать только Docs
+		  document.querySelectorAll('.color_docs').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'block';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_scientists показывать только Scientist
+		  document.querySelectorAll('.color_scientists').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'block';
+			});
+		  });
+		});
+	</script>
+	<script type="text/javascript">
+		tinymce.init({
+			selector: '#myTextarea',
+			
+			plugins: [
+			'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+			'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+			'media', 'table', 'emoticons', 'template'
+			],
+			toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+			'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+			'forecolor backcolor emoticons | help | googlemap',
+	
+			setup: function (editor) {
+			  editor.ui.registry.addButton('googlemap', {
+				text: 'Insert Map',
+				onAction: function () {
+				  let link = prompt("Enter the link here.");
+				  
+				  if(link != ""){
+					const mapCode = '<iframe src="' + link + '" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>';
+					editor.insertContent(mapCode);
+				  }
+				},
+			  });
+			},
+            /* Block popup (DO NOT REMOVE COMMENTS)
+			init_instance_callback : function(editor) {
+				var freeTiny = document.querySelector('.tox .tox-notification--in');
+			   freeTiny.style.display = 'none';
+			  },*/
+			menu: {
+			favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+			},
+			menubar: 'favs file edit view insert format tools table help',
+           
+
+            image_title: true,
+            // enable automatic uploads of images represented by blob or data URIs
+            automatic_uploads: true,
+            // add custom filepicker only to Image dialog
+            file_picker_types: 'image',
+            file_picker_callback: function(cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function() {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+
+                    reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        // call the callback and populate the Title field with the file name
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                input.click();
+            }
+        });
+	</script>
 {% endblock %}	
 {% block content %}
 	{% include "navbar.html" %}
@@ -100,8 +222,75 @@
 							{% endif %}
 						</div>
 					</div>
-					<div class="Second Second_m plates col-lg-7 col-sm-7 col-md-7 col-xs-7">
-						<h1> Вид ОТОБРАЖЕНИЯ НОВОСТИ Как отображается ? </h1>
+					<div class="plates Second_m col-lg-7 col-sm-7 col-md-7 col-xs-7">
+						<div style="position:relative; z-index:1" class="Moders container-custom">
+							<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+								<h1 class="text-dark text-center"> Окно Модерации </h1>
+							</div>
+						</div>
+						<div style="position:relative; z-index:1" class="Events container-custom">
+							<div class="pt-4 labels_for_form col-lg-12 col-md-12 col-sm-12">
+								<textarea id="myTextarea" style="width:100%"></textarea>
+							</div>
+							<div class="pt-4 pb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<input type="text" id="myTitle" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
+								<label class="labels_for_form" for="startDate">Дата начала мероприятия:</label>
+								<input class="input_for_form" type="datetime-local" id="startDate" name="startDate">
+								<label class="labels_for_form" for="endDate">Дата окончания мероприятия:</label>
+								<input class="input_for_form" type="datetime-local" id="endDate" name="endDate">
+							</div>
+						</div>
+						<div style="position:relative; z-index:1" class="News container-custom">
+							<div class="pt-4 labels_for_form col-lg-12 col-md-12 col-sm-12">
+								<textarea id="myTextarea" style="width:100%"></textarea>
+							</div>
+							<input type="text" id="myTitle" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
+						</div>
+						<div style="position:relative; z-index:1" class="Docs container-custom">
+											<div class="Intoform col-lg-6 col-sm-6 col-md-6 col-xs-6">
+					<label class="labels_for_form" for="id_Name_doc">Название документа</label>
+					<input type="text" class="form-control input_for_form" id="Name_doc" name="Name_doc">
+					<label  class="mt-2 labels_for_form inst sel_cat" for="id_Category">Категория документа</label>
+					<input type="text" class="form-control input_for_form" id="New_categoty" name="New_categoty">
+                    <label class="mt-2 labels_for_form" for="documentUpload">ссылка на документ</label>
+					<a href='#' class="mt-2 links labels_for_form"> ссылка на документ </a>
+                </div>
+						</div>
+						<div style="position:relative; z-index:1" class="Scientist container-custom">
+							<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+								<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
+									<div class="First plates col-lg-5 col-sm-5 col-md-5 col-xs-5">
+										<br>
+										<label class="labels_for_form" for="name">Имя учёного:</label>
+										{{form.name}}
+										<br>
+										<label class="labels_for_form" for="position">Должность:</label>
+										{{form.position}}
+										<br>
+										<label class="labels_for_form" for="degree">Учёная степень:</label>
+										{{form.degree}}
+										<br>
+										<label class="labels_for_form" for="institute">Институт:</label>
+										{{ form.institute }}
+										<br>
+										<label class="labels_for_form" for="lab">Лаборатория:</label>
+										{{form.lab}}
+										<br>
+										<label class="labels_for_form" for="imageInput">Фотография учёного:</label>
+										{{form.url_path}}
+									</div>
+									<div class="First plates col-lg-6 col-sm-6 col-md-6 col-xs-6">
+										<br>
+										<label class="labels_for_form" for="service_name">Ссылки на профили:</label>
+										{{form.service_name}}
+										<br>
+										<label class="labels_for_form" for="scientific_interests">Научные интересы:</label>
+										{{form.scientific_interests}}
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="underform col-lg-12 col-sm-12 col-md-12 col-xs-12">
