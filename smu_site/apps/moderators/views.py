@@ -194,7 +194,8 @@ def create_scientist(request):
                                   lab=form.cleaned_data['lab'],
                                   position=form.cleaned_data['position'],
                                   degree=form.cleaned_data['degree'],
-                                  scientific_interests=form.cleaned_data['scientific_interests'])
+                                  scientific_interests=form.cleaned_data['scientific_interests'],
+                                  user_id=request.user.id)
             scientist.save()
             
             links = form.cleaned_data['link'].split('\n')
