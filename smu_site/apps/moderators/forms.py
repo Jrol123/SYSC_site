@@ -231,6 +231,7 @@ class CreateInstituteForm(forms.Form):
                                       'type': "file",
                                       'id': "imageInput",
                                       'name': "image",
+                                      'onchange' : "checkImageSize(this)",
                                       'accept': ".jpg, .jpeg, .png"}),
                            required=True)
 

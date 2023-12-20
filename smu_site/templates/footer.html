@@ -1,14 +1,6 @@
     <footer class="footer">
         <div class="container row justify-content-between">    
             <div class="footer-col">
-                <h4>Остались вопросы ?</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-				
-            </div>
-
-            <div class="footer-col">
                
 				<h4>Связь с администратором</h4>
                 <ul style="color:whitesmoke">
@@ -24,7 +16,7 @@
                 </div><br/>
 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout'%}?next={% url 'main' %}" class="login-btn">Выйти из акаунта</a>
+                    <a href="{% url 'logout'%}?next={% url 'main' %}" class="login-btn">Выйти</a>
                 {% else %}
                     <a href="{% url 'user_login'%}?next={{ request.path }}" class="login-btn">Вход</a>
                 {% endif %}

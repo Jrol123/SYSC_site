@@ -51,6 +51,27 @@
 						{{form.description}}
 						<br>
 						<label class="labels_for_form" for="imageInput">Изображение Института:</label>
+						  <script>
+							function checkImageSize(input) {
+							  if (input.files && input.files[0]) {
+								var reader = new FileReader();
+
+								reader.onload = function(e) {
+								  var image = new Image();
+								  image.src = e.target.result;
+
+								  image.onload = function() {
+									if (this.height > 200 || this.width > 300) {
+									  alert("Высота фотографии не должна превышать 200px, а ширина 300px.");
+									  input.value = ""; // очистить поле ввода, чтобы была возможность выбрать другой файл
+									}
+								  };
+								};
+
+								reader.readAsDataURL(input.files[0]);
+							  }
+							}
+						</script>
 						{{form.img}}
 						<br>
 					</div>
