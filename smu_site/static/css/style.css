@@ -381,6 +381,15 @@ ul {
   border-left:2px solid black;
 }
 
+.catbtn-all{
+  font-size:16px;
+  background-color:rgba(0, 0, 0, 0.705);
+  text-decoration:none;
+  color:white;
+  padding:20px 30px;
+  border-left:2px solid black;
+}
+
 
 
 .footer-col ul li a {
@@ -1067,7 +1076,7 @@ table {
 }
 
 td, th {
- 
+  border: 2px solid silver;
   text-align: left;
   padding: 8px;
   color:black
