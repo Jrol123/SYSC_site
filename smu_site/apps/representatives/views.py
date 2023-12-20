@@ -122,24 +122,29 @@ def save_news(request):
         if category == 'Events':
             q = Queue(obj_type='event')
             q.save()
+            
             start = request.POST.get('start')
             end = request.POST.get('end')
             obj = Event(queue_id=q.id, title=title, text=text,
                         user_id=request.user.id,
                         begin_date=start, end_date=end)
             obj.save()
-            img = Image(url_path=image, event_id=obj)
+            
+            img = Image(url_path=image, event_id=obj.id)
             img.save()
         else:
             q = Queue(obj_type='news')
             q.save()
+            
             obj = News(queue_id=q.id, title=title, text=text,
                        user_id=request.user.id)
             obj.save()
-            img = Image(url_path=image, news_id=obj)
+            
+            img = Image(url_path=image, news_id=obj.id)
             img.save()
 
         return JsonResponse({'success': True})
+    
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
 
@@ -153,6 +158,7 @@ def upload_doc(request):
         if form.is_valid():
             q = Queue(obj_type='doc')
             q.save()
+            
             doc = Doc(path=request.FILES["path"],
                       name=form.cleaned_data['name'],
                       category=form.cleaned_data['category'],
