@@ -455,9 +455,7 @@ ul {
   height: 300px;
   border: 1px solid var(--nav-bg);
 }
-.frame:hover{
-background-color:black;
-}
+
 .frame fieldset{
 
 width: 100%;
@@ -465,7 +463,7 @@ height: 300px;
 background-color:rgba(0,0,0,0.1);
 }
 .frame fieldset:hover{
-background-color:rgba(0,0,0,0.3);
+
   .function{
    display:inline;
   }
