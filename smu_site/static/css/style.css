@@ -936,6 +936,13 @@ details[open] .content {
   -webkit-appearance: none;
   background-color:var(--nav-bg);
 }
+.ellipsis {
+  display: block;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .pl_hrefs
 {
 	background-color: #99c2f0!important;
