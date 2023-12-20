@@ -32,8 +32,10 @@
             {% if grants %}
                 {% for grant, img in grants %}
                 <section>
-                    <div class="grantees plates mt-4 rounded" style="border-left:5px solid var(--nav-bg)">
-                       <div class="title"><h3>{{grant.name}}</h3></div>
+                    <div class="grantees plates mt-4 rounded" >
+                       <div class="title limit"><h3 style="line-height:30px">
+                        {{ grant.name |default_if_none:""|slice:":100" }}{% if grant.name|length > 100 %}...{% endif %}
+                    </h3></div>
                         <div class="content rounded" style="background-color:white">
                             <div class="row" style="padding:15px">
                                 
@@ -48,9 +50,9 @@
                                                 <div class="modal-content" >
                                                     <div class="modal-body">
                                                         <img src="/media/{{img.url_path}}" width="100%" class="img-responsive">
-                                                        <a download="custom-filename.jpg" class="mt-4 btn btn-primary" href="/media/{{img.url_path}}" title="{{n.title}}" style="float:left;">
+                                                        <!--<a download="custom-filename.jpg" class="mt-4 btn btn-primary " href="/media/{{img.url_path}}" title="{{n.title}}" style="float:left;">
                                                             Скачать
-                                                        </a>
+                                                        </a>-->
                                                         </div>  
 
                                                         {% block script %}
@@ -82,7 +84,7 @@
                                 <div class="mt-4 col-lg-3 col-md-2" style="color:black">
                                     <h3 style="color:grey; font-size:14px">Описание гранта</h3><hr style="color:silver">
                                     <div class="mt-4">
-                                        <p style="color:black">{{grant.description}}</p>
+                                        <p style="color:black" class="limitp">{{grant.description}}</p>
                                     </div>
                                     <div class="mt-5 mb-2">
 
@@ -92,7 +94,7 @@
                                 <div class="mt-4 col-lg-3 col-md-2">
                                     <h3 style="color:grey; font-size:14px">Критерии к участникам</h3><hr style="color:silver">
                                     <div class="mt-4">
-                                        <p style="color:black">{{grant.criteria}}</p>
+                                        <p style="color:black" class="limitp">{{grant.criteria}}</p>
                                     </div>
                                 </div>
 
