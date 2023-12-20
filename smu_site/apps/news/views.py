@@ -26,8 +26,12 @@ def newspage(request, news_id):
         img = img[0]
     
     return render(request, 'news/newspage.html',
-                  {'content': news, 'type': 'news', 'img': img,
-                   'month': m})
+                  {'content': news, 'type': 'news',
+                   'img': img, 'month': m,
+                   "is_moder": request.user.groups
+                   .filter(name='moderator').exists(),
+                   "is_repr": request.user.groups
+                   .filter(name='representative').exists()})
 
 
 def eventpage(request, event_id):
@@ -46,7 +50,11 @@ def eventpage(request, event_id):
         
     return render(request, 'news/newspage.html',
                   {'content': event, 'type': 'event', 'img': img,
-                   'month': m})
+                   'month': m,
+                   "is_moder": request.user.groups
+                   .filter(name='moderator').exists(),
+                   "is_repr": request.user.groups
+                   .filter(name='representative').exists()})
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
