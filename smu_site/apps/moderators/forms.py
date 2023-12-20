@@ -307,6 +307,7 @@ class CreateScientistForm(ModelForm):
             institutes_list = Institute.objects.values('id', 'name')
             for obj in institutes_list:
                 INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+                
         return INSTITUTE_CHOICE
 
     def __init__(self, *args, **kwargs):
@@ -350,11 +351,11 @@ class CreateScientistForm(ModelForm):
         #            }),
         #     required=True)
 
-        self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
-            attrs={'class': "input_for_form",
-                   'type': "text",
-                   }),
-            required=True)
+        # self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
+        #     attrs={'class': "input_for_form",
+        #            'type': "text",
+        #            }),
+        #     required=True)
 
         self.fields['institute'] = forms.ChoiceField(widget=forms.Select(
             attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",

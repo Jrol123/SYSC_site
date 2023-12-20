@@ -30,63 +30,71 @@
 				<div class="mt-3 plates rounded col-lg-3 col-sm-12 col-md-12 col-xs-12">
 					<div class="mt-5 mb-5">
 						<div class="container">
-							<div class="categories_here">Категории</div>
 							
 							<div class="list-group">
+								
+								<div class="categories_here">Категории</div>
+								
 								{% if categories %}
 									{% for c, content in categories %}
-										<a href="#" class="list-group-item list-group-item-action link-item" data-doc="{{content}}">{{c}}</a>
-									{% endfor %}
-								{% else %}
-									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 1</h1>>">Link 1</a>
-									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 2</h1>>">Link 2</a>
-									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 3</h1>>">Link 3</a>
-									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 4</h1>>">Link 4</a>
-									<a href="#" class="list-group-item list-group-item-action link-item" data-doc="<h1>Document for Link 5</h1>>">Link 5</a>
-								{% endif %}
-							</div>
-							<div class="result"></div>
+								       <a href="#" class="catbtn rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content{{c}}">{{c}} </a>
+								   
+									<!-- Define your document content divs -->
+								<div id="doc-content{{c}}" style=" display: none;">
+									<h2>{{c}}</h2>
+									<div class="doclinks">
+									<a href="#">{{content | safe}}</a>
+									</div>
+									
+								</div>
+									
+								    {% endfor%}
 
+								{% else %}
+
+
+
+								{% endif %}
+
+								
+
+							</div>
+
+							<div class="result"></div>				
+						</div>
 						</div>
 					</div>
-				</div>
 
             <div class="col-lg-main col-sm-12 col-md-12 col-xs-12"></div>
 
-            <div class="ScrollBar Scroll_dock mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12">
-
-                <div class="pl_hrefs plates col-sm-12 col-md-12 col-xs-12 m-2">
-
-					<div id="doc-container">
-						Документы
-						<!-- Document content will be displayed here -->
-						{% if categories %}
-							{% for c, content in categories %}
-								{{content | safe}}
-							{% endfor %}
-						{% else %}
-							<a href=""><h1>Document1</h1></a>
-							<a href=""><h1>Document2</h1></a>
-							<a href=""><h1>Document3</h1></a>
-							<a href=""><h1>Document4</h1></a>
-							<a href=""><h1>Document5</h1></a>
-						{% endif %}
+			<!-- DONT TEMPER WITH THIS SECTION -->
+            <div class="ScrollBar Scroll_dock mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12" style="background-color:white">
+                <div id="doc-container">
+					<h2>Все документы</h2>
+					<div class="doclinks">
+						{% for c, content in categories %}
+							<a href="#">{{content | safe}}</a>
+						{% endfor %}
 					</div>
 				</div>
-			
-            </div>      
+            </div> 
+			<!-- DONT TEMPER WITH THIS SECTION -->
+			     
         </div>
     </div>
         
 	<script>
-
+		$(document).ready(function() {
+		
 		  $(".link-item").on("click", function() {
-
-			const docContent = $(this).data("doc");
-			$("#doc-container").html(`${docContent}`);
+			const docContentId = $(this).data("doc");
+			const docContent = $(docContentId).html();
+			$("#doc-container").html(docContent);
 		  });
-
+		});
 	  </script>
+
+  
     
 	 
 	 

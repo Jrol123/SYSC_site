@@ -1,4 +1,4 @@
-import os
+import configparser
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
 
@@ -13,6 +13,10 @@ from django.utils.timezone import localdate
 from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
+
+
+config = configparser.ConfigParser()  # создаём объекта парсера
+config.read("config.ini")
 
 
 def index(request):
@@ -73,7 +77,7 @@ def index(request):
                             .select_one('p').text, 280), img)
                  for n, img in last_news]
     
-    p = Paginator(last_news, 5)
+    p = Paginator(last_news, int(config["news"]["news_per_page"]))
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)
@@ -91,7 +95,7 @@ def index(request):
     
     # Получаем актуальные события и гранты
     events = (Event.objects.filter(queue_id__isnull=True)
-              .order_by('begin_date', '-pub_date'))[:3]
+              .order_by('begin_date', '-pub_date'))[:int(config["news"]["events_per_page"])]
     events = [(e, trim_text(BS(e.text, 'html.parser')
                             .select_one('p').text, 180))
               for e in events]
