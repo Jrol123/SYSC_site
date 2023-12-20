@@ -33,10 +33,12 @@ def create_scientist(request):
         if form.is_valid():
             q = Queue(obj_type='scientist')
             q.save()
+            
             scientist = Scientist(
                 institute_id=ReprInst.objects.get(
                     user_id=request.user.id).institute_id,
                 queue_id=q.id,
+                user_id=request.user.id,
                 name=form.cleaned_data['name'],
                 lab=form.cleaned_data['lab'],
                 position=form.cleaned_data['position'],
@@ -46,10 +48,12 @@ def create_scientist(request):
                 achievements=form.cleaned_data['achievements'],
                 future_plans=form.cleaned_data['future_plans'])
             scientist.save()
+            
             link = ScientistLink(scientist_id=scientist.id,
                                  service_name=form.cleaned_data['service_name'],
                                  link=form.cleaned_data['link'])
             link.save()
+            
             img = Image(scientist_id=scientist.id,
                         url_path=request.FILES['url_path'],
                         alt=form.cleaned_data['alt'])
