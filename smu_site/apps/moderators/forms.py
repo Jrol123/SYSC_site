@@ -345,11 +345,11 @@ class CreateScientistForm(ModelForm):
                        }),
             required=True)
 
-        # self.fields['link'] = forms.URLField(widget=forms.Textarea(
-        #     attrs={'class': "input_for_form",
-        #            'type': "text",
-        #            }),
-        #     required=True)
+        self.fields['link'] = forms.CharField(widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
 
         # self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
         #     attrs={'class': "input_for_form",
