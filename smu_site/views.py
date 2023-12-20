@@ -5,8 +5,7 @@ from datetime import date, timedelta
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponseRedirect, HttpResponse
-from django.template import loader
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.timezone import localdate
 
@@ -72,7 +71,8 @@ def index(request):
     # объединяем со списков месяцев и кратким текстом
     month = ['Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
              'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек']
-    last_news = [(n, month[n.pub_date.month - 1],
+    last_news = [('news' if isinstance(n, News) else 'event',
+                  n, month[n.pub_date.month - 1],
                   trim_text(BS(n.text, 'html.parser')
                             .select_one('p').text, 280), img)
                  for n, img in last_news]

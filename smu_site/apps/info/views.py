@@ -10,8 +10,8 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 
-def newspage(request):
-    return render(request, 'info/newspage.html')
+# def newspage(request):
+#     return render(request, 'info/newspage.html')
 
 def institutes(request):
     inst = Institute.objects.all().order_by('name')

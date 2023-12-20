@@ -24,7 +24,7 @@ from . import views, settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
-    path('news/', views.index, name='news'),
+    path('news/', include('news.urls'), name='news'),
     path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
     path('moderators/', include('moderators.urls')),

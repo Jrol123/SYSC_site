@@ -28,7 +28,7 @@
             <div class="mt-5 mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div class="mt-5 plates" style="border-radius:0px;">
                     <figure class="news-card">
-                        <div class="frame" id="myModalbtn{{ n.id}}" data-target="#myModal{{ n.id}}" style="background-image: url('/media/{{img.url_path}}'); background-size:cover">      
+                        <div class="frame" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="background-image: url('/media/{{img.url_path}}'); background-size:cover">
                             <div class="frame">
                                 <fieldset>
                                     <div class="function"><br>       
@@ -38,13 +38,13 @@
                         </div>
     
                             <div class="container news-sec">
-                              <div class="date"><span class="day">27</span><span class="month">Jun</span></div>
-                              <h2 class="text_compress limit" >This is the Title</h2>
-                                <hr />
+                              <div class="date"><span class="day">{{content.pub_date.day}}</span><span class="month">{{month}}</span></div>
+                              <h2 class="text_compress limit" >{{content.title}}</h2>
+                                <hr>
                             </div>
 
                             <div class="container news-sec" style="margin-top:-2em">
-                            <p class="limitp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <p class="limitp">{{content.text | safe}}</p>
                             </div>
                        
                     </figure>
