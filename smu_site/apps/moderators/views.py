@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group
 from django.db import transaction
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
@@ -196,13 +196,17 @@ def create_scientist(request):
                                   scientific_interests=form.cleaned_data['scientific_interests'])
             scientist.save()
             link = ScientistLink(scientist_id=scientist.id,
-                                 link=form.cleaned_data['link'])
+                                 link='<?>',
+                                 service_name=form.cleaned_data['service_name'])
             link.save()
             img = Image(scientist_id=scientist.id,
                         url_path=request.FILES['url_path'])
             img.save()
-
-            return HttpResponseRedirect('/moderators/account')
+        # else:
+        #     res = 'o_o\n'
+        #     for e in form.errors:
+        #         res += str(e)
+        #     return HttpResponse(res)
 
     else:
         form = CreateScientistForm()
