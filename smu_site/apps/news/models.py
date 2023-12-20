@@ -18,7 +18,7 @@ class News(models.Model):
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
 
     def get_template_message(self):
-        return f"<b>{self.title}</b>\n\n{self.text}"
+        return f"<b>{self.title}</b>\n{self.text}"
 
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
@@ -47,7 +47,7 @@ class Event(models.Model):
     def get_template_message(self):
         return (f"<b>{self.title}</b>\n\n"
                 f"Дата начала: {self.begin_date}\n"
-                f"Дата окончания: {self.end_date}\n\n{self.text}")
+                f"Дата окончания: {self.end_date}\n{self.text}")
 
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
@@ -104,11 +104,9 @@ class Image(models.Model):
                 f"alt=\"{self.alt}\")")
     
     @classmethod
-    def get_related_images(cls, obj_id,
-                           category: ('news', 'event', 'institute',
-                                      'scientist', 'grant')):
+    def get_related_images(cls, obj_id, category):
         assert category in ('news', 'event', 'institute',
                             'scientist', 'grant')
         
-        kwargs = {category: obj_id}
+        kwargs = {category + '_id': obj_id}
         return list(cls.objects.filter(**kwargs).order_by("id"))

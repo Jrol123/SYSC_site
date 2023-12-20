@@ -1,4 +1,6 @@
 import configparser
+from html.parser import HTMLParser
+import re
 import telebot
 import time
 from telebot import types
@@ -11,6 +13,7 @@ import django
 django.setup()
 
 # Тот самый импорт, для которого нужна вся конструкция выше
+from django.conf import settings
 from news.models import News, Event, Image
 
 
@@ -55,7 +58,36 @@ def update_conf(field: str, value: str):
         cfg.write(configfile)
 
 
-def split_message(text, limit) -> list[str]:
+class MyHTMLParser(HTMLParser):
+    def __init__(self, allowed_tags):
+        super().__init__()
+        self.allowed_tags = allowed_tags
+        self.result = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.allowed_tags:
+            self.result.append(f"<{tag}>")
+
+    def handle_endtag(self, tag):
+        if tag in self.allowed_tags:
+            self.result.append(f"</{tag}>")
+
+    def handle_data(self, data):
+        self.result.append(data)
+
+
+def clear_message(text):
+    # сохраняем только указанные теги
+    allowed_tags = ["p", "a", "b", "strong", "i", "em", "u", "ins", "s",
+                    "strike", "del", "code", "pre"]
+    parser = MyHTMLParser(allowed_tags)
+    print('before', text)
+    parser.feed(text)
+    print('after', ''.join(parser.result))
+    return ''.join(parser.result)
+
+
+def split_text(text, limit) -> list[str] or str:
     if len(text) < limit:
         return text
     
@@ -120,6 +152,26 @@ def split_message(text, limit) -> list[str]:
     return text
 
 
+def split_message(text, limit) -> list[str] or str:
+    print('unsplit', text)
+    text = text.replace('<p>', '\n').replace('</p>', '\n')
+    print('split', text)
+    
+    text = split_text(text, limit)
+    
+    # nt = [header] if isinstance(header, str) else header
+    # if len(text) > 2:
+    #     for i in range(2, len(text)):
+    #         if isinstance(text[i], list):
+    #             nt.extend(text[i])
+    #         else:
+    #             nt.append(text[i])
+    # else:
+    #     return '\n'.join(nt)
+    
+    return text
+
+
 def news_mailing(wait_for):
     global last_mess_id
     
@@ -128,23 +180,22 @@ def news_mailing(wait_for):
         
         time.sleep(wait_for)
         
-        nw = list(News.objects.filter(queue_id=None, link=None)
+        nw = list(News.objects.filter(queue_id__isnull=True, link=None)
                   .order_by("pub_date"))
-        ev = list(Event.objects.filter(queue_id=None, link=None)
+        ev = list(Event.objects.filter(queue_id__isnull=True, link=None)
                   .order_by("pub_date"))
         
         if nw:
             nw = nw[0]
-            nwmedia = [types.InputMediaPhoto(open(photo, 'rb'))
-                       for photo in Image.get_related_images(
-                    nw.id, 'news')]
-            
-            if nwmedia:
-                m = nw.get_template_message()
+            m = clear_message(nw.get_template_message())
+            nwimg = Image.get_related_images(nw.id, 'news')
+            if nwimg:
+                nwimg = open(settings.MEDIA_ROOT.replace('\\', '/')
+                             + '/' + str(nwimg[0].url_path), 'rb')
                 if len(m) < 1024:
-                    nwmedia[0].caption = m
-                    nwmedia[0].parse_mode = "html"
-                    bot.send_media_group(channel_id, nwmedia)
+                    bot.send_photo(channel_id, nwimg,
+                                   caption=split_message(m, 1024),
+                                   parse_mode='html')
                     
                     last_mess_id += 1
                     nw.link = (link_temp + str(last_mess_id))
@@ -156,9 +207,8 @@ def news_mailing(wait_for):
                                 str(last_mess_id))
                 else:
                     m, *sepm = split_message(m, 1024)
-                    nwmedia[0].caption = m
-                    nwmedia[0].parse_mode = "html"
-                    bot.send_media_group(channel_id, nwmedia)
+                    bot.send_photo(channel_id, nwimg, caption=m,
+                                   parse_mode='html')
                     
                     for i in range(len(sepm)):
                         bot.send_message(channel_id, sepm[i],
@@ -171,9 +221,9 @@ def news_mailing(wait_for):
                     nw.save(update_fields=["link"])
                     
             else:
-                m = nw.get_template_message()
                 if len(m) < 4096:
-                    bot.send_message(channel_id, m, parse_mode="html")
+                    bot.send_message(channel_id, split_message(m, 1024),
+                                     parse_mode="html")
                     
                     last_mess_id += 1
                     nw.link = (link_temp + str(last_mess_id))
@@ -193,16 +243,15 @@ def news_mailing(wait_for):
                     nw.save(update_fields=["link"])
         if ev:
             ev = ev[0]
-            evmedia = [types.InputMediaPhoto(open(photo, 'rb'))
-                       for photo in Image.get_related_images(
-                    ev.id, 'event')]
-            
-            if evmedia:
-                m = ev.get_template_message()
+            m = clear_message(ev.get_template_message())
+            evimg = Image.get_related_images(ev.id, 'event')
+            if evimg:
+                evimg = open(settings.MEDIA_ROOT.replace('\\', '/')
+                             + '/' + str(evimg[0].url_path), 'rb')
                 if len(m) < 1024:
-                    evmedia[0].caption = m
-                    evmedia[0].parse_mode = "html"
-                    bot.send_media_group(channel_id, evmedia)
+                    bot.send_photo(channel_id, evimg,
+                                   caption=split_message(m, 1024),
+                                   parse_mode='html')
                     
                     last_mess_id += 1
                     ev.link = (link_temp + str(last_mess_id))
@@ -211,9 +260,8 @@ def news_mailing(wait_for):
                     ev.save(update_fields=["link"])
                 else:
                     m, *sepm = split_message(m, 1024)
-                    evmedia[0].caption = m
-                    evmedia[0].parse_mode = "html"
-                    bot.send_media_group(channel_id, evmedia)
+                    bot.send_photo(channel_id, evimg, caption=m,
+                                   parse_mode='html')
                     
                     for i in range(len(sepm)):
                         bot.send_message(channel_id, sepm[i],
@@ -226,9 +274,10 @@ def news_mailing(wait_for):
                                 str(last_mess_id))
                     ev.save(update_fields=["link"])
             else:
-                m = ev.get_template_message()
                 if len(m) < 4096:
-                    bot.send_message(channel_id, m, parse_mode="html")
+                    bot.send_message(channel_id,
+                                     split_message(m, 4096),
+                                     parse_mode="html")
                     
                     last_mess_id += 1
                     ev.link = (link_temp + str(last_mess_id))
