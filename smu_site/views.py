@@ -1,4 +1,4 @@
-import os, configparser
+import configparser
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
 
@@ -13,6 +13,7 @@ from django.utils.timezone import localdate
 from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
+
 
 config = configparser.ConfigParser()  # создаём объекта парсера
 config.read("config.ini")

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group
 from django.db import transaction
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 from .forms import (CreateUserForm, CreateGrantForm, CreateInstituteForm, UploadSHCDocForm,
                     CreateScientistForm, UploadDocForm)
@@ -188,6 +188,7 @@ def create_scientist(request):
         form = CreateScientistForm(request.POST, request.FILES)
 
         if form.is_valid():
+            print(repr(form.cleaned_data['institute']))
             scientist = Scientist(institute_id=form.cleaned_data['institute'],
                                   name=form.cleaned_data['name'],
                                   lab=form.cleaned_data['lab'],
@@ -195,14 +196,23 @@ def create_scientist(request):
                                   degree=form.cleaned_data['degree'],
                                   scientific_interests=form.cleaned_data['scientific_interests'])
             scientist.save()
-            link = ScientistLink(scientist_id=scientist.id,
-                                 link=form.cleaned_data['link'])
-            link.save()
+            
+            links = form.cleaned_data['link'].split('\n')
+            for link in links:
+                desc, link = link.rsplit(' ', 1)
+                lnk = ScientistLink(scientist_id=scientist.id,
+                                    link=link, service_name=desc)
+                lnk.save()
+                
             img = Image(scientist_id=scientist.id,
-                        url_path=request.FILES['url_path'])
+                        url_path=request.FILES['url_path'],
+                        alt=form.cleaned_data['name'])
             img.save()
-
-            return HttpResponseRedirect('/moderators/account')
+        # else:
+        #     res = 'o_o\n'
+        #     for e in form.errors:
+        #         res += str(e)
+        #     return HttpResponse(res)
 
     else:
         form = CreateScientistForm()

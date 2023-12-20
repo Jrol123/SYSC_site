@@ -80,9 +80,7 @@ class CreateUserForm(forms.Form):
         return name
 
     def clean_password(self):
-        password = self.cleaned_data['password']
-
-        return password
+        return self.cleaned_data['password']
 
     def clean_password_repeat(self):
         password = self.cleaned_data['password']
@@ -309,6 +307,7 @@ class CreateScientistForm(ModelForm):
             institutes_list = Institute.objects.values('id', 'name')
             for obj in institutes_list:
                 INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+                
         return INSTITUTE_CHOICE
 
     def __init__(self, *args, **kwargs):
@@ -333,7 +332,7 @@ class CreateScientistForm(ModelForm):
                    'placeholder': "Введите должность"}),
             required=True)
 
-        self.fields['degree'] = forms.IntegerField(widget=forms.NumberInput(
+        self.fields['degree'] = forms.CharField(widget=forms.TextInput(
             attrs={'class': "input_for_form",
                    'type': "text",
                    }),
@@ -346,17 +345,17 @@ class CreateScientistForm(ModelForm):
                        }),
             required=True)
 
-        self.fields['link'] = forms.URLField(widget=forms.Textarea(
+        self.fields['link'] = forms.CharField(widget=forms.Textarea(
             attrs={'class': "input_for_form",
                    'type': "text",
                    }),
             required=True)
 
-        self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
-            attrs={'class': "input_for_form",
-                   'type': "text",
-                   }),
-            required=True)
+        # self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
+        #     attrs={'class': "input_for_form",
+        #            'type': "text",
+        #            }),
+        #     required=True)
 
         self.fields['institute'] = forms.ChoiceField(widget=forms.Select(
             attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
@@ -373,6 +372,27 @@ class CreateScientistForm(ModelForm):
                    'id': "imageInput",
                    'name': "image",
                    'accept': ".jpg, .jpeg, .png"})}
+
+    def clean_name(self):
+        return self.cleaned_data['name']
+
+    def clean_lab(self):
+        return self.cleaned_data['lab']
+
+    def clean_position(self):
+        return self.cleaned_data['position']
+
+    def clean_degree(self):
+        return self.cleaned_data['degree']
+
+    def clean_link(self):
+        return self.cleaned_data['link']
+
+    def clean_scientific_interests(self):
+        return self.cleaned_data['scientific_interests']
+
+    def clean_institute(self):
+        return self.cleaned_data['institute']
 
 
 # class CreateNewsForm(forms.Form):
