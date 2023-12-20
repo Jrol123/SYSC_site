@@ -38,28 +38,19 @@
 								<a href="" class="catbtn-all rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content">All Categories </a>
 								
 								{% if categories %}
+								
 									{% for c, content in categories %}
-								       <a href="#" class="catbtn rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content{{c}}">{{c}} </a>
+								       <a href="#" class="catbtn limit rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content{{c|cut:" "}}">{{c}} </a>
 								   
-										<div id="doc-content{{c}}" style=" display: none;">
-											<h2>{{c}}</h2>
-											<table class="mt-4">
-												<tr >
-													<th>Название документа</th>
-												  
-												  <th>количество</th>
-												 
-												</tr>
-												<tr class="mt-4 float-right">
-												
-												  
-												  <td><a href="#">{{content | safe}}</a></td>
-												  <td>4</td>
-												 
-												</tr>
-											
-												
-											  </table>
+										<div id="doc-content{{c|cut:" "}}" style=" display: none;">
+											<h2 class="limit">{{c}}</h2>
+											<div class="container  limitp" style="border:2px solid silver; padding:15px; background-color: white; ">
+												<h3 style="text-align:left">Название документа</h3>
+											</div>
+											<div class="container doclinks limitp">
+												<a href="#" >{{content | safe}}</a>
+											</div>
+						
 										</div>
 
 										
@@ -87,21 +78,17 @@
             <div class="ScrollBar Scroll_dock mt-3 plates rounded col-lg-8 col-sm-12 col-md-12 col-xs-12" style="background-color:white">
                 <div id="doc-container">
 				
-					<h2>Все документы</h2>
+					<h2>Все документы</h2><br/>
+					
 				{% if categories %}
-					<table class="mt-4">
-						<tr >
-						  <th class="text-center">№</th>
-						  <th class="text-center">Название документа</th>
-						  <th class="text-center">категория </th>
-						</tr>
-						<tr class="mt-4 float-right">
+					<div class="container  limitp" style="border:2px solid silver; padding:15px; background-color: white; ">
+						<h3 style="text-align:left">Название документа</h3>
+					</div>
+					
 						{% for c, content in categories %}
-						  <td>1</td>
-						  <td><a href="#">{{content | safe}}</a></td>
-						  <td><h3 style="text-transform:uppercase">{{c}}</h3></td>
-						 
-						</tr>
+							<div class="container doclinks limitp">
+								<a href="#" >{{content | safe}}</a>
+							</div>
 						{% endfor %}
 						
 					  </table>
