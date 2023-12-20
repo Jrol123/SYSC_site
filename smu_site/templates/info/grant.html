@@ -30,7 +30,7 @@
             <h4 class="mb-4 " style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
             <hr style="color:var(--nav-btn-bg)">
             {% if grants %}
-                {% for grant, img in grants %}
+                {% for grant, img in grants.object_list %}
                 <section>
                     <div class="grantees plates mt-4 rounded" >
                        <div class="title limit"><h3 style="line-height:30px">
@@ -129,19 +129,19 @@
                         
         </div>
 
-
+        {% if grants %}
         <div class="mt-5">
-        <nava ria-label="...">
+        <nav aria-label="...">
             <ul class="pagination">
               
-            {% if last_news.has_previous %}
+            {% if grants.has_previous %}
                 {# whether the previous page exists #}
                 {# link to the prev page #}
                 
                   <li class="page-item ">
-                    <a class="page-link" href="?page={{last_news.previous_page_number}}" tabindex="-1">Previous</a>
+                    <a class="page-link" href="?page={{grants.previous_page_number}}" tabindex="-1">Previous</a>
                   </li>
-                  <li class="page-item"><a class="page-link" href="?page={{last_news.previous_page_number}}">{{last_news.previous_page_number}}</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{grants.previous_page_number}}">{{grants.previous_page_number}}</a></li>
                 
               {% else %}
                 {# If previous page does not exist  #}
@@ -154,22 +154,22 @@
 
 
             <li class="page-item active">
-              <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+              <a class="page-link" href="#">{{grants.number}} <span class="sr-only">(current)</span></a>
             </li> {# the current page number #}
 
-            {%if last_news.has_next %} {# whether the next page exists #}
+            {%if grants.has_next %} {# whether the next page exists #}
                 {# link to the next page #}
                
                     
                     
-                    <li class="page-item"><a class="page-link" href="?page={{last_news.next_page_number}}">{{last_news.next_page_number}}</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{grants.next_page_number}}">{{grants.next_page_number}}</a></li>
                     <li class="page-item">
-                      <a class="page-link" href="?page={{last_news.next_page_number}}">Next</a>
+                      <a class="page-link" href="?page={{grants.next_page_number}}">Next</a>
                     </li>
 
-              {%else %} 
+              {% else %}
                   <li class="page-item disabled">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="">Next</a>
                   </li>
                   
             {% endif %}
@@ -177,6 +177,7 @@
             </ul>
           </nav>
         </div>
+        {% endif %}
         
        
               
