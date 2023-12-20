@@ -8,6 +8,7 @@
 }
 :root{
     --nav-bg: #6996D3;
+    --nav-bg-darker: #4b77b4;
     --nav-btn-bg: #284C7E;
     --footer-bg: #05316D;
     --dark: #131418;
@@ -22,7 +23,18 @@
 .black-lives-meter{
     color: black !important;
 }
+.modal-backdrop{
+  width:100%!important;
+  height:100%
+}
+.modal{
+  margin-top:3em !important;
+}
+.modal-dialog {
+  max-width:75%;
+  width:500px;
 
+}
 *{
     margin: 0;
     padding: 0;
@@ -118,7 +130,7 @@ body{
 }
 .logo img {
     height: 3.3rem;
-    width: 4rem;
+    width: 3.3rem;
 
 
 }
@@ -136,7 +148,14 @@ body{
     flex: 0 0 2.333333%;
     max-width: 2.333333%;
   }
-
+.limit{
+    width:100%;
+    word-wrap: break-word;
+}
+.limitp{
+  width:100%;
+  word-wrap: break-word;
+}
 .plates{
     background-color: whitesmoke;
     border-radius:17px;
@@ -200,9 +219,13 @@ body{
     background-color: var(--nav-bg);
     color:white;
     font-size:14px;
-    width:200px;
+    max-width:400px;
     padding:12px 12px;
-    clip-path: polygon(100% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+   
+    max-width: 100%;
+    border-radius:5px;
+    word-wrap: break-word;
+   
 }
 
 .event-grant h3{
@@ -349,6 +372,16 @@ ul {
 .footer-col ul li:not(:last-child) {
 	margin-bottom: 10px;
 }
+.catbtn{
+  font-size:16px;
+  background-color:var(--nav-bg);
+  text-decoration:none;
+  color:white;
+  padding:20px 30px;
+  border-left:2px solid black;
+}
+
+
 
 .footer-col ul li a {
 	color: #DDD;
@@ -586,6 +619,7 @@ input[type="date"]{
   color:rgb(78, 78, 78);
   font-size:20px;
   text-align:center;
+
 }
 summary h3{
   font-size:20px;
@@ -887,6 +921,27 @@ details[open] .content {
 #doc-container {
     padding: 10px !important;
 
+}
+#doc-container h2{
+  background-color:var(--nav-bg-darker);
+  color:whitesmoke;
+  border-radius:10px;
+  padding:10px;
+  border-left:5px solid var(--nav-bg-darker);
+  border-right:5px solid var(--nav-bg-darker);
+
+}
+.doclinks{
+  background-color: white;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  padding:20px
+}
+.doclinks a{
+  text-decoration:none;
+  font-size:16px;
+  text-align:left;
+  background-color:none;
 }
 .categories_here {
     margin-bottom: 25px;

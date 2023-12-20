@@ -7,12 +7,6 @@ from documents.models import Doc, Category
 from info.models import Institute
 from news.models import Image
 
-CATEGORY_CHOICE = []
-if Category._meta.db_table in connection.introspection.table_names():
-    categories_list = Category.objects.values('id', 'name')
-    for obj in categories_list:
-        CATEGORY_CHOICE.append((obj['id'], obj['name']))
-
 
 class CreateScientistForm(ModelForm):
     name = forms.CharField(
@@ -79,21 +73,32 @@ class CreateScientistForm(ModelForm):
 
 
 class UploadDocForm(ModelForm):
-    Choose_Category = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "form-control input_for_form text-dark",
-               }),
-        required=True,
-        choices=((True, 'Да'), (False, 'Нет')))
-    Category = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "form-control input_for_form text-dark",
-               }),
-        required=False,
-        choices=CATEGORY_CHOICE)
-    New_category = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "form-control input_for_form",
-               'type': "text"
-               }),
-        required=False)
+    def get_dynamic_choices(self):
+        CATEGORY_CHOICE = []
+        if Category._meta.db_table in connection.introspection.table_names():
+            categories_list = Category.objects.values('id', 'name')
+            for obj in categories_list:
+                CATEGORY_CHOICE.append((obj['id'], obj['name']))
+        return CATEGORY_CHOICE
+
+    def __init__(self, *args, **kwargs):
+        super(UploadDocForm, self).__init__(*args, **kwargs)
+
+        self.fields['Choose_Category'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "form-control input_for_form text-dark",
+                   }),
+            required=True,
+            choices=((True, 'Да'), (False, 'Нет')))
+        self.fields['Category'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "form-control input_for_form text-dark",
+                   }),
+            required=False,
+            choices=CATEGORY_CHOICE)
+        self.fields['New_category'] = forms.CharField(widget=forms.TextInput(
+            attrs={'class': "form-control input_for_form",
+                   'type': "text"
+                   }),
+            required=False)
 
     class Meta:
         model = Doc

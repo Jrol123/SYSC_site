@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
 {% endblock %}
 <!--//-->
 
@@ -27,30 +27,64 @@
     <div class="plates_home main_plate container-custom plate-container" >
 
         <div class="mt-5">
-            <h4 class="mb-4 text-center" style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
+            <h4 class="mb-4 " style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГРАНТОВ</h4>
             <hr style="color:var(--nav-btn-bg)">
             {% if grants %}
                 {% for grant, img in grants %}
                 <section>
-                    <div class="grantees plates mt-5 rounded" style="border-left:5px solid var(--nav-bg)">
-                       <div class="title"><h3>{{grant.name}}</h3></div>
+                    <div class="grantees plates mt-4 rounded" >
+                       <div class="title limit"><h3 style="line-height:30px">
+                        {{ grant.name |default_if_none:""|slice:":100" }}{% if grant.name|length > 100 %}...{% endif %}
+                    </h3></div>
                         <div class="content rounded" style="background-color:white">
                             <div class="row" style="padding:15px">
-
+                                
                                 <div class="mt-4  col-lg-2 col-md-2">
                                     <div class="text-center">
                                         {% if img %}
-                                            <img src="/media/{{img.url_path}}" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black" width="200px" alt="{{img.alt}}">
-                                            {% else %}
-                                            <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black" width="100px" alt="...">
+                                            <img src="/media/{{img.url_path}}" id="logobtn{{grant.id}}" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid var(--nav-bg); width:150px; height:150px; object-fit:cover" alt="{{img.alt}}">
+
+                                            <!--Image preview popup-->
+                                            <div id="logo{{grant.id}}" style="width:100%" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" >
+                                                <div class="modal-content" >
+                                                    <div class="modal-body">
+                                                        <img src="/media/{{img.url_path}}" width="100%" class="img-responsive">
+                                                        <!--<a download="custom-filename.jpg" class="mt-4 btn btn-primary " href="/media/{{img.url_path}}" title="{{n.title}}" style="float:left;">
+                                                            Скачать
+                                                        </a>-->
+                                                        </div>  
+
+                                                        {% block script %}
+                                                        <script>
+                                                        // Javascript code for displaying image modal on news double click
+                                                        try {
+                                                            $('#logobtn{{grant.id}}').click(function () {
+                                                                $('#logo{{grant.id}}').modal('toggle');
+                                                            });
+                                                        } catch (error) {
+                                                            console.error(error);
+                                                        }
+                                                        </script>
+                                                        {% endblock %}
+                                                    </a>
+
+                                                        
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <!--Image preview popup-->
+                                        
+                                        {% else %}
+                                            <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class="mt-5 img-fluid"  style="border-radius:100px; border:4px solid black; width:150px; height:150px; object-fit:cover" alt="...">
                                         {% endif %}
                                     </div>
                                 </div>
 
                                 <div class="mt-4 col-lg-3 col-md-2" style="color:black">
-                                    <h3 style="color:black; font-size:14px">Описание гранта</h3><hr style="color:silver">
+                                    <h3 style="color:grey; font-size:14px">Описание гранта</h3><hr style="color:silver">
                                     <div class="mt-4">
-                                        <p style="color:black">{{grant.description}}</p>
+                                        <p style="color:black" class="limitp">{{grant.description}}</p>
                                     </div>
                                     <div class="mt-5 mb-2">
 
@@ -58,14 +92,14 @@
                                 </div>
 
                                 <div class="mt-4 col-lg-3 col-md-2">
-                                    <h3 style="color:black; font-size:14px">Критерии к участникам</h3><hr style="color:silver">
+                                    <h3 style="color:grey; font-size:14px">Критерии к участникам</h3><hr style="color:silver">
                                     <div class="mt-4">
-                                        <p style="color:black">{{grant.criteria}}</p>
+                                        <p style="color:black" class="limitp">{{grant.criteria}}</p>
                                     </div>
                                 </div>
 
                                 <div class="mt-4 col-lg-2 col-md-2" style="border-left:0.1px dashed silver">
-                                    <h3 style="color:black; font-size:14px">Дата</h3><hr style="color:silver">
+                                    <h3 style="color:grey; font-size:14px">Дата</h3><hr style="color:silver">
                                     <div class="mt-4">
                                         <p style="color:var(--nav-btn-bg)">Окончание подачи заявки:</p>
                                         <p style="color:black">{{grant.end_doc_date}}</p>
@@ -93,6 +127,55 @@
                
             {% endif %}
                         
+        </div>
+
+
+        <div class="mt-5">
+        <nava ria-label="...">
+            <ul class="pagination">
+              
+            {% if last_news.has_previous %}
+                {# whether the previous page exists #}
+                {# link to the prev page #}
+                
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{last_news.previous_page_number}}" tabindex="-1">Previous</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?page={{last_news.previous_page_number}}">{{last_news.previous_page_number}}</a></li>
+                
+              {% else %}
+                {# If previous page does not exist  #}
+                {# Disaplay a disabled link  #}
+                <li class="page-item disabled">
+                  <a class="page-link" href="" tabindex="-1">Previous</a>
+                </li>
+
+            {% endif %}
+
+
+            <li class="page-item active">
+              <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+            </li> {# the current page number #}
+
+            {%if last_news.has_next %} {# whether the next page exists #}
+                {# link to the next page #}
+               
+                    
+                    
+                    <li class="page-item"><a class="page-link" href="?page={{last_news.next_page_number}}">{{last_news.next_page_number}}</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{last_news.next_page_number}}">Next</a>
+                    </li>
+
+              {%else %} 
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                  
+            {% endif %}
+
+            </ul>
+          </nav>
         </div>
         
        

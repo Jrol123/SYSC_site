@@ -8,67 +8,65 @@ from info.models import Institute, Grant
 from news.models import Image
 from SHC.models import Doc as SHCDoc
 
-INSTITUTE_CHOICE = []
-if Institute._meta.db_table in connection.introspection.table_names():
-    institutes_list = Institute.objects.values('id', 'name')
-    for obj in institutes_list:
-        INSTITUTE_CHOICE.append((obj['id'], obj['name']))
-
-CATEGORY_CHOICE = []
-if Category._meta.db_table in connection.introspection.table_names():
-    categories_list = Category.objects.values('id', 'name')
-    for obj in categories_list:
-        CATEGORY_CHOICE.append((obj['id'], obj['name']))
-
 
 class CreateUserForm(forms.Form):
-    user_group = forms.ChoiceField(
-        help_text="Выберите тип аккаунта",
-        choices=(
-            ("representative", "Представитель"),
-            ("moderator", "Модератор")),
-        widget=forms.Select(attrs={
-            'class': "form-control input_for_form",
-            'id': "userGroup", 'name': "userGroup"
-        }))
-    user_institute = forms.ChoiceField(
-        help_text="Выберите институт",
-        choices=INSTITUTE_CHOICE,
-        widget=forms.Select(attrs={
-            'class': "form-control input_for_form",
-            'id': "institute", 'name': "institute"
-        }))
-    user_name = forms.CharField(
-        help_text="Введите имя аккаунта",
-        required=True,
-        widget=forms.TextInput(attrs={
-            'type': "text",
-            'class': "form-control input_for_form",
-            'id': "username", 'name': "username",
-        }))
-    email = forms.EmailField(
-        help_text="Введите имя аккаунта",
-        required=True,
-        widget=forms.EmailInput(attrs={
-            'type': "email",
-            'class': "form-control input_for_form",
-            'id': "Email", 'name': "Email",
-        }))
-    password = forms.CharField(
-        help_text="Введите пароль",
-        required=True,
-        widget=forms.PasswordInput(attrs={
-            'type': "password",
-            'class': "form-control input_for_form",
-            'id': "password", 'name': "password"
-        }))
-    password_repeat = forms.CharField(
-        help_text="Введите пароль еще раз", required=True,
-        widget=forms.PasswordInput(attrs={
-            'type': "password",
-            'class': "form-control input_for_form",
-            'id': "confirmPassword", 'name': "confirmPassword"
-        }))
+    def get_dynamic_choices(self):
+        INSTITUTE_CHOICE = []
+        if Institute._meta.db_table in connection.introspection.table_names():
+            institutes_list = Institute.objects.values('id', 'name')
+            for obj in institutes_list:
+                INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+        return INSTITUTE_CHOICE
+
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['user_group'] = forms.ChoiceField(
+            help_text="Выберите тип аккаунта",
+            choices=(
+                ("representative", "Представитель"),
+                ("moderator", "Модератор")),
+            widget=forms.Select(attrs={
+                'class': "form-control input_for_form",
+                'id': "userGroup", 'name': "userGroup"
+            }))
+        self.fields['user_institute'] = forms.ChoiceField(
+            help_text="Выберите институт",
+            choices=self.get_dynamic_choices(),
+            widget=forms.Select(attrs={
+                'class': "form-control input_for_form",
+                'id': "institute", 'name': "institute"
+            }))
+        self.fields['user_name'] = forms.CharField(
+            help_text="Введите имя аккаунта",
+            required=True,
+            widget=forms.TextInput(attrs={
+                'type': "text",
+                'class': "form-control input_for_form",
+                'id': "username", 'name': "username",
+            }))
+        self.fields['email'] = forms.EmailField(
+            help_text="Введите имя аккаунта",
+            required=True,
+            widget=forms.EmailInput(attrs={
+                'type': "email",
+                'class': "form-control input_for_form",
+                'id': "Email", 'name': "Email",
+            }))
+        self.fields['password'] = forms.CharField(
+            help_text="Введите пароль",
+            required=True,
+            widget=forms.PasswordInput(attrs={
+                'type': "password",
+                'class': "form-control input_for_form",
+                'id': "password", 'name': "password"
+            }))
+        self.fields['password_repeat'] = forms.CharField(
+            help_text="Введите пароль еще раз", required=True,
+            widget=forms.PasswordInput(attrs={
+                'type': "password",
+                'class': "form-control input_for_form",
+                'id': "confirmPassword", 'name': "confirmPassword"
+            }))
 
     def clean_user_name(self):
         name = self.cleaned_data['user_name']
@@ -305,61 +303,70 @@ class CreateInstituteForm(forms.Form):
 
 
 class CreateScientistForm(ModelForm):
-    name = forms.CharField(
-        widget=forms.TextInput(attrs=
-                               {'class': "input_for_form",
-                                'type': "text",
-                                'placeholder': "Введите ФИО учёного"}),
-        required=True)
+    def get_dynamic_choices(self):
+        INSTITUTE_CHOICE = []
+        if Institute._meta.db_table in connection.introspection.table_names():
+            institutes_list = Institute.objects.values('id', 'name')
+            for obj in institutes_list:
+                INSTITUTE_CHOICE.append((obj['id'], obj['name']))
+        return INSTITUTE_CHOICE
 
-    lab = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+    def __init__(self, *args, **kwargs):
+        super(CreateScientistForm, self).__init__(*args, **kwargs)
 
-    position = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               'placeholder': "Введите должность"}),
-        required=True)
+        self.fields['name'] = forms.CharField(
+            widget=forms.TextInput(attrs=
+                                   {'class': "input_for_form",
+                                    'type': "text",
+                                    'placeholder': "Введите ФИО учёного"}),
+            required=True)
 
-    degree = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
-
-    scientific_interests = forms.CharField(
-        widget=forms.Textarea(
+        self.fields['lab'] = forms.CharField(widget=forms.TextInput(
             attrs={'class': "input_for_form",
                    'type': "text",
                    }),
-        required=True)
+            required=True)
 
-    link = forms.URLField(widget=forms.Textarea(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+        self.fields['position'] = forms.CharField(widget=forms.TextInput(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   'placeholder': "Введите должность"}),
+            required=True)
 
-    service_name = forms.CharField(widget=forms.Textarea(
-        attrs={'class': "input_for_form",
-               'type': "text",
-               }),
-        required=True)
+        self.fields['degree'] = forms.IntegerField(widget=forms.NumberInput(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
 
-    institute = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
-               }),
-        required=True,
-        choices=INSTITUTE_CHOICE)
+        self.fields['scientific_interests'] = forms.CharField(
+            widget=forms.Textarea(
+                attrs={'class': "input_for_form",
+                       'type': "text",
+                       }),
+            required=True)
+
+        self.fields['link'] = forms.URLField(widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
+
+        self.fields['service_name'] = forms.CharField(widget=forms.Textarea(
+            attrs={'class': "input_for_form",
+                   'type': "text",
+                   }),
+            required=True)
+
+        self.fields['institute'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "input_for_form col-lg-11 col-sm-11 col-md-11 col-xs-11",
+                   }),
+            required=True,
+            choices=self.get_dynamic_choices())
 
     class Meta:
         model = Image
-        fields = ['name', 'url_path', 'alt', 'lab', 'position',
-                  'degree', 'scientific_interests',
-                  'link', 'service_name']
+        fields = ['url_path']
         widgets = {'url_path': forms.FileInput(
             attrs={'class': "input_for_form_img",
                    'type': "file",
@@ -375,21 +382,32 @@ class CreateScientistForm(ModelForm):
 
 
 class UploadDocForm(ModelForm):
-    Choose_Category = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "form-control input_for_form text-dark",
-               }),
-        required=True,
-        choices=((True, 'Да'), (False, 'Нет')))
-    Category = forms.ChoiceField(widget=forms.Select(
-        attrs={'class': "form-control input_for_form text-dark",
-               }),
-        required=False,
-        choices=CATEGORY_CHOICE)
-    New_category = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "form-control input_for_form",
-               'type': "text"
-               }),
-        required=False)
+    def get_dynamic_choices(self):
+        CATEGORY_CHOICE = []
+        if Category._meta.db_table in connection.introspection.table_names():
+            categories_list = Category.objects.values('id', 'name')
+            for obj in categories_list:
+                CATEGORY_CHOICE.append((obj['id'], obj['name']))
+        return CATEGORY_CHOICE
+
+    def __init__(self, *args, **kwargs):
+        super(UploadDocForm, self).__init__(*args, **kwargs)
+
+        self.fields['Choose_Category'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "form-control input_for_form text-dark",
+                   }),
+            required=True,
+            choices=((True, 'Да'), (False, 'Нет')))
+        self.fields['Category'] = forms.ChoiceField(widget=forms.Select(
+            attrs={'class': "form-control input_for_form text-dark",
+                   }),
+            required=False,
+            choices=self.get_dynamic_choices())
+        self.fields['New_category'] = forms.CharField(widget=forms.TextInput(
+            attrs={'class': "form-control input_for_form",
+                   'type': "text"
+                   }),
+            required=False)
 
     class Meta:
         model = Doc
