@@ -28,22 +28,22 @@
             <div class="mt-5 mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div class="mt-5 plates" style="border-radius:0px;">
                     <figure class="news-card">
-                        <div class="frame" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="border:none; background-image: url('/media/{{img.url_path}}'); background-size:cover">
-                            <div class="frame">
-                                <fieldset>
+                        <div class="framenews" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="border:none; background-image: url('/media/{{img.url_path}}'); background-size:cover">
+                          
+                                <fieldset style=>
                                     <div class="function"><br>       
                                     </div>
                                 </fieldset>
-                            </div>
+                          
                         </div>
     
-                            <div class="container news-sec">
+                            <div class="container news-sec" style="background-color:white">
                               <div class="date"><span class="day">{{content.pub_date.day}}</span><span class="month">{{month}}</span></div>
                               <h2 class="text_compress limit" >{{content.title}}</h2>
                                 <hr>
                             </div>
 
-                            <div class="container news-sec limitp " style="margin-top:-2em">
+                            <div class="container news-sec limitp rounded" style="background-color:white; margin-top:-2em">
                             <p>{{content.text | safe}}</p>
                             </div>
                        
