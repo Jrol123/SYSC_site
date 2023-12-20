@@ -28,7 +28,7 @@
             <div class="mt-5 mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div class="mt-5 plates" style="border-radius:0px;">
                     <figure class="news-card">
-                        <div class="frame" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="background-image: url('/media/{{img.url_path}}'); background-size:cover">
+                        <div class="frame" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="border:none; background-image: url('/media/{{img.url_path}}'); background-size:cover">
                             <div class="frame">
                                 <fieldset>
                                     <div class="function"><br>       
@@ -43,8 +43,8 @@
                                 <hr>
                             </div>
 
-                            <div class="container news-sec" style="margin-top:-2em">
-                            <p class="limitp">{{content.text | safe}}</p>
+                            <div class="container news-sec limitp " style="margin-top:-2em">
+                            <p>{{content.text | safe}}</p>
                             </div>
                        
                     </figure>
