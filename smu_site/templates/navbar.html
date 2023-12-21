@@ -1,10 +1,14 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg fixed-top">
  
-    <img src="{% static 'img/logo_smu.png' %}" style="margin-left:25px; margin-right:25px; height:60px; width:60px;" alt="Logo Image">
+    <img src="{% static 'img/logo_smu.png' %}"  class="d-none d-sm-block" style="margin-left:25px; margin-right:25px; height:60px; width:60px;" alt="Logo Image">
     <h3 class="mt-1  text-white text d-none d-sm-block" style="font-size:18px; margin-right:25px"> СМУ ДВО РАН </h3>
-    <h3 class="mt-1  text-white text d-block d-sm-none" style="font-size:12px; margin-left:-25px; margin-right:3px"> СМУ ДВО РАН </h3>
     
+    <!--For extra small screens-->
+    <img src="{% static 'img/logo_smu.png' %}"  class="d-block d-sm-none" style="margin-left:25px; margin-right:25px; height:40px; width:40px;" alt="Logo Image">
+    <h3 class="mt-1  text-white text d-block d-sm-none" style="font-size:12px; margin-left:-25px; margin-right:3px"> СМУ ДВО РАН </h3>
+    <!--For extran small screens-->
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"  style="" >
         <span class="navbar-toggler-icon" ></span>
     </button>
