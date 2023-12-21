@@ -1,62 +1,51 @@
 {% load static %}
-<nav class="navbar navbar-expand-xxl d-flex">
-
-    <div class="logo d-flex col-lg-3 col-sm-3 col-md-3 col-xs-3">
-		<div class="row justify-content-center align-items-center">
-			<a href="{% url 'main' %}" class="col-lg-2 col-sm-2 col-md-2 col-xs-2"> 
-				<img src="{% static 'img/logo_smu.png' %}" style="height:60px; width:60px;" alt="Logo Image">
-			</a>
-			<h2 class="col-lg-10 col-sm-10 col-md-10 col-xs-10 mt-2 text-white"> СМУ ДВО РАН </h2>
-		</div>
-    </div>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-       <span class="navbar-toggler-icon" style="color:white"></span>
+<nav class="navbar navbar-expand-lg fixed-top">
+ 
+    <img src="{% static 'img/logo_smu.png' %}" style="margin-left:25px; margin-right:25px; height:60px; width:60px;" alt="Logo Image">
+    <h3 class="mt-1  text-white text d-none d-sm-block" style="font-size:18px; margin-right:25px"> СМУ ДВО РАН </h3>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"  style="margin-right:25px" >
+        <span class="navbar-toggler-icon" ></span>
     </button>
-    <div class="collapse navbar-collapse col-lg-12 col-sm-12 col-md-12 col-xs-12 justify-content-center" id="navbarCollapse">
-       <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'news:index' %}">Новости</a><span class="sr-only">(current)</span></a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'info:grant' %}">Гранты</a>
-            </li>
-			
-			<li class="nav-item">
-                <a class="nav-link" href="{% url 'info:gzs' %}">ГЖС</a>
-            </li>
+    <div class="container-lg">
+       
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'info:institutes' %}">Институты</a>
-            </li>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'news:index' %}">Новости</a><span class="sr-only">(current)</span></a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'documents:index' %}">Документы</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'info:grant' %}">Гранты</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'info:organization' %}">Об организации</a>
-            </li>
-           {% if user.is_authenticated %}
-           <li class="nav-item">
-               {% if is_moder or user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'info:institutes' %}">Институты</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'documents:index' %}">Документы</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'info:organization' %}">Об организации</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'info:organization' %}">Об организации</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    {% if is_moder or user.is_superuser %}
                     <a class="nav-link" href="{% url 'moderators:news' %}">Профиль</a>
-               {% elif is_repr %}
+                    {% elif is_repr %}
                     <a class="nav-link" href="{% url 'representatives:news' %}">Профиль</a>
-               {% endif %}
-           </li>
-           {% endif %}
-           
-            <!--
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'news:index' %}">Новости</a>
-            </li> -->
-            
-            
-          
-        
-       </ul>
+                    {% endif %}
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-
- </nav>
+</nav>
