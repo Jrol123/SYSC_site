@@ -62,6 +62,13 @@ def organization(request):
                       "is_repr": request.user.groups
                       .filter(name='representative').exists()})
 
+def gzs(request):
+    return render(request, 'info/gzs.html',
+                  {
+                      "is_moder": request.user.groups
+                      .filter(name='moderator').exists(),
+                      "is_repr": request.user.groups
+                      .filter(name='representative').exists()})
 
 def institute_info(request, inst_id):
     try:

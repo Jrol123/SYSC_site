@@ -298,9 +298,29 @@ padding:12px 12px;
 .ScrollBar::-webkit-scrollbar-thumb {
     background-color: darkgrey
 }
+/*GZS*/
+.GZS
+{
+	position: relative;
+	background-color: var(--nav-bg);
+	border: 2px solid var(--nav-bg);
+}
+.NameAndDesc
+{
+  border-right: 0.1px solid silver;
+}
 
-
-
+.LinkTOGzs
+{
+	padding: 10px 0px 10px 30px;
+}
+.linkGzs
+{
+	text-decoration: none;
+	padding-right: 50px;
+	align-self: center;
+}
+/*GZS*/
 
 /* LOG IN FORMS */
 .field{
