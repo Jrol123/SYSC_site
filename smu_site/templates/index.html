@@ -160,9 +160,9 @@
                             <p class="limitp">{{text}}</p>
                             <hr>
                             {% if type == 'news' %}
-                            <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Read More</a>
+                            <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
                             {% else %}
-                            <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Read More</a>
+                            <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                             {% endif %}
                         </div>
                       </figure>
