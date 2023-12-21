@@ -47,13 +47,12 @@
 											<div class="container  limitp" style="border:2px solid silver; padding:15px; background-color: white; ">
 												<h3 style="text-align:left">Название документа</h3>
 											</div>
-											<div class="container doclinks limitp">
-												<a href="#" >{{content | safe}}</a>
-											</div>
+												<div class="container doclinks doc_text_limit">
+													{{content | safe}}
+												</div>
+										
 						
 										</div>
-
-										
 									
 								    {% endfor%}
 
@@ -86,8 +85,8 @@
 					</div>
 					
 						{% for c, content in categories %}
-							<div class="container doclinks limitp">
-								<a href="#" >{{content | safe}}</a>
+							<div class="container doclinks doc_text_limit">
+								{{content | safe}}
 							</div>
 						{% endfor %}
 						
