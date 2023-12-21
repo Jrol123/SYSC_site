@@ -221,7 +221,7 @@ body{
     background-color:white;
     width:100%;
     border:1px dashed var(--seal-bg);
-    
+    position:relative;
 }
 .event-card h3{
     background-color: var(--nav-bg);
@@ -252,7 +252,6 @@ body{
   background-color:white;
   width:100%;
   border-radius:100;
-  
 }
 .grant-card h3{
   background-color: black;
