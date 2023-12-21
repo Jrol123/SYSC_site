@@ -185,7 +185,7 @@ body{
 
 #first_plate{
     border-radius:20px;
-    border-top:2px solid white;
+    border-top:2px solid #6995d367;
    
     
 }
@@ -757,6 +757,7 @@ details[open] .content {
 	margin: 0px 20px 0px 20px;
 	color: black;
 }
+
 .input_for_form
 {
 	padding-left: 10px;
