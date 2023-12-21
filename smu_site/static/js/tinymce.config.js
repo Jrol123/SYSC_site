@@ -23,11 +23,11 @@ tinymce.init({
         },
       });
     },
-   
+   /*
     init_instance_callback : function(editor) {
         var freeTiny = document.querySelector('.tox .tox-notification--in');
        freeTiny.style.display = 'none';
-      },
+      },*/
     menu: {
     favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
     },
