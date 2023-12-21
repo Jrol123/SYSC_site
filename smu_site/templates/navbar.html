@@ -1,19 +1,19 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg">
 
-    <div class="logo d-flex">
+    <div class="logo d-flex col-lg-4 col-sm-4 col-md-4 col-xs-4">
 		<div class="row justify-content-center align-items-center">
-			<a href="{% url 'main' %}" class="col-lg-5 col-sm-5 col-md-5 col-xs-5"> 
+			<a href="{% url 'main' %}" class="col-lg-2 col-sm-2 col-md-2 col-xs-2"> 
 				<img src="{% static 'img/logo_smu.png' %}" style="height:60px; width:60px;" alt="Logo Image">
 			</a>
-			<h3 class="col-lg-7 col-sm-7 col-md-7 col-xs-7"> СМУ ДВО РАН </h3>
+			<h2 class="col-lg-10 col-sm-10 col-md-10 col-xs-10 mt-2 text-white"> СМУ ДВО РАН </h2>
 		</div>
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
        <span class="navbar-toggler-icon" style="color:white"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="collapse navbar-collapse col-lg-8 col-sm-8 col-md-8 col-xs-8" id="navbarCollapse">
        <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'news:index' %}">Новости</a><span class="sr-only">(current)</span></a>

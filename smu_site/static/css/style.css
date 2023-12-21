@@ -123,15 +123,17 @@ body{
   
  }
  .logo{
-    padding:0.5vh 9vw;
+    margin-left: 50px;
     text-align: center;
      width: auto;
+}
+.navbar-collapse
+{
+	margin-left: 100px;
 }
 .logo img {
     height: 3.3rem;
     width: 3.3rem;
-
-
 }
 
 .col-lg-grant {
