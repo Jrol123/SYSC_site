@@ -761,9 +761,11 @@ details[open] .content {
 {
 	padding-left: 10px;
 	padding-right: 10px;
+  padding-top:5px;
+  padding-bottom:5px;
 	margin: 0px 20px 0px 20px;
-	border: 2px solid black!important;
-	border-radius:15px!important;
+	border: 2px solid grey!important;
+	border-radius:10px!important;
 	color: black;
 }
 .input_for_form_img
@@ -842,8 +844,18 @@ details[open] .content {
 .submit_all
 {
 	align-self: flex-end!important;
-	background-color: #bbd9fa!important;
+	background-color: var(--nav-bg);
+  color:white;
 	margin-bottom: 20px;
+  border:none;
+  padding:10px 10px;
+  transition:0.5s;
+}
+
+.submit_all:hover
+{
+	background-color:black;
+  transition:0.5s;
 }
 .flex_costume
 {
@@ -1109,3 +1121,19 @@ input{
   display:block;
 }
 
+/* File Selector */
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  margin-top:12px;
+  border: none;
+  background: var(--nav-bg);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
