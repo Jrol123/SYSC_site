@@ -66,6 +66,24 @@
   --doc-links-color: #131418;
 }
 
+[black-dark-mode] {
+  --nav-bg: black;
+  --nav-btn-hover-color: #4b77b4;
+  --body-color: white;
+ --nav-bg-darker: black;
+ --nav-btn-bg: black;
+ --footer-bg: black;
+ --dark: #131418;
+ --grey-bg: #D2D2D2;
+ --purple-bg: #A690D3;
+ --light-blue-bg: white;
+ --seal-bg: #1E6D74;
+ --dark-grant: #AAA5A5;
+ --red-grant: #BF9B9B;
+ --doc-links-bg: #474e6818;
+ --doc-links-color: #131418;
+}
+
 
 
 
