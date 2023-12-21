@@ -16,6 +16,8 @@ class Institute(models.Model):
     link = models.URLField("Ссылка на сайт института")
     smu_link = models.URLField("Ссылка на сайт СМУ института",
                                null=True, blank=True)
+    on_changed = models.BigIntegerField('ID заменяемой записи',
+                                        null=True)
     
     def __str__(self):
         return (f"Institute(id={self.id}, name=\"{self.name}\", "
@@ -35,6 +37,8 @@ class Scientist(models.Model):
     degree = models.CharField("Учёная степень", max_length=200,
                               null=True)
     scientific_interests = models.TextField("Сфера научных интересов")
+    on_changed = models.BigIntegerField('ID заменяемой записи',
+                                        null=True)
     
     def __str__(self):
         return (f"ScientistInfo(id={self.id}, "

@@ -21,3 +21,4 @@ class Doc(models.Model):
     
     path = models.FileField("Путь до документа",
                             upload_to=_img_dir_path)
+    
