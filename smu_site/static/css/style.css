@@ -33,7 +33,6 @@
 .modal-dialog {
   max-width:75%;
   width:500px;
-
 }
 *{
     margin: 0;
@@ -125,8 +124,20 @@ body{
  .logo{
     margin-left: 50px;
     text-align: center;
-     width: auto;
+    width: auto;
 }
+.navbar-collapse
+{
+	position: absolute;
+}
+  @media (max-width: 1400px)
+  {
+	  .navbar-collapse
+		{
+			position: static;
+		}
+  }
+
 .logo img {
     height: 3.3rem;
     width: 3.3rem;
