@@ -960,11 +960,12 @@ details[open] .content {
   background-color:var(--nav-bg);
 }
 .ellipsis {
-  display: block;
-  width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.doc_text_limit a{
+  display: block; width: 550px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  width:100%;
+  word-wrap: break-word;
 }
 .pl_hrefs
 {
