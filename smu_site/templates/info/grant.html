@@ -33,7 +33,7 @@
                 {% for grant, img in grants.object_list %}
                 <section>
                     <div class="grantees plates mt-4 rounded" >
-                       <div class="title limit"><h3 style="line-height:30px">
+                       <div class="title limit"><h3 style="line-height:30px;  padding-left:3em; padding-right:4em">
                         {{ grant.name |default_if_none:""|slice:":100" }}{% if grant.name|length > 100 %}...{% endif %}
                     </h3></div>
                         <div class="content rounded" style="background-color:white">
