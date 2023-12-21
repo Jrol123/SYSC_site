@@ -36,37 +36,44 @@
 
         {% for i, img in institutes %} <!--This loop repeats the div below exactly 9 times-->
       
-        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
-            <div class="row container-custom">
-                <div class="mt-4 mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8">
+        <div  id="first_plate" class="mt-4 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
+            
+            <div class="title limit"><h3 class="big_title" style="line-height:30px; padding-left:3em; padding-right:4em">
+                {{ i.name |default_if_none:""|slice:":100" }}{% if i.name|length > 100 %}...{% endif %}
+            </h3></div>
+
+            <div class="row container-custom rounded " style="background-color:white; width:99%" >
+                <div class="mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8" >
                     <div class="row">
                    
-                        <div class="col-lg-11 col-md-11S col-sm-12 rounded" style="">
-                            <h3 style="color:var(--nav-bg); font-size:14px">{{i.name}}</h3><hr style="color:silver">
+                        <div class="col-lg-11 col-md-11 col-sm-12 rounded" style="background-color:white">
                             
-							<div class="mt-2">
-                                <h3 style="color:var(--nav-bg); font-size:14px">ФИО председателя<span style="color:black">: {{i.chairman}}</span></h3><hr style="color:silver">
-                            </div> 
-							
-                            <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">Количество сотрудников<span style="color:black">: {{i.employees_count}}</span></h3><hr style="color:silver">
-                            </div>
+                            <div class="container mt-4">
+                                <div class="mt-2">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; " class="limit">ФИО председателя<span style="color:black">: {{ i.chairman |default_if_none:""|slice:":45" }}{% if i.chairman|length > 45 %}...{% endif %}</span></h3><hr style="color:silver">
+                                </div> 
+                                
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; line-height:20px; " class="limit">Количество сотрудников<span style="color:black">: {{i.employees_count}}</span></h3><hr style="color:silver">
+                                </div>
 
-                            <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">Количество молодых учёных<span style="color:black">: {{i.scientist_count}}</span></h3><hr style="color:silver">
-                            </div>	
-							
-							<div class="mt-4">
-                                <p style="color:black">{{i.description}}</p>
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; line-height:20px; ">Количество молодых учёных<span style="color:black">: {{i.scientist_count}}</span></h3><hr style="color:silver">
+                                </div>	
+                                
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px">Описание:</h3>
+                                    <p style="color:black" class="limitp">{{i.description}}</p>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div d-flex align-items-center justify-content-center">
+                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div d-flex align-items-center justify-content-center" >
                     <div class="text-center mt-3 mb-3 d-flex align-items-center justify-content-center">
                         {% if img %}
-                            <img src="/media/{{img.url_path}}" class=" img-fluid align-items-center justify-content-center"  style="height: 200px width:300px ;" alt="{{img.alt}}">
+                            <img src="/media/{{img.url_path}}" class="rounded img-fluid align-items-center justify-content-center"  style="height: 200px width:300px ;" alt="{{img.alt}}">
                         {% else %}
                             <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid align-items-center justify-content-center"  style=" border:4px solid black" width="100%" alt="...">
                         {% endif %}
@@ -118,7 +125,63 @@
 <!--            </div>-->
 <!--            <a class="stretched-link" href="{% url 'info:institute_info' 1 %}"></a>-->
 <!--        </div>-->
+
+
+
+    {% if institutes %}
+        <div class="mt-5">
+        <nav aria-label="...">
+            <ul class="pagination">
+              
+            {% if institutes.has_previous %}
+                {# whether the previous page exists #}
+                {# link to the prev page #}
+                
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{grants.previous_page_number}}" tabindex="-1">Previous</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?page={{grants.previous_page_number}}">{{grants.previous_page_number}}</a></li>
+                
+              {% else %}
+                {# If previous page does not exist  #}
+                {# Disaplay a disabled link  #}
+                <li class="page-item disabled">
+                  <a class="page-link" href="" tabindex="-1">Previous</a>
+                </li>
+
+            {% endif %}
+
+
+            <li class="page-item active">
+              <a class="page-link" href="#">{{grants.number}} <span class="sr-only">(current)</span></a>
+            </li> {# the current page number #}
+
+            {%if grants.has_next %} {# whether the next page exists #}
+                {# link to the next page #}
+               
+                    
+                    
+                    <li class="page-item"><a class="page-link" href="?page={{grants.next_page_number}}">{{grants.next_page_number}}</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{grants.next_page_number}}">Next</a>
+                    </li>
+
+              {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="">Next</a>
+                  </li>
+                  
+            {% endif %}
+
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+
+
     </div>
+
+        
 
 
     {% include "footer.html" %}
