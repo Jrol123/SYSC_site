@@ -161,11 +161,13 @@
                             <h2 class="text_compress limit" >{{ n.title |default_if_none:""|slice:":100" }}{% if n.title|length > 100 %}...{% endif %}</h2>
                               <p class="limitp">{{text}}</p>
                               <hr>
+                              <div class="mt-4">
                               {% if type == 'news' %}
                               <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% else %}
                               <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
+                              </div>
                           </div>
                     
                       </figure>
