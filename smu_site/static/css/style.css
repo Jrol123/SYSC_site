@@ -25,6 +25,7 @@
     --red-grant: #BF9B9B;
     --doc-links-bg: #31517e10; 
     --doc-links-color:#4b77b4;
+    --first-plate: #6995d367;
 }
 
 
@@ -46,6 +47,7 @@
   --red-grant: #BF9B9B;
   --doc-links-bg: #31517e10; 
   --doc-links-color:#4b77b4;
+  --first-plate: #6995d367;
 }
 
 [data-dark-mode] {
@@ -64,6 +66,7 @@
   --red-grant: #BF9B9B;
   --doc-links-bg: #474e6818;
   --doc-links-color: #131418;
+  --first-plate: #07070767;
 }
 
 [black-dark-mode] {
@@ -101,6 +104,9 @@
 .modal-dialog {
   max-width:75%;
   width:500px;
+}
+.navbar-toggler-icon{
+  color:red;
 }
 *{
     margin: 0;
@@ -261,7 +267,7 @@ body{
 
 #first_plate{
     border-radius:20px;
-    border-top:2px solid #6995d367;
+    border-top:2px solid var(--first-plate);
    
     
 }
@@ -375,6 +381,9 @@ padding:12px 12px;
 	background-color: var(--nav-bg);
 	border: 2px solid var(--nav-bg);
 }
+.GZS:hover{
+  background-color: var(--dark);
+}
 .NameAndDesc
 {
   border-right: 0.1px solid silver;
@@ -390,6 +399,7 @@ padding:12px 12px;
 	padding-right: 50px;
 	align-self: center;
 }
+
 /*GZS*/
 
 /* LOG IN FORMS */
