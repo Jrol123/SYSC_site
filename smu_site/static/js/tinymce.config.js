@@ -4,11 +4,11 @@ tinymce.init({
     plugins: [
     'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
     'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-    'media', 'table', 'emoticons', 'template'
+    'media', 'table', 'emoticons', 'template', 'accordion'
     ],
-    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+    toolbar: 'undo redo | styles | accordion | bold italic | alignleft aligncenter alignright alignjustify | ' +
     'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-    'forecolor backcolor emoticons | help | googlemap',
+    'forecolor backcolor emoticons | help | googlemap ',
 
     setup: function (editor) {
       editor.ui.registry.addButton('googlemap', {
