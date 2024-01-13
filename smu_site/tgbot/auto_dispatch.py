@@ -34,9 +34,9 @@ SYSC_site/
 
 
 bot = telebot.TeleBot(
-    token="6933728312:AAEovNd1s3kIm75O0LKgu90DLqJ3uxyCpTg")
-channel_id = -1001935648024
-link_temp = "https://t.me/c/1935648024/"
+    token="")
+channel_id = None
+link_temp = ""
 
 cfg = configparser.ConfigParser()
 cfg.read("config.cfg", encoding='utf-8')
