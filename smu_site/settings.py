@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import sys
 from pathlib import Path
+from dotenv import dotenv_values
+secrets = dotenv_values(".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ob+a9dztk3a5@6l1$ddb!vg-hd=!96=7-hu-z)da)h!d+!j966'
+SECRET_KEY = secrets['DJANGO']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

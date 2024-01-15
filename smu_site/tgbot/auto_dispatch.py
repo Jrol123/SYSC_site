@@ -7,15 +7,19 @@ from telebot import types
 
 # Нужно для импорта из приложений проекта
 import os
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'SYSC_site.smu_site.settings')
 import django
+
 django.setup()
 
 # Тот самый импорт, для которого нужна вся конструкция выше
 from django.conf import settings
 from news.models import News, Event, Image
+from dotenv import dotenv_values
 
+secrets = dotenv_values(".env")
 
 """
 SYSC_site/
@@ -32,11 +36,9 @@ SYSC_site/
                 models.py
 """
 
-
-bot = telebot.TeleBot(
-    token="")
-channel_id = None
-link_temp = ""
+bot = telebot.TeleBot(token=secrets['TELEGRAM'])
+channel_id = -1001935648024
+link_temp = "https://t.me/c/1935648024/"
 
 cfg = configparser.ConfigParser()
 cfg.read("config.cfg", encoding='utf-8')
@@ -90,7 +92,7 @@ def clear_message(text):
 def split_text(text, limit) -> list[str] or str:
     if len(text) < limit:
         return text
-    
+
     # разделение по переносам строки
     if '\n' in text:
         text = text.split('\n')
@@ -100,32 +102,32 @@ def split_text(text, limit) -> list[str] or str:
                    and len(text[i] + text[i + 1]) < limit):
                 text[i] += ('\n' + text[i + 1])
                 del text[i + 1]
-            
+
             i += 1
-    
+
     # разделение по пробелам
     if (isinstance(text, list) and
-       any((len(t) > limit and ' ' in t) for t in text)):
+            any((len(t) > limit and ' ' in t) for t in text)):
         i = 0
         for j in range(len(text)):
             if len(text[j]) > limit:
                 i = j
                 break
-        
+
         # часть текста, разделённая пробелами
         text2 = text[i:]
         del text[i:]
-        
+
         # делаем список слов
         text2 = (' '.join(text2)).split()
         while len(text2):
             while 1 < len(text2) and len(text2[0] + text2[1]) < limit:
                 text2[0] += (' ' + text2[1])
                 del text2[1]
-            
+
             text.append(text2[0])
             del text2[0]
-        
+
         del text2
     elif isinstance(text, str):
         text = text.split()
@@ -135,9 +137,9 @@ def split_text(text, limit) -> list[str] or str:
                    and len(text[i] + text[i + 1]) < limit):
                 text[i] += (' ' + text[i + 1])
                 del text[i + 1]
-            
+
             i += 1
-        
+
     # разделение по символам
     if any(len(t) > limit for t in text):
         for j in range(len(text)):
@@ -148,7 +150,7 @@ def split_text(text, limit) -> list[str] or str:
                     text[j + 1] += tmpt
                 else:
                     text.append(tmpt)
-    
+
     return text
 
 
@@ -156,9 +158,9 @@ def split_message(text, limit) -> list[str] or str:
     print('unsplit', text)
     text = text.replace('<p>', '\n').replace('</p>', '\n')
     print('split', text)
-    
+
     text = split_text(text, limit)
-    
+
     # nt = [header] if isinstance(header, str) else header
     # if len(text) > 2:
     #     for i in range(2, len(text)):
@@ -168,23 +170,23 @@ def split_message(text, limit) -> list[str] or str:
     #             nt.append(text[i])
     # else:
     #     return '\n'.join(nt)
-    
+
     return text
 
 
 def news_mailing(wait_for):
     global last_mess_id
-    
+
     while True:
         print('test')
-        
+
         time.sleep(wait_for)
-        
+
         nw = list(News.objects.filter(queue_id__isnull=True, link=None)
                   .order_by("pub_date"))
         ev = list(Event.objects.filter(queue_id__isnull=True, link=None)
                   .order_by("pub_date"))
-        
+
         if nw:
             nw = nw[0]
             m = clear_message(nw.get_template_message())
@@ -196,35 +198,35 @@ def news_mailing(wait_for):
                     bot.send_photo(channel_id, nwimg,
                                    caption=split_message(m, 1024),
                                    parse_mode='html')
-                    
+
                     last_mess_id += 1
                     nw.link = (link_temp + str(last_mess_id))
                     update_conf("last_message_id",
                                 str(last_mess_id))
                     nw.save(update_fields=["link"])
-                    
+
                     update_conf("last_message_id",
                                 str(last_mess_id))
                 else:
                     m, *sepm = split_message(m, 1024)
                     bot.send_photo(channel_id, nwimg, caption=m,
                                    parse_mode='html')
-                    
+
                     for i in range(len(sepm)):
                         bot.send_message(channel_id, sepm[i],
                                          parse_mode="html")
-                        
+
                     nw.link = (link_temp + str(last_mess_id + 1))
                     last_mess_id += len(sepm) + 1
                     update_conf("last_message_id",
                                 str(last_mess_id))
                     nw.save(update_fields=["link"])
-                    
+
             else:
                 if len(m) < 4096:
                     bot.send_message(channel_id, split_message(m, 1024),
                                      parse_mode="html")
-                    
+
                     last_mess_id += 1
                     nw.link = (link_temp + str(last_mess_id))
                     update_conf("last_message_id",
@@ -235,7 +237,7 @@ def news_mailing(wait_for):
                     for i in range(len(m)):
                         bot.send_message(channel_id, m[i],
                                          parse_mode="html")
-                    
+
                     nw.link = (link_temp + str(last_mess_id + 1))
                     last_mess_id += len(m)
                     update_conf("last_message_id",
@@ -252,7 +254,7 @@ def news_mailing(wait_for):
                     bot.send_photo(channel_id, evimg,
                                    caption=split_message(m, 1024),
                                    parse_mode='html')
-                    
+
                     last_mess_id += 1
                     ev.link = (link_temp + str(last_mess_id))
                     update_conf("last_message_id",
@@ -262,11 +264,11 @@ def news_mailing(wait_for):
                     m, *sepm = split_message(m, 1024)
                     bot.send_photo(channel_id, evimg, caption=m,
                                    parse_mode='html')
-                    
+
                     for i in range(len(sepm)):
                         bot.send_message(channel_id, sepm[i],
                                          parse_mode="html")
-                        
+
                     last_mess_id += 1
                     ev.link = (link_temp + str(last_mess_id))
                     last_mess_id += len(sepm)
@@ -278,7 +280,7 @@ def news_mailing(wait_for):
                     bot.send_message(channel_id,
                                      split_message(m, 4096),
                                      parse_mode="html")
-                    
+
                     last_mess_id += 1
                     ev.link = (link_temp + str(last_mess_id))
                     update_conf("last_message_id",
@@ -286,11 +288,11 @@ def news_mailing(wait_for):
                     ev.save(update_fields=["link"])
                 else:
                     m = split_message(m, 4096)
-                    
+
                     for i in range(len(m)):
                         bot.send_message(channel_id, m[i],
                                          parse_mode="html")
-                    
+
                     ev.link = (link_temp + str(last_mess_id + 1))
                     last_mess_id += len(m)
                     update_conf("last_message_id",
