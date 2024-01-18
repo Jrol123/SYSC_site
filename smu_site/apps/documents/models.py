@@ -17,7 +17,7 @@ class Doc(models.Model):
     
     def _img_dir_path(self, filename):
         return (f'documents/'
-                f'{Category.objects.get(id=self.category.id).name}'
+                f'{self.category.name}'
                 f'/{filename}')
     
     path = models.FileField("Путь до документа",

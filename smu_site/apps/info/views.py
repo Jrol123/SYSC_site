@@ -1,10 +1,13 @@
 import configparser
 
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, Http404
 
 from info.models import Institute, Scientist, Grant
 from news.models import Image
+from SHC.models import Doc as SHCDoc
+
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -62,13 +65,19 @@ def organization(request):
                       "is_repr": request.user.groups
                       .filter(name='representative').exists()})
 
+
 def gzs(request):
+    documents = (SHCDoc.objects.select_related('doc')
+                 .order_by('doc__id'))
     return render(request, 'info/gzs.html',
                   {
+                      'docs': documents,
+                      'media': settings.MEDIA_URL,
                       "is_moder": request.user.groups
                       .filter(name='moderator').exists(),
                       "is_repr": request.user.groups
                       .filter(name='representative').exists()})
+
 
 def institute_info(request, inst_id):
     try:
