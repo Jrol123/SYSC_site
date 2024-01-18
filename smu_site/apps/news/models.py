@@ -6,7 +6,7 @@ from django.db import models
 class News(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField("Заголовок новости", max_length=400)
     text = models.TextField("Текст разметки новости")
     pub_date = models.DateTimeField("Дата и время публикации",
@@ -18,7 +18,7 @@ class News(models.Model):
                 f"title=\"{self.title}\", pub_date={self.pub_date})")
 
     def get_template_message(self):
-        return f"<b>{self.title}</b>\n\n{self.text}"
+        return f"<b>{self.title}</b>\n{self.text}"
 
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
@@ -28,7 +28,7 @@ class News(models.Model):
 class Event(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField("Заголовок мероприятия", max_length=400)
     text = models.TextField("Текст разметки мероприятия")
     begin_date = models.DateTimeField("Дата и время начала")
@@ -47,7 +47,7 @@ class Event(models.Model):
     def get_template_message(self):
         return (f"<b>{self.title}</b>\n\n"
                 f"Дата начала: {self.begin_date}\n"
-                f"Дата окончания: {self.end_date}\n\n{self.text}")
+                f"Дата окончания: {self.end_date}\n{self.text}")
 
     # def delete(self, using=None, keep_parents=False):
     #     bot.delete_message(channel_id, int(self.link.split('/')[-1]))
@@ -91,9 +91,8 @@ class Image(models.Model):
                                     self.institute, self.scientist,
                                     self.grant)) if v]
         
-        return (f'images/{folder[cd()[0][0]]}/{cd()[0][1]}'
+        return (f'images/{folder[cd()[0][0]]}/{cd()[0][1].id}'
                 f'/{filename}')
-
     
     url_path = models.ImageField("Путь к изображению",
                                  upload_to=_img_dir_path)
@@ -105,11 +104,9 @@ class Image(models.Model):
                 f"alt=\"{self.alt}\")")
     
     @classmethod
-    def get_related_images(cls, obj_id,
-                           category: ('news', 'event', 'institute',
-                                      'scientist', 'grant')):
+    def get_related_images(cls, obj_id, category):
         assert category in ('news', 'event', 'institute',
                             'scientist', 'grant')
         
-        kwargs = {category: obj_id}
+        kwargs = {category + '_id': obj_id}
         return list(cls.objects.filter(**kwargs).order_by("id"))

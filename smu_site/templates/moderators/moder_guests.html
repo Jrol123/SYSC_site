@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+	{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Responsive Animated Navbar{% endblock %}
+{% block title %}Модерация{% endblock %}
 {% block meta %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,108 +9,236 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
 {% endblock %}
-<!-- IconFont and Stylesheet -->
+
 {% block link %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-{% endblock %}
-<!--//-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="{% static 'js/tinymce.js' %}" referrerpolicy="origin"></script>
+	<script type="text/javascript" src="{% static 'js/tinymce.config.js' %}"></script>
+	<!-- Online TINYMCE JS
+		<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	-->
+	<script>
+		$(document).ready(function() {
+		// Hide institute-related elements on page load
+			$('.First').closest('.Intoform').show();
 
+			// Show/hide institute-related elements based on user group selection
+			$('#moder').change(function() {
+				  if ($(this).val() === 'All') {
+					$('.color_news').show();
+					$('.color_event').show();
+					$('.color_docs').show();
+					$('.color_scientists').show();
+				  }
+				  if ($(this).val() === 'News')
+				  {
+					$('.color_news').show();
+					$('.color_event').hide();
+					$('.color_docs').hide();
+					$('.color_scientists').hide();
+				  }
+				  if ($(this).val() === 'Events')
+				  {
+					$('.color_news').hide();
+					$('.color_event').show();
+					$('.color_docs').hide();
+					$('.color_scientists').hide();
+				  }
+				  if ($(this).val() === 'Docs')
+				  {
+					$('.color_news').hide();
+					$('.color_event').hide();
+					$('.color_docs').show();
+					$('.color_scientists').hide();
+				  }
+				  if ($(this).val() === 'Sceints')
+				  {
+					$('.color_news').hide();
+					$('.color_event').hide();
+					$('.color_docs').hide();
+					$('.color_scientists').show();
+				  }
+			});
+		});
+	</script>
+	<script>
+			document.addEventListener("DOMContentLoaded", function() {
+		  // При загрузке страницы оставить видимым только Moders и скрыть остальные классы
+		  document.querySelector('.Moders').style.display = 'block';
+		  document.querySelector('.Events').style.display = 'none';
+		  document.querySelector('.News').style.display = 'none';
+		  document.querySelector('.Docs').style.display = 'none';
+		  document.querySelector('.Scientist').style.display = 'none';
+
+		  // При нажатии кнопки с классом color_news показывать только News
+		  document.querySelectorAll('.color_news').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'block';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_event показывать только Events
+		  document.querySelectorAll('.color_event').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'block';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_docs показывать только Docs
+		  document.querySelectorAll('.color_docs').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'block';
+			  document.querySelector('.Scientist').style.display = 'none';
+			});
+		  });
+
+		  // При нажатии кнопки с классом color_scientists показывать только Scientist
+		  document.querySelectorAll('.color_scientists').forEach(function(element) {
+			element.addEventListener('click', function() {
+			  document.querySelector('.Moders').style.display = 'none';
+			  document.querySelector('.Events').style.display = 'none';
+			  document.querySelector('.News').style.display = 'none';
+			  document.querySelector('.Docs').style.display = 'none';
+			  document.querySelector('.Scientist').style.display = 'block';
+			});
+		  });
+		});
+	</script>
+
+{% endblock %}	
 {% block content %}
-    {% include "navbar.html" %}
-	<div class="plates_home container-custom plate-container">
-		<div class="Navbar_Moder plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row flex justify-content-center">
-			<div class="links m-1 col-lg-1 col-sm-1 col-md-1 col-xs-1 d-flex bg-black">
-				<a href="{% url 'moderators:news' %}">Добавить новости</a>
-			</div>
-			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
-				<a href="{% url 'moderators:create_grant' %}">Гранты</a>
-			</div>
-			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
-				<a href="{% url 'moderators:gzs' %}">ГЖС</a>
-			</div>
-			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
-				<a href="{% url 'moderators:add_new_guests' %}">Добавление пользователей</a>
-			</div>
-			<div class="links m-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
-				<a href="{% url 'moderators:profile' %}">Вернуться в главное окно модерации</a>
-			</div>
-            <div class="links ml-1 mr-1 col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex bg-black">
-				<a href="{% url 'moderators:create_institute' %}">Добавление института</a>
-			</div>
-		</div>
-	</div>
-	<div class="plates_home container-custom plate-container d-flex flex-row">
-		<div class="plates NewsFromGuests col-lg-3 col-sm-3 col-md-3 col-xs-3 d-flex flex-column ScrollBar">
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>blank</h1>
-			</div>
-		</div>
-		<div class="col-lg-main col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-		</div>
-		<div class="plates col-lg-9 col-sm-9 col-md-9 col-xs-9 d-flex flex-column">
-			<div class="redctor_place plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-column">
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Окно Одобрения предложений гостей IN PROGRESS </h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-				<h1>Blank</h1>
-			</div>
-			<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row-reverse">
-				<div class="plates col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex flex-column justify-content-center">
-					<button class="btn btn-success" style="submit"> Опубликовать </p>
-					<button class="btn btn-danger" style="submit"> Отказать </p>
+	{% include "navbar.html" %}
+	{% include "moderators/moder_navbar.html" %}
+	<div class="place_form main_plate plates_home container-custom plate-container">
+		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12">
+			<form class="form_all" action="" method="POST">
+				{% csrf_token %}
+				<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<div class ="leftside plates col-lg-4 col-sm-4 col-md-4 col-xs-4">
+						<label  class="labels_for_form" for="moder">Категории</label>
+						<select class="input_for_form col-lg-5 col-sm-5 col-md-5 col-xs-5 text-dark" id="moder" name="moder">
+							<option value="All">Все категории</option>
+							<option value="News">Новости</option>
+							<option value="Events">События</option>
+							<option value="Docs">Документы</option>
+							<option value="Sceints">Ученые</option>
+						</select>
+						<div class="First First_m ScrollBar ScrollBar_formoder">
+							<br>
+							{% if queue %}
+								{% for type, obj in queue %}
+									{% if type == 'Новость' %}
+										<button type="button" class="btn input_for_form color_news">{{type}}: {{obj.title}}</button>
+									{% elif type == 'Мероприятие' %}
+										<button type="button" class="btn input_for_form color_event">{{type}}: {{obj.title}}</button>
+									{% elif type == 'Документ' %}
+										<button type="button" class="btn input_for_form color_docs">{{type}}: {{obj.name}}</button>
+									{% elif type == 'Учёный' %}
+										<button type="button" class="btn input_for_form color_scientists">{{type}}: {{obj.name}}</button>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								<button type="button" class="btn input_for_form color_news mb-2">Пр. Новость #{{ i }}</button>
+								<button type="button" class="btn input_for_form color_event mb-2">Пр. Событие #{{ i }}</button>
+								<button type="button" class="btn input_for_form color_docs mb-2">Пр. Доки #{{ i }}</button>
+								<button type="button" class="btn input_for_form color_scientists mb-2">Пр. Ученые #{{ i }}</button>
+							{% endif %}
+						</div>
+					</div>
+					<div class="plates Second_m col-lg-7 col-sm-7 col-md-7 col-xs-7">
+						<div style="position:relative; z-index:1" class="Moders container-custom">
+							<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+								<h1 class="text-dark text-center"> Окно Модерации </h1>
+							</div>
+						</div>
+						<div style="position:relative; z-index:1" class="Events container-custom">
+							<div class="pt-4 labels_for_form col-lg-12 col-md-12 col-sm-12">
+								<textarea id="myTextarea" style="width:100%"></textarea>
+							</div>
+							<div class="pt-4 pb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<input type="text" id="myTitle" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
+								<label class="labels_for_form" for="startDate">Дата начала мероприятия:</label>
+								<input class="input_for_form" type="datetime-local" id="startDate" name="startDate">
+								<label class="labels_for_form" for="endDate">Дата окончания мероприятия:</label>
+								<input class="input_for_form" type="datetime-local" id="endDate" name="endDate">
+							</div>
+						</div>
+						<div style="position:relative; z-index:1" class="News container-custom">
+							<div class="pt-4 labels_for_form col-lg-12 col-md-12 col-sm-12">
+								<textarea id="myTextarea" style="width:100%"></textarea>
+							</div>
+							<input type="text" id="myTitle" class="form-control mt-2 labels_for_form platesx" style="height:4em; margin-bottom:1em" placeholder="Название новости" required/>
+						</div>
+						<div style="position:relative; z-index:1" class="Docs container-custom">
+											<div class="Intoform col-lg-6 col-sm-6 col-md-6 col-xs-6">
+					<label class="labels_for_form" for="id_Name_doc">Название документа</label>
+					<input type="text" class="form-control input_for_form" id="Name_doc" name="Name_doc">
+					<label  class="mt-2 labels_for_form inst sel_cat" for="id_Category">Категория документа</label>
+					<input type="text" class="form-control input_for_form" id="New_categoty" name="New_categoty">
+                    <label class="mt-2 labels_for_form" for="documentUpload">ссылка на документ</label>
+					<a href='#' class="mt-2 links labels_for_form"> ссылка на документ </a>
+                </div>
+						</div>
+						<div style="position:relative; z-index:1" class="Scientist container-custom">
+							<div class="pt-4 col-lg-12 col-md-12 col-sm-12">
+								<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
+									<div class="First plates col-lg-5 col-sm-5 col-md-5 col-xs-5">
+										<br>
+										<label class="labels_for_form" for="name">Имя учёного:</label>
+										{{form.name}}
+										<br>
+										<label class="labels_for_form" for="position">Должность:</label>
+										{{form.position}}
+										<br>
+										<label class="labels_for_form" for="degree">Учёная степень:</label>
+										{{form.degree}}
+										<br>
+										<label class="labels_for_form" for="institute">Институт:</label>
+										{{ form.institute }}
+										<br>
+										<label class="labels_for_form" for="lab">Лаборатория:</label>
+										{{form.lab}}
+										<br>
+										<label class="labels_for_form" for="imageInput">Фотография учёного:</label>
+										{{form.url_path}}
+									</div>
+									<div class="First plates col-lg-6 col-sm-6 col-md-6 col-xs-6">
+										<br>
+										<label class="labels_for_form" for="service_name">Ссылки на профили:</label>
+										{{form.service_name}}
+										<br>
+										<label class="labels_for_form" for="scientific_interests">Научные интересы:</label>
+										{{form.scientific_interests}}
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+				<div class="underform col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<div class="intounderform col-lg-2 col-sm-2 col-md-2 col-xs-2">
+						<input class="btn_publikate mb-1 plates col-lg-12 col-sm-12 col-md-12 col-xs-12 text-dark" type="submit" value="Опубликовать">
+						<input class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 text-dark" type="button" value="Отказать">
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
-    {% include "footer.html" %}
+	{% include "footer.html" %}
 
-    <!-- Javascript Inc-->
-    <script src="{% static 'js/nav-bar.js' %}"></script>
 {% endblock %}

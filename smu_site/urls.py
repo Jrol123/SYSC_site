@@ -24,18 +24,20 @@ from . import views, settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
+    path('news/', include('news.urls'), name='news'),
     path('documents/', include('documents.urls')),
     path('info/', include('info.urls')),
     path('moderators/', include('moderators.urls')),
-    path('news/', include('news.urls')),
     path('accounts/login', include('django.contrib.auth.urls')),
     path('accounts/login', views.user_login, name='user_login'),
     # path('representatives/', include(
-    #     ('representatives.urls', 'representatives'),
-    #     namespace='representatives')),
+    #      ('representatives.urls', 'representatives'),
+    #      namespace='representatives')),
+    path('representatives/', include('representatives.urls')),
     path('SHC/', include('SHC.urls')),
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)

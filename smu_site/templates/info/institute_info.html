@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Responsive Animated Navbar{% endblock %}
+{% block title %}{{institute.name}}{% endblock %}
 {% block meta %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,15 +22,19 @@
     {% include "navbar.html" %}
 
 
-    <div class="plates_home container-custom plate-container">
+    <div class="plates_home main_plate container-custom plate-container">
 		<div class="row">
 			<div class="plates mt-5 mb-5 col-lg-4 col-sm-4 col-md-4 col-xs-4 rounded">
 				<div class="column container-custom">
 					<div class="mt-4 mb-4 p-3 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 institute-right-div">
-						<p>Some photo of institute</p>
+						{% if inst_img %}
+							<img src="/media/{{inst_img.url_path}}" class="rounded img-fluid"  style="height: 200px; width: 300px;" alt="{{img.alt}}">
+						{% else %}
+							<p>Some photo of institute</p>
+						{% endif %}
 					</div>
 					<div class="mt-4 mb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<p class="text-black"> Some describe of institute </p>
+						<p class="text-black limitp">{{institute.description}}</p>
 					</div>
 				</div>
 			</div>

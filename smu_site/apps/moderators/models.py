@@ -6,18 +6,20 @@ class Queue(models.Model):
         ('doc', 'Документ'),
         ('news', 'Новость'),
         ('event', 'Мероприятие/событие'),
-        ('scientist', 'Учёный'),
-        ('grant', 'Грант'),
+        ('scientist', 'Учёный')
     )
     obj_type = models.CharField("Тип объекта",
                                 max_length=10, choices=CHOICES)
     
+    SCHOICES = (
+        ('pub', 'Публикация'),
+        ('chg', 'Изменение'),
+        ('del', 'Удаление')
+    )
+    status = models.CharField("Статус запрашиваемого объекта",
+                              max_length=10, choices=SCHOICES,
+                              default='Публикация')
+    
     class Meta:
         verbose_name = 'Очередь'
         verbose_name_plural = 'Очереди'
-
-        constraints = [
-            models.UniqueConstraint(fields=['id', 'obj_type'],
-                                    name='unique_id_type_obj')
-        ]
-

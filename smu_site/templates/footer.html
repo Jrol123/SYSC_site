@@ -1,20 +1,27 @@
     <footer class="footer">
         <div class="container row justify-content-between">    
             <div class="footer-col">
-                <h4>Остались вопросы ?</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-				
-            </div>
-
-            <div class="footer-col">
                
 				<h4>Связь с администратором</h4>
-                <ul>
+                <ul style="color:whitesmoke">
 					<li>Электронная почта: example@mail.ru</li>
                     <li>Контактный телефон: 8 800 555 35-35</li>
                 </ul>
+            </div>
+
+            <div class="footer-col">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            выберите тему страницы
+                        </button>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" id="light-mode-toggless">Default Theme</a>
+                            <a class="dropdown-item" id="dark-mode-toggless">Dark Mode</a>
+                            <a class="dropdown-item" id="black-mode-toggless">Black Mode</a>
+                        
+                        </div>
+                      </div>
             </div>
             
             <div class="footer-col">
@@ -24,7 +31,7 @@
                 </div><br/>
 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout'%}?next={% url 'main' %}" class="login-btn">Выйти из акаунта</a>
+                    <a href="{% url 'logout'%}?next={% url 'main' %}" class="login-btn">Выйти</a>
                 {% else %}
                     <a href="{% url 'user_login'%}?next={{ request.path }}" class="login-btn">Вход</a>
                 {% endif %}

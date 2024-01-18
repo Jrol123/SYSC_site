@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Гранты{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+{% endblock %}
+<!-- IconFont and Stylesheet -->
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
+{% endblock %}
+<!--//-->
+
+{% block content %}
+    
+    {% include "navbar.html" %}
+
+
+    <div class="plates_home main_plate container-custom plate-container">
+		<h4 class="mb-4 mt-5 " style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГЖС</h4>
+		<hr style="color:var(--nav-btn-bg)">
+		<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row ">
+			<div class="d-flex flex-column col-lg-8 col-sm-8 col-md-8 col-xs-8 NameAndDesc">
+				<div class="Names m-2">
+					<div style="color:grey; font-size:18px" class="mt-2 col-lg-4 col-sm-4 col-md-4 col-xs-4">
+						Название документа
+					</div>	
+					<hr style="color:silver">
+					<div class="p-1 m-2 col-lg-8 col-sm-8 col-md-8 col-xs-8 text-dark">
+						Газожидкостная смесь
+					</div>
+				</div>
+				<div class="description m-2">
+					<div style="color:grey; font-size:18px" class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+						Описание документа
+					</div>
+					<hr style="color:silver">					
+					<div class="p-1 m-2 col-lg-8 col-sm-8 col-md-8 col-xs-8 text-dark">
+						Газожидкостная смесь – это дисперсная система пленочно-ячеистой структуры, в которой ячейки – пузырьки газа – разделены пленками, состоящими из водного раствора ПАВ-пенообразователя и других растворенных компонентов и являющимися непрерывной фазой, которая образует пленочный каркас, служащий основой пены. Прочность этого каркаса определяет основные технологические параметры ГЖС в целом.
+					</div>
+				</div>
+			</div>
+			<div class="LinkTOGzs col-lg-4 col-sm-4 col-md-4 col-xs-4 d-flex justify-content-center align-items-center p-3">
+				<div class="plates mt-2 GZS col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex justify-content-center align-items-center p-5">
+					<a href="#" class="text-white stretched-link linkGzs m-0 p-0 text-center">**ССылка на документ**</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    {% include "footer.html" %}
+
+
+{% endblock %}

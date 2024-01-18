@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Responsive Animated Navbar{% endblock %}
+{% block title %}Институты{% endblock %}
 {% block meta %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,10 @@
 {% block link %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
 {% endblock %}
 <!--//-->
 
@@ -28,53 +31,159 @@
     <!--//-->
 
 
-    <div class="plates_home container-custom plate-container">
+    <div class="plates_home main_plate container-custom plate-container">
+        <h4 class="mt-5 mb-4 " style="font-size:23px; color:var(--nav-bg)">ИНСТИТУТЫ</h4>
+            <hr style="color:var(--nav-btn-bg)">
+        {% if institutes %}
 
-        {% for i in '123456789' %} <!--This loop repeats the div below exactly 9 times--> 
+        {% for i, img in institutes %} <!--This loop repeats the div below exactly 9 times-->
+      
+        <div  id="first_plate" class="mt-4 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
+            
+            <div class="title limit"><h3 class="big_title" style="line-height:30px; padding-left:3em; padding-right:4em">
+                {{ i.name |default_if_none:""|slice:":100" }}{% if i.name|length > 100 %}...{% endif %}
+            </h3></div>
 
-        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">
-            <div class="row container-custom">
-                <div class="mt-4 mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8">
+            <div class="row container-custom rounded " style="background-color:white; width:99%" >
+                <div class="mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8" >
                     <div class="row">
                    
-                        <div class="col-lg-2 mt-5 mb-3 col-md-2 col-sm-12">
-                            <div class="text-center">
-                                <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid"  style="border-radius:100px; border:4px solid black" width="100px" alt="...">
-                            </div>
-                         </div>
-                         
-
-                        <div class="col-lg-9 col-md-9 col-sm-12">
-                            <h3 style="color:var(--nav-bg); font-size:14px">Описание гранта</h3><hr style="color:silver">
-                            <div class="mt-2">
-                                <p style="color:black">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
-                            </div>
+                        <div class="col-lg-11 col-md-11 col-sm-12 rounded" style="background-color:white">
                             
-                            <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">сотрудников <span style="color:black">: 2000</span></h3><hr style="color:silver">
-                            </div>
+                            <div class="container mt-4">
+                                <div class="mt-2">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; " class="limit">ФИО председателя<span style="color:black">: {{ i.chairman |default_if_none:""|slice:":45" }}{% if i.chairman|length > 45 %}...{% endif %}</span></h3><hr style="color:silver">
+                                </div> 
+                                
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; line-height:20px; " class="limit">Количество сотрудников<span style="color:black">: {{i.employees_count}}</span></h3><hr style="color:silver">
+                                </div>
 
-                            <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">молодых учёных <span style="color:black">: 2000</span></h3><hr style="color:silver">
-                            </div>
-
-                            <div class="mt-4">
-                                <h3 style="color:var(--nav-bg); font-size:14px">ФИО председателя СМУ <span style="color:black">: 2000</span></h3><hr style="color:silver">
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px; line-height:20px; ">Количество молодых учёных<span style="color:black">: {{i.scientist_count}}</span></h3><hr style="color:silver">
+                                </div>	
+                                
+                                <div class="mt-4">
+                                    <h3 style="color:var(--nav-bg-darker); font-size:14px">Описание:</h3>
+                                    <p style="color:black" class="limitp">{{i.description}}</p>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div">
-                    <a href="readmore">Ссылка на сайт института</a>
-                    <a href="readmore">Ссылка на сайт института</a>
+                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div d-flex align-items-center justify-content-center" >
+                    <div class="text-center mt-3 mb-3 d-flex align-items-center justify-content-center">
+                        {% if img %}
+                            <img src="/media/{{img.url_path}}" class="rounded img-fluid align-items-center justify-content-center"  style="height: 200px width:300px ;" alt="{{img.alt}}">
+                        {% else %}
+                            <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid align-items-center justify-content-center"  style=" border:4px solid black" width="100%" alt="...">
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <a class="stretched-link" href="{% url 'info:institute_info' %}"></a>
+            <a class="stretched-link" href="{% url 'info:institute_info' i.id %}"></a>
         </div>
-
         {% endfor %}
+        {% else %}
+        <div class="container plates mt-2 " style="max-width:700px">
+            <h4 class="text-center" style="margin-top:6em; line-height:22px; font-family:Arial,Helvetica,sans-serif; padding:5em; color: grey">ИНСТИТУТЫ не найдены.</h4>
+            <h1 style="margin-top:-1em; color:white; background-color: rgba(146,0,0,0.5)" class="text-center rounded"><i class="fa fa-exclamation-triangle "></i></h1><br/>
+          </div>
+
+        {% endif %}
+      
+<!--        <div  id="first_plate" class="mt-5 plates mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12 position-relative">-->
+<!--            <div class="row container-custom">-->
+<!--                <div class="mt-4 mb-4 c col-lg-9 col-md-9 col-sm-8 col-xs-8">-->
+<!--                    <div class="row">-->
+<!--                   -->
+<!--                        <div class="col-lg-11 col-md-11S col-sm-12 rounded" style="">-->
+<!--                            <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Описание гранта</h3><hr style="color:silver">-->
+<!--                            <div class="mt-2">-->
+<!--                                <p style="color:black">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley </p>-->
+<!--                            </div>-->
+<!--                            -->
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Количество сотрудников<span style="color:black">: 2000</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">Количество молодых учёных<span style="color:black">: 2000</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+
+<!--                            <div class="mt-4">-->
+<!--                                <h3 style="color:var(&#45;&#45;nav-bg); font-size:14px">ФИО председателя<span style="color:black">: Фамилия Имя Отчество</span></h3><hr style="color:silver">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="mt-4 mb-4 rounded col-lg-3 col-md-3 col-sm-4 col-xs-4 institute-right-div">-->
+<!--                    <div class="text-center mt-3 mb-3">-->
+<!--                        <img src="https://marketplace.canva.com/EAFCh_1S8lw/2/0/400w/canva-gold-and-black-luxury-estate-agency-logo-J8_Ruw9_2Zw.jpg" class=" img-fluid"  style=" border:4px solid black" width="100%" alt="...">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <a class="stretched-link" href="{% url 'info:institute_info' 1 %}"></a>-->
+<!--        </div>-->
+
+
+
+    {% if institutes %}
+        <div class="mt-5">
+        <nav aria-label="...">
+            <ul class="pagination">
+              
+            {% if institutes.has_previous %}
+                {# whether the previous page exists #}
+                {# link to the prev page #}
+                
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{grants.previous_page_number}}" tabindex="-1">Previous</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?page={{grants.previous_page_number}}">{{grants.previous_page_number}}</a></li>
+                
+              {% else %}
+                {# If previous page does not exist  #}
+                {# Disaplay a disabled link  #}
+                <li class="page-item disabled">
+                  <a class="page-link" href="" tabindex="-1">Previous</a>
+                </li>
+
+            {% endif %}
+
+
+            <li class="page-item active">
+              <a class="page-link" href="#">{{grants.number}} <span class="sr-only">(current)</span></a>
+            </li> {# the current page number #}
+
+            {%if grants.has_next %} {# whether the next page exists #}
+                {# link to the next page #}
+               
+                    
+                    
+                    <li class="page-item"><a class="page-link" href="?page={{grants.next_page_number}}">{{grants.next_page_number}}</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{grants.next_page_number}}">Next</a>
+                    </li>
+
+              {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="">Next</a>
+                  </li>
+                  
+            {% endif %}
+
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+
+
     </div>
+
+        
 
 
     {% include "footer.html" %}

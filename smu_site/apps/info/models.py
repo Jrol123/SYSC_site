@@ -1,8 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Institute(models.Model):
-
     name = models.CharField("Название института",
                             max_length=400, unique=True)
     description = models.TextField("Информация об институте",
@@ -16,6 +16,8 @@ class Institute(models.Model):
     link = models.URLField("Ссылка на сайт института")
     smu_link = models.URLField("Ссылка на сайт СМУ института",
                                null=True, blank=True)
+    on_changed = models.BigIntegerField('ID заменяемой записи',
+                                        null=True)
     
     def __str__(self):
         return (f"Institute(id={self.id}, name=\"{self.name}\", "
@@ -24,6 +26,7 @@ class Institute(models.Model):
 
 
 class Scientist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
     institute = models.ForeignKey(Institute, on_delete=models.CASCADE,
@@ -33,11 +36,9 @@ class Scientist(models.Model):
     position = models.CharField("Должность", max_length=300)
     degree = models.CharField("Учёная степень", max_length=200,
                               null=True)
-    teaching_info = models.TextField("Информация о преподавании",
-                                     null=True)
     scientific_interests = models.TextField("Сфера научных интересов")
-    achievements = models.TextField("Достижения", null=True)
-    future_plans = models.TextField("Планы на будущее", null=True)
+    on_changed = models.BigIntegerField('ID заменяемой записи',
+                                        null=True)
     
     def __str__(self):
         return (f"ScientistInfo(id={self.id}, "
@@ -53,12 +54,6 @@ class ScientistLink(models.Model):
     link = models.URLField("Ссылка на профиль")
     service_name = models.CharField("Краткое описание", max_length=250)
 
-
-class ScientistPublication(models.Model):
-    scientist = models.ForeignKey(Scientist,
-                                  on_delete=models.CASCADE)
-    pub_link = models.TextField("Ссылка на публикацию")
-    
 
 class Grant(models.Model):
     queue = models.OneToOneField("moderators.Queue",
@@ -76,4 +71,3 @@ class Grant(models.Model):
         return (f"Grant(id={self.id}, name=\"{self.name}\", "
                 f"end_doc_date=\"{self.end_doc_date}\", "
                 f"end_result_date=\"{self.end_result_date}\")")
-

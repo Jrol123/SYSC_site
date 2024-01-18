@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Добавление документов для ГЖС{% endblock %}
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
+	<script src="https://cdn.tiny.cloud/1/x9fbifsbf9wgj1k6nbzyfyhabvwcsb9ewleh0lajmfbfnvip/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}	
+{% block content %}
+	{% include "navbar.html" %}
+	{% include "moderators/moder_navbar.html" %}
+	<div class="place_form main_plate plates_home container-custom plate-container">
+		<div class="decorate_form plates col-lg-12 col-sm-12 col-md-12 col-xs-12">
+			<form class="form_all" action="" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="Intoform col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<div class="First plates p-1 col-lg-12 col-sm-12 col-md-12 col-xs-12">
+						<br>
+						<label class="labels_for_form" for="doc_name">{{form.name.help_text}}:</label>
+						{{form.name}}
+						<br>
+						<label class="labels_for_form" for="documentUpload">{{form.path.help_text}}:</label>
+						{{form.path}}
+						<br>
+						<label class="labels_for_form" for="description">{{form.description.help_text}}:</label>
+						{{form.description}}
+						<br>
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="doc_name">Название документа:</label>-->
+<!--						<input class="input_for_form col-lg-3 col-sm-3 col-md-3 col-xs-3" type="text" id="doc_name" name="grant_name">-->
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="documentUpload">Pагрузить документ:</label>-->
+<!--						<input class="input_for_form_img col-lg-6 col-sm-6 col-md-6 col-xs-6" type="file" accept=".doc, .docx, .xls, .txt, .rtf, .pdf" id="documentUpload" name="documentUpload">-->
+<!--						<br>-->
+<!--						<label class="labels_for_form" for="description">Описание:</label>-->
+<!--						<textarea class="textarea col-lg-12 col-sm-12 col-md-12 col-xs-12" id="description" name="description"></textarea>-->
+<!--						<br>-->
+					</div>
+				</div>
+				<input class="submit_all labels_for_form plates col-lg-2 col-sm-2 col-md-2 col-xs-2" type="submit" value="Отправить">
+			</form>
+		</div>
+	</div>
+	{% include "footer.html" %}
+
+{% endblock %}
