@@ -2,13 +2,6 @@ var mode = localStorage.getItem("mode");
       $('html').attr(mode, '');
 
 $(document).ready(function(){
-  
-   
-    jQuery('img').each(function(){
-    jQuery(this).attr('src',jQuery(this).attr('src')+ '?' + (new Date()).getTime());
-    });
- 
-    
 
     $( "#dark-mode-toggless" ).on( "click", function() {
       localStorage.setItem("mode", "data-dark-mode");
