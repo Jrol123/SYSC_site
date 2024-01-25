@@ -15,8 +15,43 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
-
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <style>
+      /* Add any additional styles for your carousel container here */
+      .carousel-container {
+        width: 80%;
+        margin: auto;
+      }
+  
+      /* Style for individual carousel items */
+      .carousel img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+   <style>
+      /* Add any additional styles for your carousel container here */
+      .carousel-container {
+        width: 100%;
+        height: 500px;
+        margin: auto;
+        black;
+        border-radius:10px;
+      }
+  
+      /* Style for individual carousel items */
+      .carousel img {
+        width: 100%;
+        height: 500px;
+        object-fit:cover;
+        border-radius:10px;
+      }
+      .carosuel_no_show{
+        display:none;
+      }
+    </style>
 {% endblock %}
 <!--//-->
 
@@ -30,6 +65,8 @@
 
             <div class="mt-5 mb-5 col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div class="mt-5 plates" style="border-radius:0px;">
+
+                
                     <figure class="news-card">
 
                         {%if img.url_path %}
@@ -58,7 +95,7 @@
             </div>        
         </div>
 
- 
+       
 
 
 
