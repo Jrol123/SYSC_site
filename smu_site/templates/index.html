@@ -130,11 +130,6 @@
                                                   console.error(error);
                                               }
                                           </script>
-                                          <script>
-                                            function readelete(){
-
-                                            }
-                                          </script>
                                         {% endblock %}
 
                                   </div>
@@ -164,7 +159,7 @@
                               {% else %}
                               <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
-                              <a href="#" onclick="readelete()" class="readmore-btn">Прочитать</a>
+                              <a href="{% url 'delete_news' type n.id %}" onclick="" class="readmore-btn">Прочитать</a>
                               </div>
                           </div>
                     
