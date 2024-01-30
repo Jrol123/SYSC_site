@@ -34,8 +34,6 @@ def add_new_documents(request):
                           category_id=cat.id, user_id=request.user.id)
                 doc.save()
             else:
-                print(repr(form.cleaned_data['Category']),
-                      form.cleaned_data['Category'].__class__)
                 doc = Doc(path=request.FILES["path"],
                           name=form.cleaned_data['name'],
                           category_id=form.cleaned_data['Category'],

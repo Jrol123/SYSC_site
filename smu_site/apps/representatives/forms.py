@@ -93,7 +93,7 @@ class UploadDocForm(ModelForm):
             attrs={'class': "form-control input_for_form text-dark",
                    }),
             required=False,
-            choices=CATEGORY_CHOICE)
+            choices=self.get_dynamic_choices())
         self.fields['New_category'] = forms.CharField(widget=forms.TextInput(
             attrs={'class': "form-control input_for_form",
                    'type': "text"

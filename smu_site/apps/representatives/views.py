@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from .forms import CreateScientistForm, UploadDocForm
-from documents.models import Doc
+from documents.models import Doc, Category
 from info.models import Institute, Scientist, ScientistLink
 from moderators.models import Queue
 from news.models import News, Event, Image
@@ -163,12 +163,32 @@ def upload_doc(request):
             q = Queue(obj_type='doc')
             q.save()
             
-            doc = Doc(path=request.FILES["path"],
-                      name=form.cleaned_data['name'],
-                      category=form.cleaned_data['category'],
-                      queue_id=q.id)
-            doc.save()
+            if form.cleaned_data['Choose_Category'] == 'True':
+                cat = Category(name=form.cleaned_data['New_category'])
+                cat.save()
+                doc = Doc(path=request.FILES["path"],
+                          name=form.cleaned_data['name'],
+                          category_id=cat.id, user_id=request.user.id)
+                doc.save()
+            else:
+                doc = Doc(path=request.FILES["path"],
+                          name=form.cleaned_data['name'],
+                          category_id=form.cleaned_data['Category'],
+                          user_id=request.user.id)
+                doc.save()
+            
             return HttpResponseRedirect('/representatives/account')
+        
+        # if form.is_valid():
+        #     q = Queue(obj_type='doc')
+        #     q.save()
+        #
+        #     doc = Doc(path=request.FILES["path"],
+        #               name=form.cleaned_data['name'],
+        #               category=form.cleaned_data['category'],
+        #               queue_id=q.id)
+        #     doc.save()
+        #     return HttpResponseRedirect('/representatives/account')
     else:
         form = UploadDocForm()
     
