@@ -140,15 +140,30 @@ def user_login(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def readelete(request, obj_type, id):
-    if obj_type == 'news':
-        news = News.objects.get(id=id)
-        img = Image.objects.get(news_id=id)
-        os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
-        os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
-        img.delete()
-        news.delete()
-    elif obj_type == 'events':
-        Image.objects.get(events_id=id).delete()
-        Event.objects.get(id=id).delete()
+    try:
+        if obj_type == 'news':
+            news = News.objects.get(id=id)
+            try:
+                img = Image.objects.get(news_id=id)
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
+                img.delete()
+            except:
+                pass
+            
+            news.delete()
+        elif obj_type == 'event':
+            event = Event.objects.get(id=id)
+            try:
+                img = Image.objects.get(event_id=id)
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
+                img.delete()
+            except:
+                pass
+            
+            event.delete()
+    except:
+        pass
     
     return HttpResponseRedirect('/')
