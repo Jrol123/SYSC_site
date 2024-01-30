@@ -42,16 +42,15 @@
 									{% for c, content in categories %}
 								       <a href="#" class="catbtn limit rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content{{c|cut:" "}}">{{c}} </a>
 								   
-										<div id="doc-content{{c|cut:" "}}" style=" display: none;">
+										<div id="doc-content{{c|cut:' '}}" style=" display: none;">
 											<h2 class="limit">{{c}}</h2>
 											<div class="container  limitp" style="border:2px solid silver; padding:15px; background-color: white; ">
 												<h3 style="text-align:left">Название документа</h3>
 											</div>
-												<div class="container doclinks doc_text_limit">
-													{{content | safe}}
-												</div>
-										
-						
+											<div class="container doclinks doc_text_limit">
+												{{content | safe}}
+											</div>
+
 										</div>
 									
 								    {% endfor%}
