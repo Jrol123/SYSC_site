@@ -138,8 +138,10 @@ def user_login(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def readelete(request, obj_type, id):
+    
     if obj_type == 'news':
         News.objects.get(id=id).delete()
-    elif obj_type == 'events':
+    elif obj_type == 'event':
         Event.objects.get(id=id).delete()
+    
     return HttpResponseRedirect('/')
