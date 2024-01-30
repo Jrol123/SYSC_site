@@ -15,7 +15,6 @@ from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
 
-
 config = configparser.ConfigParser()  # создаём объекта парсера
 config.read("config.ini")
 
@@ -27,7 +26,7 @@ def index(request):
     edate = date.fromisoformat(
         request.POST.get("end-date", localdate().isoformat()))
     edate += timedelta(days=1)
-    
+
     # Выбираем те новости и события, которые не находятся в очереди
     last_news = News.objects.filter(
         pub_date__range=(sdate, edate), queue_id__isnull=True)
@@ -38,17 +37,17 @@ def index(request):
     last_events = [(e, Image.objects.filter(event_id=e.id).first())
                    for e in last_events]
     last_news += last_events
-    
+
     # Сортируем по дате и выбираем первые 5 для первой страницы новостей
     # в будущем нужно реализовать pagination
     last_news = list(sorted(last_news, key=lambda x: x[0].pub_date,
                             reverse=True))
-    
+
     # функция для сокращения текста
     def trim_text(text: str, limit):
         if len(text) < limit:
             return text
-        
+
         si1 = text.find('. ')
         si2 = text.find('! ')
         si3 = text.find('? ')
@@ -57,7 +56,7 @@ def index(request):
             if si < limit:
                 return text[:si + 2] + trim_text(text[si + 2:],
                                                  limit - si - 1)
-        
+
         if ' ' in text:
             t = ''
             for w in text.split(' '):
@@ -65,11 +64,11 @@ def index(request):
                     t += w + ' '
                 else:
                     break
-            
+
             return t + ' ...'
-        
+
         return text[:limit - 3] + '...'
-    
+
     # объединяем со списков месяцев и кратким текстом
     month = ['Янв', 'Февр', 'Март', 'Апр', 'Май', 'Июнь',
              'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек']
@@ -78,7 +77,7 @@ def index(request):
                   trim_text(BS(n.text, 'html.parser')
                             .select_one('p').text, 280), img)
                  for n, img in last_news]
-    
+
     p = Paginator(last_news, int(config["news"]["news_per_page"]))
     page_number = request.GET.get('page')
     try:
@@ -89,12 +88,12 @@ def index(request):
     except EmptyPage:
         # Если страница пустая, возвращает последнюю страницу
         page_obj = p.page(p.num_pages)
-    
+
     # переводим даты в изначальный формат
     sdate = sdate.isoformat()
     edate -= timedelta(days=1)
     edate = edate.isoformat()
-    
+
     # Получаем актуальные события и гранты
     events = (Event.objects.filter(queue_id__isnull=True)
               .order_by('begin_date', '-pub_date'))[:int(config["news"]["events_per_page"])]
@@ -103,13 +102,13 @@ def index(request):
               for e in events]
     grants = (Grant.objects.filter(queue_id__isnull=True)
               .order_by('end_doc_date'))[:3]
-    
+
     return render(request, 'index.html',
                   {
                       "is_moder": request.user.groups
-                      .filter(name='moderator').exists(),
+                  .filter(name='moderator').exists(),
                       "is_repr": request.user.groups
-                      .filter(name='representative').exists(),
+                  .filter(name='representative').exists(),
                       "last_news": page_obj,
                       "sdate": sdate,
                       "edate": edate,
@@ -129,10 +128,10 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect('/')
-    
+
     else:
         form = LoginForm()
-        
+
     return render(request, 'registration/login.html', {'form': form})
 
 
@@ -140,14 +139,31 @@ def user_login(request):
 @login_required
 @permission_required('auth.moderator', raise_exception=True)
 def readelete(request, obj_type, id):
-    if obj_type == 'news':
-        news = News.objects.get(id=id)
-        img = Image.objects.get(news_id=id)
-        os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
-        os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
-        img.delete()
-        news.delete()
-    elif obj_type == 'events':
-        Image.objects.get(events_id=id).delete()
-        Event.objects.get(id=id).delete()
+    try:
+        if obj_type == 'news':
+            news = News.objects.get(id=id)
+            try:
+                img = Image.objects.get(news_id=id)
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
+                img.delete()
+            except:
+                pass
+
+            news.delete()
+        elif obj_type == 'event':
+            event = Event.objects.get(id=id)
+            try:
+                img = Image.objects.get(event_id=id)
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(
+                    os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
+                img.delete()
+            except:
+                pass
+
+            event.delete()
+    except:
+        pass
+
     return HttpResponseRedirect('/')
