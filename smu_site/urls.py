@@ -35,6 +35,7 @@ urlpatterns = [
     #      namespace='representatives')),
     path('representatives/', include('representatives.urls')),
     path('SHC/', include('SHC.urls')),
+    path('delete/<str:obj_type>/<int:id>', views.readelete, name='delete_news'),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
 
