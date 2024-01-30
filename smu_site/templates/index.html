@@ -159,22 +159,19 @@
                               <hr>
                               <div class="mt-4">
                               {% if type == 'news' %}
-                              <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
+                                  <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% else %}
-                              <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
+                                  <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
-                              <a href="#" class="readmore-btn">Прочитать</a>
+                                  <a href="/delete/{{type}}/{{n.id}}" class="readmore-btn delete">Прочитать</a>
                               </div>
                           </div>
                     
                       </figure>
                     </div>
 
-                 
                   {% endfor %}
-
-
-
+                          
                 {% else %}
                
                     <div class="container plates mt-5 " style="max-width:700px">
@@ -215,16 +212,14 @@
                           <a class="page-link" href="?page={{last_news.previous_page_number}}" tabindex="-1">Previous</a>
                         </li>
                         <li class="page-item"><a class="page-link" href="?page={{last_news.previous_page_number}}">{{last_news.previous_page_number}}</a></li>
-                      
-                    {% else %}
+
+                  {% else %}
                       {# If previous page does not exist  #}
                       {# Disaplay a disabled link  #}
                       <li class="page-item disabled">
                         <a class="page-link" href="" tabindex="-1">Previous</a>
                       </li>
-  
                   {% endif %}
-  
   
                   <li class="page-item active">
                     <a class="page-link" href="#">{{last_news.number}} <span class="sr-only">(current)</span></a>
@@ -232,19 +227,14 @@
   
                   {% if last_news.has_next %} {# whether the next page exists #}
                       {# link to the next page #}
-                     
-                          
-                          
                           <li class="page-item"><a class="page-link" href="?page={{last_news.next_page_number}}">{{last_news.next_page_number}}</a></li>
                           <li class="page-item">
                             <a class="page-link" href="?page={{last_news.next_page_number}}">Next</a>
                           </li>
-  
                     {% else %}
                         <li class="page-item disabled">
                           <a class="page-link" href="#">Next</a>
                         </li>
-                        
                   {% endif %}
   
                   </ul>
@@ -259,7 +249,7 @@
       {# Block for pagination#}
     {% endif %}
 
-
     {% include "footer.html" %}
 
+        </div>
 {% endblock %}
