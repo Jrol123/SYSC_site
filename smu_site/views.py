@@ -1,14 +1,14 @@
 import configparser
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
-
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.timezone import localdate
-
+from django.db import transaction
 from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
@@ -132,3 +132,14 @@ def user_login(request):
         form = LoginForm()
         
     return render(request, 'registration/login.html', {'form': form})
+
+
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def readelete(request, obj_type, id):
+    if obj_type == 'news':
+        News.objects.get(id=id).delete()
+    elif obj_type == 'events':
+        Event.objects.get(id=id).delete()
+    return HttpResponseRedirect('/')

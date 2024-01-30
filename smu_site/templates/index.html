@@ -125,14 +125,19 @@
 
                                         {% block script %}
                                           <script>
-                                          // Javascript code for displaying image modal on news double click
-                                          try {
-                                              $('#myModalbtn{{ n.id }}').dblclick(function () {
-                                                  $('#myModal{{ n.id }}').modal('toggle');
-                                              });
-                                          } catch (error) {
-                                              console.error(error);
-                                          }
+                                              // Javascript code for displaying image modal on news double click
+                                              try {
+                                                  $('#myModalbtn{{ n.id }}').dblclick(function () {
+                                                      $('#myModal{{ n.id }}').modal('toggle');
+                                                  });
+                                              } catch (error) {
+                                                  console.error(error);
+                                              }
+                                          </script>
+                                          <script>
+                                            function readelete(){
+
+                                            }
                                           </script>
                                         {% endblock %}
 
@@ -164,6 +169,7 @@
                                   <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
                                   <a href="/delete/{{type}}/{{n.id}}" class="readmore-btn delete">Прочитать</a>
+                              <a href="#" onclick="readelete()" class="readmore-btn">Прочитать</a>
                               </div>
                           </div>
                     
@@ -248,6 +254,7 @@
 
       {# Block for pagination#}
     {% endif %}
+
 
     {% include "footer.html" %}
 
