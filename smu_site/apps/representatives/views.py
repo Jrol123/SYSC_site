@@ -134,8 +134,11 @@ def save_news(request):
                         begin_date=start, end_date=end)
             obj.save()
             
-            img = Image(url_path=image, event_id=obj.id)
-            img.save()
+            try:
+                img = Image(url_path=image, event_id=obj.id)
+                img.save()
+            except:
+                pass
         else:
             q = Queue(obj_type='news')
             q.save()
@@ -144,8 +147,11 @@ def save_news(request):
                        user_id=request.user.id)
             obj.save()
             
-            img = Image(url_path=image, news_id=obj.id)
-            img.save()
+            try:
+                img = Image(url_path=image, news_id=obj.id)
+                img.save()
+            except:
+                pass
 
         return JsonResponse({'success': True})
     
@@ -168,13 +174,14 @@ def upload_doc(request):
                 cat.save()
                 doc = Doc(path=request.FILES["path"],
                           name=form.cleaned_data['name'],
-                          category_id=cat.id, user_id=request.user.id)
+                          category_id=cat.id, user_id=request.user.id,
+                          queue_id=q.id)
                 doc.save()
             else:
                 doc = Doc(path=request.FILES["path"],
                           name=form.cleaned_data['name'],
                           category_id=form.cleaned_data['Category'],
-                          user_id=request.user.id)
+                          user_id=request.user.id, queue_id=q.id)
                 doc.save()
             
             return HttpResponseRedirect('/representatives/account')
