@@ -102,7 +102,10 @@ fieldset {
     align-items: center;
    
 }
-
+.icon{
+    margin-left:10px;
+    margin-right:10px;
+}
 input[type="text"],
 input[type="email"],
 input[type="Password"] {
@@ -116,7 +119,7 @@ input[type="Password"] {
     box-sizing: border-box;
     border: none;
     outline: none;
-    background: transparent;
+    background-color: rgb(228, 227, 227);
     letter-spacing: .5px;
 }
 
@@ -125,6 +128,7 @@ input[type="Password"] {
     padding: 0px 0px;
     border-bottom: 1px solid #e5e5e5;
     position: relative;
+    background-color:whitesmoke;
 }
 
 .btn-block {
