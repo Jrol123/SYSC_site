@@ -213,10 +213,14 @@ def readelete(request, obj_type, id):
             institute = Institute.objects.get(id=id)
             try:
                 for obj in Scientist.objects.filter(institute_id=institute.id):
-                    oimg = Image.objects.get(scientist_id=obj.id)
-                    shutil.rmtree(os.path.join(os.path.join(
-                        os.path.join(settings.MEDIA_ROOT, 'images'),
-                        'scientists'), str(obj.id)))
+                    # oimg = Image.objects.get(scientist_id=obj.id)
+                    try:
+                        shutil.rmtree(os.path.join(os.path.join(
+                            os.path.join(settings.MEDIA_ROOT, 'images'),
+                            'scientists'), str(obj.id)))
+                    except:
+                        pass
+                    
                 img = Image.objects.get(institute_id=id)
                 shutil.rmtree(os.path.join(os.path.join(
                     os.path.join(settings.MEDIA_ROOT, 'images'),
