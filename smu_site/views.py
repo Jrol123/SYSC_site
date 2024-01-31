@@ -179,9 +179,10 @@ def readelete(request, obj_type, id):
                 img = Image.objects.get(grant_id=id)
                 os.rmdir(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
                 img.delete()
-                grant.delete()
             except:
                 pass
+
+            grant.delete()
     except:
         pass
     
