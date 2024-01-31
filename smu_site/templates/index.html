@@ -159,14 +159,14 @@
                               <hr>
                               <div class="mt-4">
                               {% if type == 'news' %}
-                                  <a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
+									<a href="{% url 'news:newspage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% else %}
-                                  <a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
+									<a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
-
+									<a href="#" class="readmore-btn">Комментировать в телеграме</a>
                               {% if user.is_authenticated %}
                                   {% if is_moder or user.is_superuser %}
-                                      <a href="{% url 'delete_news' type n.id %}" class="readmore-btn">Прочитать</a>
+                                      <a href="{% url 'delete_news' type n.id %}" class="readmore-btn">Удалить</a>
                                   {% endif %}
                               {% endif %}
 

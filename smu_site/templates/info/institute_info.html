@@ -26,46 +26,50 @@
 		<div class="row">
 			<div class="plates mt-5 mb-5 col-lg-4 col-sm-4 col-md-4 col-xs-4 rounded">
 				<div class="column container-custom">
-					<div class="mt-4 mb-4 p-3 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 institute-right-div">
+					<div class="mt-2 mb-2 p-3 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12 institute-right-div">
 						{% if inst_img %}
-							<img src="/media/{{inst_img.url_path}}" class="rounded img-fluid"  style="height: 200px; width: 300px;" alt="{{img.alt}}">
+							<img src="/media/{{inst_img.url_path}}" class="rounded img-fluid" alt="{{img.alt}}">
 						{% else %}
 							<p>Some photo of institute</p>
 						{% endif %}
 					</div>
-					<div class="mt-4 mb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="mt-2 mb-2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<p class="text-black limitp">{{institute.description}}</p>
 					</div>
-                    {% if user.is_authenticated %}
-                      {% if is_moder or user.is_superuser %}
-                          <a href="/delete/institute/{{ institute.id }}" class="readmore-btn">Удалить инофрмацию о вузе</a>
-                      {% endif %}
-                    {% endif %}
+					<div class="mt-2 mb-2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						{% if user.is_authenticated %}
+						  {% if is_moder or user.is_superuser %}
+							  <a href="/delete/institute/{{ institute.id }}" class="readmore-btn">Удалить</a>
+						  {% endif %}
+						{% endif %}
+					</div>
 				</div>
 			</div>
 			<div class="col-lg-main col-sm-12 col-md-12 col-xs-12"> </div>
 			<div class="ScrollBar plates mt-5 mb-5 ml-20 col-lg-7 col-sm-7 col-md-7 col-xs-7 rounded">
 				{% for i in '1234567891011121314151617181920' %}
 				<div class="d-flex flex-row mt-5 mb-4 p-3 rounded sub_grant_left col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div  class="d-flex flex-column mt-5 mb-4 p-3 rounded sub_grant_left col-lg-5 col-md-5 col-sm-5 col-xs-5">
-						<p class="text-black limitp">ФИО</p>
+					<div  class="d-flex flex-column mt-5 mb-4 p-3 rounded sub_grant_left col-lg-7 col-md-7 col-sm-7 col-xs-7">
+						<p class="text-black limitp labels_for_form ss">ФИО:</p>
 						<p class="text-black limitp">{{scientist.name}}</p>
 						<br />
-						<p class="text-black limitp">Лаборатория</p>
+						<p class="text-black limitp labels_for_form ss">Лаборатория:</p>
 						<p class="text-black limitp">{{scientist.lab}}</p>
 						<br />
-						<p class="text-black limitp">Должность</p>
+						<p class="text-black limitp labels_for_form ss">Должность:</p>
 						<p class="text-black limitp">{{scientist.position}}</p>
 						<br />
-						<p class="text-black limitp">Учёная степень</p>
+						<p class="text-black limitp labels_for_form ss">Учёная степень:</p>
 						<p class="text-black limitp">{{scientist.degree}}</p>
 						<br />
-						<p class="text-black limitp">Сфера научных интересов</p>
+						<p class="text-black limitp labels_for_form ss">Сфера научных интересов:</p>
 						<p class="text-black limitp">{{scientist.scientific_interests}}</p>
 						<br />
 					</div>
+					<div class="col-lg-main col-sm-12 col-md-12 col-xs-12 NameAndDesc"> </div>
+					<div class="col-lg-main col-sm-12 col-md-12 col-xs-12 NameAndDesc"> </div>
 					<div class="rounded d-flex align-items-center m-3 col-lg-4 col-md-4 col-sm-4 col-xs-4">
-						<img src="/media/{{inst_img.url_path}}" class="rounded img-fluid"  style="height: 200px; width: 300px;" alt="{{img.alt}}">
+						<img src="/media/{{inst_img.url_path}}" class="rounded img-fluid" alt="{{img.alt}}">
 					</div>
 				</div>
 				{% endfor %}

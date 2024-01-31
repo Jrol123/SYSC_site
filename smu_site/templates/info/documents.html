@@ -84,14 +84,18 @@
 					</div>
 					
 						{% for c, content, id in categories %}
-							<div class="container doclinks doc_text_limit">
-								{{content | safe}}
+							<div class="container doclinks doc_text_limit d-flex flex-row">
+								<div class="col-lg-10 col-sm-10 col-md-10 col-xs-10">
+									{{content | safe}}
+								</div>
+								<div class="col-lg-2 col-sm-2 col-md-2 col-xs-2 d-flex align-self-center">
+									{% if user.is_authenticated %}
+									  {% if is_moder or user.is_superuser %}
+										  <a href="/delete/doc/{{ id }}" class="btn-del">удалить</a>
+									  {% endif %}
+									{% endif %}
+								</div>
 							</div>
-                            {% if user.is_authenticated %}
-                              {% if is_moder or user.is_superuser %}
-                                  <a href="/delete/doc/{{ id }}" class="readmore-btn">Прочитать</a>
-                              {% endif %}
-                            {% endif %}
 						{% endfor %}
 						
 					  </table>

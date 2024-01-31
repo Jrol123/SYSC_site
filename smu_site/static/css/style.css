@@ -628,6 +628,19 @@ border:1px solid blue;
   border:2px solid var(--nav-btn-bg);
 
 }
+.img-fluid{
+  max-width: 100%;
+  height: auto;
+}
+.btn-del
+{
+  text-align:center !important;
+  color:var(--nav-btn-bg);
+  text-decoration:none;
+  border-radius:5px;
+  background-color:whitesmoke;
+  border:2px solid var(--nav-btn-bg);
+}
 .readmore-btn:hover{
   color:white;
   background-color: var(--nav-btn-bg);
@@ -842,6 +855,10 @@ details[open] .content {
 	font-size: 20px;
 	margin: 0px 20px 0px 20px;
 	color: black;
+}
+
+.ss{
+	text-align: left !important;
 }
 
 .input_for_form
