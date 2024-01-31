@@ -159,12 +159,13 @@ def readelete(request, obj_type, id):
             event = Event.objects.get(id=id)
             try:
                 img = Image.objects.get(event_id=id)
-                os.rmdir(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
                 img.delete()
             except:
                 pass
             
             event.delete()
+            
         elif obj_type == 'doc':
             doc = Doc.objects.get(id=id)
             try:
@@ -173,15 +174,23 @@ def readelete(request, obj_type, id):
                 doc.delete()
             except:
                 pass
+            
+            doc.delete()
+            
         elif obj_type == 'grant':
             grant = Grant.objects.get(id=id)
             try:
                 img = Image.objects.get(grant_id=id)
-                os.rmdir(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.rmdir(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'grants'), str(grant.id)))
                 img.delete()
-                grant.delete()
             except:
                 pass
+            
+            grant.delete()
+        
+        
     except:
         pass
     

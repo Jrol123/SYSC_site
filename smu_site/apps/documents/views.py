@@ -4,7 +4,6 @@ from .models import Category, Doc
 
 
 def index(request):
-    # kitkat = Category.objects.all().order_by('name')
     docs = (Doc.objects.select_related('category')
             .filter(queue_id__isnull=True,
                     category__isnull=False).order_by('category__name',
