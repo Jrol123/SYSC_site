@@ -18,6 +18,7 @@ from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
 from documents.models import Doc
+from SHC.models import Doc as GZS_doc
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
@@ -194,7 +195,19 @@ def readelete(request, obj_type, id):
                 pass
             
             grant.delete()
-        
+
+        elif obj_type == 'gzs':
+            doc = GZS_doc.objects.get(id=id)
+            try:
+                os.remove(os.path.join(settings.MEDIA_ROOT,
+                                       str(doc.path)))
+                # os.rmdir(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                doc.delete()
+            except:
+                pass
+
+            doc.delete()
+
     except:
         pass
     

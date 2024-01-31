@@ -7,6 +7,6 @@ from .models import Doc as SHCDoc
 def index(request):
     documents = (SHCDoc.objects.select_related('documents.doc')
                  .order_by('documents.doc__id'))
-    print(documents)
+    # print(documents)
     return render(request, 'SHC/index.html',
                   {'docs': documents, 'media': settings.MEDIA_URL})
