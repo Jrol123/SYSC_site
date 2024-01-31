@@ -1,5 +1,6 @@
 import configparser
 import os.path
+import shutil
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
 
@@ -148,8 +149,9 @@ def readelete(request, obj_type, id):
             news = News.objects.get(id=id)
             try:
                 img = Image.objects.get(news_id=id)
-                # os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
-                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'news'), str(news.id)))
                 img.delete()
             except:
                 pass
@@ -159,7 +161,9 @@ def readelete(request, obj_type, id):
             event = Event.objects.get(id=id)
             try:
                 img = Image.objects.get(event_id=id)
-                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'events'), str(event.id)))
                 img.delete()
             except:
                 pass
@@ -169,7 +173,8 @@ def readelete(request, obj_type, id):
         elif obj_type == 'doc':
             doc = Doc.objects.get(id=id)
             try:
-                os.remove(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                os.remove(os.path.join(settings.MEDIA_ROOT,
+                                       str(doc.path)))
                 # os.rmdir(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
                 doc.delete()
             except:
@@ -181,7 +186,7 @@ def readelete(request, obj_type, id):
             grant = Grant.objects.get(id=id)
             try:
                 img = Image.objects.get(grant_id=id)
-                os.rmdir(os.path.join(os.path.join(
+                shutil.rmtree(os.path.join(os.path.join(
                     os.path.join(settings.MEDIA_ROOT, 'images'),
                     'grants'), str(grant.id)))
                 img.delete()
