@@ -1,19 +1,22 @@
 import configparser
 import os.path
-from django.conf import settings
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth import authenticate, login
+
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.timezone import localdate
-from django.db import transaction
+
 from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
+from documents import Doc
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
@@ -145,7 +148,7 @@ def readelete(request, obj_type, id):
             news = News.objects.get(id=id)
             try:
                 img = Image.objects.get(news_id=id)
-                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                # os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
                 os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'news'), str(news.id)))
                 img.delete()
             except:
@@ -156,13 +159,21 @@ def readelete(request, obj_type, id):
             event = Event.objects.get(id=id)
             try:
                 img = Image.objects.get(event_id=id)
-                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
-                os.rmdir(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
+                # os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                os.remove(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
                 img.delete()
             except:
                 pass
             
             event.delete()
+        elif obj_type == 'doc':
+            doc = Doc.objects.get(id=id)
+            try:
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                # os.rmdir(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                doc.delete()
+            except:
+                pass
     except:
         pass
     
