@@ -197,7 +197,8 @@ def readelete(request, obj_type, id):
             grant.delete()
 
         elif obj_type == 'gzs':
-            doc = GZS_doc.objects.get(id=id)
+            gzs_doc = GZS_doc.objects.get(doc_id=id)
+            doc = Doc.objects.get(id=id)
             try:
                 os.remove(os.path.join(settings.MEDIA_ROOT,
                                        str(doc.path)))
@@ -206,7 +207,7 @@ def readelete(request, obj_type, id):
             except:
                 pass
 
-            doc.delete()
+            gzs_doc.delete()
 
     except:
         pass
