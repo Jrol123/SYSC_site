@@ -39,7 +39,7 @@
 								
 								{% if categories %}
 								
-									{% for c, content in categories %}
+									{% for c, content, id in categories %}
 								       <a href="#" class="catbtn limit rounded mt-1 list-group-item list-group-item-action link-item" data-doc="#doc-content{{c|cut:" "}}">{{c}} </a>
 								   
 										<div id="doc-content{{c|cut:' '}}" style=" display: none;">
@@ -83,7 +83,7 @@
 						<h3 style="text-align:left">Название документа</h3>
 					</div>
 					
-						{% for c, content in categories %}
+						{% for c, content, id in categories %}
 							<div class="container doclinks doc_text_limit">
 								{{content | safe}}
 							</div>

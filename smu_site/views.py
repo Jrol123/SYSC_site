@@ -16,7 +16,7 @@ from django.utils.timezone import localdate
 from .forms import LoginForm
 from news.models import News, Event, Image
 from info.models import Grant
-from documents import Doc
+from documents.models import Doc
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
