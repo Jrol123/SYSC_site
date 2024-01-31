@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Гранты{% endblock %}
+{% block title %}Государственный жилищный сертификат{% endblock %}
 {% block meta %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,7 @@
 
     <div class="plates_home main_plate container-custom plate-container">
 		<h4 class="mb-4 mt-5 " style="font-size:23px; color:var(--nav-bg)">ЛЕНТА ГЖС</h4>
+		{% for doc in docs %}
 		<hr style="color:var(--nav-btn-bg)">
 		<div class="plates col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex flex-row ">
 			<div class="d-flex flex-column col-lg-8 col-sm-8 col-md-8 col-xs-8 NameAndDesc">
@@ -35,7 +36,7 @@
 					</div>	
 					<hr style="color:silver">
 					<div class="p-1 m-2 col-lg-8 col-sm-8 col-md-8 col-xs-8 text-dark">
-						Газожидкостная смесь
+						{{doc.doc.name}}
 					</div>
 				</div>
 				<div class="description m-2">
@@ -44,16 +45,22 @@
 					</div>
 					<hr style="color:silver">					
 					<div class="p-1 m-2 col-lg-8 col-sm-8 col-md-8 col-xs-8 text-dark">
-						Газожидкостная смесь – это дисперсная система пленочно-ячеистой структуры, в которой ячейки – пузырьки газа – разделены пленками, состоящими из водного раствора ПАВ-пенообразователя и других растворенных компонентов и являющимися непрерывной фазой, которая образует пленочный каркас, служащий основой пены. Прочность этого каркаса определяет основные технологические параметры ГЖС в целом.
+						{{doc.description}}
 					</div>
+                    {% if user.is_authenticated %}
+                      {% if is_moder or user.is_superuser %}
+                          <a href="/delete/gzs/{{ doc.doc.id }}" class="readmore-btn">**ССылка на документ**</a>
+                      {% endif %}
+                    {% endif %}
 				</div>
 			</div>
 			<div class="LinkTOGzs col-lg-4 col-sm-4 col-md-4 col-xs-4 d-flex justify-content-center align-items-center p-3">
 				<div class="plates mt-2 GZS col-lg-12 col-sm-12 col-md-12 col-xs-12 d-flex justify-content-center align-items-center p-5">
-					<a href="#" class="text-white stretched-link linkGzs m-0 p-0 text-center">**ССылка на документ**</a>
-				</div>
+                    <a href="{{media}}{{doc.doc.path}}" class="text-white stretched-link linkGzs m-0 p-0 text-center">**ССылка на документ**</a>
+                </div>
 			</div>
 		</div>
+		{% endfor %}
 	</div>
 
 

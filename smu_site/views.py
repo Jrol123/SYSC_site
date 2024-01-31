@@ -1,17 +1,24 @@
 import configparser
+import os.path
+import shutil
 from bs4 import BeautifulSoup as BS
 from datetime import date, timedelta
 
-from django.contrib.auth import authenticate, login
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.timezone import localdate
 
 from .forms import LoginForm
 from news.models import News, Event, Image
-from info.models import Grant
+from info.models import Grant, Institute, Scientist
+from documents.models import Doc
+from SHC.models import Doc as GZS_doc
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
@@ -132,3 +139,100 @@ def user_login(request):
         form = LoginForm()
         
     return render(request, 'registration/login.html', {'form': form})
+
+
+@transaction.atomic
+@login_required
+@permission_required('auth.moderator', raise_exception=True)
+def readelete(request, obj_type, id):
+    try:
+        if obj_type == 'news':
+            news = News.objects.get(id=id)
+            try:
+                img = Image.objects.get(news_id=id)
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'news'), str(news.id)))
+                img.delete()
+            except:
+                pass
+            
+            news.delete()
+        elif obj_type == 'event':
+            event = Event.objects.get(id=id)
+            try:
+                img = Image.objects.get(event_id=id)
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'events'), str(event.id)))
+                img.delete()
+            except:
+                pass
+            
+            event.delete()
+            
+        elif obj_type == 'doc':
+            doc = Doc.objects.get(id=id)
+            try:
+                os.remove(os.path.join(settings.MEDIA_ROOT,
+                                       str(doc.path)))
+                # os.rmdir(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                doc.delete()
+            except:
+                pass
+            
+            doc.delete()
+            
+        elif obj_type == 'grant':
+            grant = Grant.objects.get(id=id)
+            try:
+                img = Image.objects.get(grant_id=id)
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'grants'), str(grant.id)))
+                img.delete()
+            except:
+                pass
+            
+            grant.delete()
+
+        elif obj_type == 'gzs':
+            gzs_doc = GZS_doc.objects.get(doc_id=id)
+            doc = Doc.objects.get(id=id)
+            try:
+                os.remove(os.path.join(settings.MEDIA_ROOT,
+                                       str(doc.path)))
+                # os.rmdir(os.path.join(settings.MEDIA_ROOT, str(doc.path)))
+                doc.delete()
+            except:
+                pass
+
+            gzs_doc.delete()
+
+        elif obj_type == 'institute':
+            institute = Institute.objects.get(id=id)
+            try:
+                for obj in Scientist.objects.filter(institute_id=institute.id):
+                    # oimg = Image.objects.get(scientist_id=obj.id)
+                    try:
+                        shutil.rmtree(os.path.join(os.path.join(
+                            os.path.join(settings.MEDIA_ROOT, 'images'),
+                            'scientists'), str(obj.id)))
+                    except:
+                        pass
+                    
+                img = Image.objects.get(institute_id=id)
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'institutes'), str(institute.id)))
+                img.delete()
+
+            except:
+                pass
+
+            institute.delete()
+
+    except:
+        pass
+    
+    return HttpResponseRedirect('/')

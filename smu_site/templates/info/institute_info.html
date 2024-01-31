@@ -36,6 +36,11 @@
 					<div class="mt-4 mb-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<p class="text-black limitp">{{institute.description}}</p>
 					</div>
+                    {% if user.is_authenticated %}
+                      {% if is_moder or user.is_superuser %}
+                          <a href="/delete/institute/{{ institute.id }}" class="readmore-btn">Угнетать</a>
+                      {% endif %}
+                    {% endif %}
 				</div>
 			</div>
 			<div class="col-lg-main col-sm-12 col-md-12 col-xs-12"> </div>

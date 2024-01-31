@@ -113,6 +113,11 @@
 
                                 <div class="mt-4 col-lg-2 col-md-1"><br/><br/><br/>
                                     <a href="{{grant.link}}" class="grant-btn" target="_blank">ссылка на грант</a><br/><br/>
+                                    {% if user.is_authenticated %}
+                                      {% if is_moder or user.is_superuser %}
+                                          <a href="/delete/grant/{{ grant.id }}" class="grant-btn">ссылка на грант</a>
+                                      {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

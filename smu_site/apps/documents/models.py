@@ -11,12 +11,13 @@ class Doc(models.Model):
     queue = models.OneToOneField("moderators.Queue",
                                  on_delete=models.SET_NULL, null=True)
     name = models.CharField("Название документа", max_length=100)
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  null=True)
     
     def _img_dir_path(self, filename):
         return (f'documents/'
-                f'{Category.objects.get(id=self.category.id).name}'
+                f'{self.category.name}'
                 f'/{filename}')
     
     path = models.FileField("Путь до документа",
