@@ -87,6 +87,11 @@
 							<div class="container doclinks doc_text_limit">
 								{{content | safe}}
 							</div>
+                            {% if user.is_authenticated %}
+                                  {% if is_moder or user.is_superuser %}
+                                      <a href="/delete/doc/{{ id }}" class="readmore-btn">Прочитать</a>
+                                  {% endif %}
+                              {% endif %}
 						{% endfor %}
 						
 					  </table>

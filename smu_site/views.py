@@ -159,8 +159,7 @@ def readelete(request, obj_type, id):
             event = Event.objects.get(id=id)
             try:
                 img = Image.objects.get(event_id=id)
-                # os.remove(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
-                os.remove(os.path.join(os.path.join(os.path.join(settings.MEDIA_ROOT, 'images'), 'events'), str(event.id)))
+                os.rmdir(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
                 img.delete()
             except:
                 pass
@@ -178,7 +177,8 @@ def readelete(request, obj_type, id):
             grant = Grant.objects.get(id=id)
             try:
                 img = Image.objects.get(grant_id=id)
-                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.path)))
+                os.rmdir(os.path.join(settings.MEDIA_ROOT, str(img.url_path)))
+                img.delete()
                 grant.delete()
             except:
                 pass
