@@ -86,7 +86,8 @@ def institute_info(request, inst_id):
         return Http404('Институт не найден')
     
     inst_img = Image.objects.filter(institute_id=inst_id).first()
-    scientists = (Scientist.objects.filter(institute_id=inst_id)
+    scientists = (Scientist.objects.filter(institute_id=inst_id,
+                                           queue_id__isnull=True)
                   .order_by('name'))
     scientists = [(s, Image.objects.filter(scientist_id=s.id)
                    .order_by('id').first())
