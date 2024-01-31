@@ -174,6 +174,14 @@ def readelete(request, obj_type, id):
                 doc.delete()
             except:
                 pass
+        elif obj_type == 'grant':
+            grant = Grant.objects.get(id=id)
+            try:
+                img = Image.objects.get(grant_id=id)
+                os.remove(os.path.join(settings.MEDIA_ROOT, str(img.path)))
+                grant.delete()
+            except:
+                pass
     except:
         pass
     
