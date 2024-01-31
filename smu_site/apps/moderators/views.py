@@ -61,9 +61,12 @@ def moder_guests(request):
             'event': ('Мероприятие', Event),
             'scientist': ('Учёный', Scientist)}
     for q in Queue.objects.all():
-        moder_queue.append((obtp[q.obj_type][0],
-                            obtp[q.obj_type][1]
-                            .objects.get(queue_id=q.id)))
+        try:
+            moder_queue.append((obtp[q.obj_type][0],
+                                obtp[q.obj_type][1]
+                                .objects.get(queue_id=q.id)))
+        except:
+            q.delete()
 
     return render(request, 'moderators/moder_guests.html', {
         'queue': moder_queue, 'range': range(20),
