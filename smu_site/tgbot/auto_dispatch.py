@@ -8,7 +8,7 @@ from telebot import types
 # Нужно для импорта из приложений проекта
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'SYSC_site.smu_site.settings')
+                      'smu_site.settings')
 import django
 django.setup()
 
@@ -34,9 +34,9 @@ SYSC_site/
 
 
 bot = telebot.TeleBot(
-    token="")
-channel_id = None
-link_temp = ""
+    token="6933728312:AAEovNd1s3kIm75O0LKgu90DLqJ3uxyCpTg")
+channel_id = -1001935648024
+link_temp = "https://t.me/c/1935648024/"
 
 cfg = configparser.ConfigParser()
 cfg.read("config.cfg", encoding='utf-8')
@@ -176,8 +176,6 @@ def news_mailing(wait_for):
     global last_mess_id
     
     while True:
-        print('test')
-        
         time.sleep(wait_for)
         
         nw = list(News.objects.filter(queue_id__isnull=True, link=None)

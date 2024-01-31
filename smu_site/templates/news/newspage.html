@@ -69,7 +69,7 @@
                 
                     <figure class="news-card">
 
-                        {%if img.url_path %}
+                        {% if img.url_path %}
                         <div class="framenews" id="myModalbtn{{content.id}}" data-target="#myModal{{content.id}}" style="border:none; background-image: url('/media/{{img.url_path}}'); background-size:cover">
                           
                                 <fieldset style=>
@@ -78,7 +78,7 @@
                                 </fieldset>
                           
                         </div>
-                        {% endif%}
+                        {% endif %}
     
                             <div class="container news-sec" style="background-color:white">
                               <div class="date"><span class="day">{{content.pub_date.day}}</span><span class="month">{{month}}</span></div>
@@ -92,7 +92,11 @@
                        
                     </figure>
                 </div>
-				<a href="#" class="readmore-btn">Комментировать в телеграме</a>
+                {% if content.link %}
+                    <a href="{{content.link}}" class="readmore-btn">Комментировать в телеграме</a>
+                {% else %}
+				    <a href="#" class="readmore-btn">Комментировать в телеграме</a>
+                {% endif %}
             </div>        
         </div>
 
