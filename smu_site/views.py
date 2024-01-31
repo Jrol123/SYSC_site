@@ -16,7 +16,7 @@ from django.utils.timezone import localdate
 
 from .forms import LoginForm
 from news.models import News, Event, Image
-from info.models import Grant
+from info.models import Grant, Institute
 from documents.models import Doc
 from SHC.models import Doc as GZS_doc
 
@@ -208,6 +208,19 @@ def readelete(request, obj_type, id):
                 pass
 
             gzs_doc.delete()
+
+        elif obj_type == 'institute':
+            institute = Institute.objects.get(id=id)
+            try:
+                img = Image.objects.get(institute_id=id)
+                shutil.rmtree(os.path.join(os.path.join(
+                    os.path.join(settings.MEDIA_ROOT, 'images'),
+                    'institutes'), str(institute.id)))
+                img.delete()
+            except:
+                pass
+
+            institute.delete()
 
     except:
         pass
