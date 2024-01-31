@@ -49,22 +49,27 @@
 			<div class="ScrollBar plates mt-5 mb-5 ml-20 col-lg-7 col-sm-7 col-md-7 col-xs-7 rounded">
 				{% if scientists %}
 					{% for scientist, img in scientists %}
-					<div class="d-flex flex-row mt-5 mb-4 p-3 rounded sub_grant_left col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div  class="d-flex flex-column mt-5 mb-4 p-3 rounded sub_grant_left col-lg-7 col-md-7 col-sm-7 col-xs-7">
+					<div class="d-flex flex-row mt-5 mb-4 p-3 rounded col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div  class="d-flex flex-column mt-5 mb-4 p-3 rounded col-lg-7 col-md-7 col-sm-7 col-xs-7">
 							<p class="text-black limitp labels_for_form ss">ФИО:</p>
-							<p class="text-black limitp">{{scientist.name}}</p>
+							<p class="text-black limitp m-0">{{scientist.name}}</p>
+							<hr class="mt-0" style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Лаборатория:</p>
-							<p class="text-black limitp">{{scientist.lab}}</p>
+							<p class="text-black limitp m-0">{{scientist.lab}}</p>
+							<hr class="mt-0" style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Должность:</p>
-							<p class="text-black limitp">{{scientist.position}}</p>
+							<p class="text-black limitp m-0">{{scientist.position}}</p>
+							<hr class="mt-0" style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Учёная степень:</p>
-							<p class="text-black limitp">{{scientist.degree}}</p>
+							<p class="text-black limitp m-0">{{scientist.degree}}</p>
+							<hr class="mt-0" style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Сфера научных интересов:</p>
-							<p class="text-black limitp">{{scientist.scientific_interests}}</p>
+							<p class="text-black limitp g m-0">{{scientist.scientific_interests}}</p>
+							<hr class="mt-0" style="color:silver">
 							<br />
 						</div>
 						<div class="col-lg-main col-sm-12 col-md-12 col-xs-12 NameAndDesc"> </div>
@@ -80,18 +85,23 @@
 						<div  class="d-flex flex-column mt-5 mb-4 p-3 rounded sub_grant_left col-lg-7 col-md-7 col-sm-7 col-xs-7">
 							<p class="text-black limitp labels_for_form ss">ФИО:</p>
 							<p class="text-black limitp">{{scientist.name}}</p>
+							<hr style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Лаборатория:</p>
 							<p class="text-black limitp">{{scientist.lab}}</p>
+							<hr style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Должность:</p>
 							<p class="text-black limitp">{{scientist.position}}</p>
+							<hr style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Учёная степень:</p>
 							<p class="text-black limitp">{{scientist.degree}}</p>
+							<hr style="color:silver">
 							<br />
 							<p class="text-black limitp labels_for_form ss">Сфера научных интересов:</p>
 							<p class="text-black limitp">{{scientist.scientific_interests}}</p>
+							<hr style="color:silver">
 							<br />
 						</div>
 						<div class="col-lg-main col-sm-12 col-md-12 col-xs-12 NameAndDesc"> </div>

@@ -245,6 +245,10 @@ body{
   width:100%;
   word-wrap: break-word;
 }
+.g
+{
+	text-align: left;
+}
 .plates{
     background-color: whitesmoke;
     border-radius:17px;
