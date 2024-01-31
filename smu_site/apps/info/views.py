@@ -68,6 +68,7 @@ def organization(request):
 
 def gzs(request):
     documents = (SHCDoc.objects.select_related('doc')
+                 .filter(doc__queue_id__isnull=True)
                  .order_by('doc__id'))
     return render(request, 'info/gzs.html',
                   {

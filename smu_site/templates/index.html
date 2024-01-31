@@ -163,7 +163,13 @@
                               {% else %}
 									<a href="{% url 'news:eventpage' n.id %}" class="readmore-btn">Прочитать</a>
                               {% endif %}
-									<a href="#" class="readmore-btn">Комментировать в телеграме</a>
+
+                              {% if n.link %}
+                                  <a href="{{n.link}}" class="readmore-btn">Комментировать в телеграме</a>
+                              {% else %}
+                                  <a href="#" class="readmore-btn">Комментировать в телеграме</a>
+                              {% endif %}
+
                               {% if user.is_authenticated %}
                                   {% if is_moder or user.is_superuser %}
                                       <a href="{% url 'delete_news' type n.id %}" class="readmore-btn">Удалить</a>
